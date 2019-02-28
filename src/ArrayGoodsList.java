@@ -66,6 +66,7 @@ public class ArrayGoodsList implements List {
                 size--;
                 for (int j = i + 1; j < list.length; j++) {
                     list[i] = list[j];
+                    i++;
                 }
                 return true;
             }
@@ -182,7 +183,10 @@ public class ArrayGoodsList implements List {
     }
     @Override
     public boolean retainAll(Collection c) {
-        return false;
+        for (Object o : c) {
+            remove(o);
+        }
+        return !c.isEmpty();
     }
 
     @Override

@@ -214,5 +214,68 @@ public class ArrayGoodsListTest {
             destArray[i] = "dest" + i;
         }
     }
+    @Test
+    public void retainAllTest() {
+        final String o1 = new String("0");
+        final String o2 = new String("1");
+        final String o3 = new String("2");
+        final String o4 = new String("3");
+        final String o5 = new String("4");
+        final String o6 = new String("5");
+        final String o7 = new String("6");
+        final String o8 = new String("7");
 
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add(o1);
+        arrayGoodsList.add(o2);
+        arrayGoodsList.add(o3);
+        arrayGoodsList.add(o4);
+        arrayGoodsList.add(o5);
+        arrayGoodsList.add(o6);
+        arrayGoodsList.add(o7);
+        arrayGoodsList.add(o8);
+
+        final ArrayList arrayGoodsList2 = new ArrayList();
+        arrayGoodsList2.add(o5);
+        arrayGoodsList2.add(o6);
+
+
+        arrayGoodsList.retainAll(arrayGoodsList2);
+
+        for (int i = 0; i <arrayGoodsList.size() ; i++) {
+            System.out.println(arrayGoodsList.get(i));
+
+        }
+
+
+
+    }
+
+    @Test
+    public void removeElementTest() {
+        final String o1 = new String("0");
+        final String o2 = new String("1");
+        final String o3 = new String("2");
+        final String o4 = new String("3");
+        final String o5 = new String("4");
+        final String o6 = new String("5");
+        final String o7 = new String("6");
+        final String o8 = new String("7");
+
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add(o1);
+        arrayGoodsList.add(o2);
+        arrayGoodsList.add(o3);
+        arrayGoodsList.add(o4);
+        arrayGoodsList.add(o5);
+        arrayGoodsList.add(o6);
+        arrayGoodsList.add(o7);
+        arrayGoodsList.add(o8);
+
+        arrayGoodsList.remove(o2);
+        for (int i = 0; i <arrayGoodsList.size() ; i++) {
+            System.out.println(arrayGoodsList.get(i));
+
+        }
+    }
 }
