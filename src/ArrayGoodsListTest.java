@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class ArrayGoodsListTest {
@@ -25,7 +27,7 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         assertFalse(arrayGoodsList.contains(o3));
-        System.out.println(arrayGoodsList.remove(o1)+" "+arrayGoodsList.size());
+        System.out.println(arrayGoodsList.remove(o1) + " " + arrayGoodsList.size());
 
     }
 
@@ -40,6 +42,7 @@ public class ArrayGoodsListTest {
         assertEquals(1, subject.size());
         assertFalse(subject.contains(toAddAndRemove));
     }
+
     @Test
     public void addTest() {
         final Object o1 = new Object();
@@ -69,4 +72,147 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o11);
         arrayGoodsList.add(o12);
     }
+
+    @Test
+    public void setTest() {
+        final Object o1 = new Object();
+        final Object o2 = new Object();
+
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add(o1);
+        System.out.println(arrayGoodsList.set(0, o2));
+
+    }
+
+    @Test
+    public void addElementByIndex() {
+        final String o1 = new String("0");
+        final String o2 = new String("1");
+        final String o3 = new String("2");
+        final String o4 = new String("3");
+        final String o5 = new String("4");
+        final String o6 = new String("5");
+        final String o7 = new String("6");
+        final String o8 = new String("7");
+        final String o9 = new String("8");
+        final String o10 = new String("9");
+        final String o11 = new String("10");
+        final String o12 = new String("11");
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add(o1);
+        arrayGoodsList.add(o2);
+        arrayGoodsList.add(0, o3);
+        arrayGoodsList.add(o4);
+        arrayGoodsList.add(o5);
+        arrayGoodsList.add(o6);
+        arrayGoodsList.add(o7);
+        arrayGoodsList.add(o8);
+        arrayGoodsList.add(o9);
+        arrayGoodsList.add(o10);
+        arrayGoodsList.add(5, o11);
+        arrayGoodsList.add(o12);
+        arrayGoodsList.remove(11);
+        System.out.println(arrayGoodsList.size());
+        for (int i = 0; i < arrayGoodsList.size(); i++) {
+            System.out.println((i) + " " + arrayGoodsList.get(i));
+        }
+
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void assertThatGetWillThrowIndexOutOfBoundsExceptionIfTooBigElementWasRequested() {
+        new ArrayGoodsList().get(11);
+    }
+
+    @Test
+    public void assertThatAddToInappropriateIndexWillThrowIndexOutOfBoundsException() {
+        final ArrayList<Object> objects = new ArrayList<>();
+        objects.add(1, new Object());
+    }
+
+    @Test
+    public void indexOfTest() {
+        final Object o1 = new Object();
+        final Object o2 = new Object();
+        final Object o3 = new Object();
+        final Object o4 = new Object();
+        final Object o5 = new Object();
+        final Object o6 = new Object();
+
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add(o1);
+        arrayGoodsList.add(o2);
+        arrayGoodsList.add(o3);
+        arrayGoodsList.add(o4);
+        arrayGoodsList.add(o5);
+
+        System.out.println(arrayGoodsList.indexOf(o6));
+
+
+    }
+
+    @Test
+    public void addAllTestByIndex() {
+        final String o1 = new String("0");
+        final String o2 = new String("1");
+        final String o3 = new String("2");
+        final String o4 = new String("3");
+        final String o5 = new String("4");
+        final String o6 = new String("5");
+        final String o7 = new String("6");
+        final String o8 = new String("7");
+
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add(o1);
+        arrayGoodsList.add(o2);
+        arrayGoodsList.add(o3);
+        arrayGoodsList.add(o4);
+        arrayGoodsList.add(o5);
+        arrayGoodsList.add(o6);
+        arrayGoodsList.add(o7);
+        arrayGoodsList.add(o8);
+
+
+        final String o05 = new String("8");
+        final String o06 = new String("9");
+        final String o07 = new String("10");
+        final String o08 = new String("11");
+
+        final ArrayList arrayGoodsList2 = new ArrayList();
+        arrayGoodsList2.add(o05);
+        arrayGoodsList2.add(o06);
+        arrayGoodsList2.add(o07);
+        arrayGoodsList2.add(o08);
+
+        arrayGoodsList.addAll(6, arrayGoodsList2);
+
+        for (int i = 0; i < arrayGoodsList.size(); i++) {
+            System.out.println(arrayGoodsList.get(i));
+        }
+        System.out.println("");
+        System.out.println(arrayGoodsList.size());
+    }
+
+    @Test
+    public void systemArrayCopyTest() {
+        String[] sourceArray = new String[5];
+        int sourceIndex = 1;
+        String[] destArray = new String[10];
+        int destIndex = 2;
+        int length = sourceArray.length - sourceIndex;
+        justFillArrays(sourceArray, destArray);
+        String[] expected = {"dest0", "dest1", "source1", "source2", "source3", "source4", "dest6", "dest7", "dest8", "dest9"};
+        System.arraycopy(sourceArray, sourceIndex, destArray, destIndex, length);
+        assertArrayEquals(expected, destArray);
+    }
+
+    private void justFillArrays(String[] sourceArray, String[] destArray) {
+        for (int i = 0; i < sourceArray.length; i++) {
+            sourceArray[i] = "source" + i;
+        }
+        for (int i = 0; i < destArray.length; i++) {
+            destArray[i] = "dest" + i;
+        }
+    }
+
 }

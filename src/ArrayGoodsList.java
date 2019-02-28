@@ -40,7 +40,7 @@ public class ArrayGoodsList implements List {
     @Override
     public Object[] toArray() {
         Object[] a = new Object[size];
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size(); i++) {
             a[i] = list[i];
         }
         return a;
@@ -51,13 +51,9 @@ public class ArrayGoodsList implements List {
         if (size != list.length) {
             list[size++] = o;
         } else {
-            int newSize = size * EXPAND_MODIFIER;
-            reList = new Object[newSize];
-            for (int i = 0; i < list.length; i++) {
-                reList[i] = list[i];
-            }
-            list = reList;
-            list[++size] = o;
+            expandArrayIfNeeded();
+            list[size] = o;
+            size++;
         }
         return true;
     }
@@ -79,59 +75,126 @@ public class ArrayGoodsList implements List {
 
     @Override
     public boolean addAll(Collection c) {
-        return false;
+        for (Object o : c) {
+            add(o);
+        }
+        return !c.isEmpty();
     }
 
     @Override
     public boolean addAll(int index, Collection c) {
-        return false;
-    }
+        checkThatIndexIsInAcceptableRange(index);
+        size += c.size();
+        expandArrayIfNeeded();
+        int elementToAdd = c.size();
+        int newPositionOfElement = size-1;
+        for (int i = newPositionOfElement; i > elementToAdd-1; i--) {
+            list[i] = list[i - elementToAdd];
+        }
+        for (int i = 0; i < elementToAdd; i++) {
+            for (Object o : c) {
+                list[index+i] = o;
+                i++;
+            }
 
-    @Override
-    public void replaceAll(UnaryOperator operator) {
-
-    }
-
-    @Override
-    public void sort(Comparator c) {
-
+        }
+        return !c.isEmpty();
     }
 
     @Override
     public void clear() {
-
+        for (int i = 0; i < size; i++) {
+            list[i] = null;
+            size = 0;
+        }
     }
 
     @Override
     public Object get(int index) {
-        return null;
+        checkThatIndexIsInAcceptableRange(index);
+        return list[index];
     }
 
     @Override
     public Object set(int index, Object element) {
-        return null;
+        checkThatIndexIsInAcceptableRange(index);
+        Object o = list[index];
+        list[index] = element;
+        return o;
+    }
+
+    private void checkThatIndexIsInAcceptableRange(final int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     @Override
     public void add(int index, Object element) {
+        checkThatIndexIsInAcceptableRange(index);
+        size++;
+        expandArrayIfNeeded();
+        for (int i = size; i > index; i--) {
+            list[i] = list[i - 1];
+        }
+        list[index] = element;
+    }
 
+    private void expandArrayIfNeeded() {
+        if (size > list.length) {
+            reList = new Object[list.length * EXPAND_MODIFIER];
+            for (int i = 0; i < list.length; i++) {
+                reList[i] = list[i];
+            }
+            list = reList;
+        }
     }
 
     @Override
     public Object remove(int index) {
-        return null;
+        checkThatIndexIsInAcceptableRange(index);
+        Object o = list[index];
+        list[index] = null;
+        for (int i = index; i < size; i++) {
+            list[index] = list[index + 1];
+        }
+        size--;
+        return o;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+
+        for (int i = 0; i < list.length; i++) {
+            if (o.equals(list[i]))
+                return i;
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        for (int i = 0; i < list.length; i++) {
+            if (o.equals(list[i]) && i < size)
+                return ++i;
+        }
+        return -1;
+    }
+    @Override
+    public boolean retainAll(Collection c) {
+        return false;
     }
 
+    @Override
+    public boolean removeAll(Collection c) {
+
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection c) {
+        return false;
+    }
     @Override
     public ListIterator listIterator() {
         return null;
@@ -153,22 +216,8 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public boolean retainAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection c) {
-        return false;
-    }
-
-    @Override
     public Object[] toArray(Object[] a) {
+
         return new Object[0];
     }
 
