@@ -1,6 +1,11 @@
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +21,7 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
         assertTrue(arrayGoodsList.contains(o2));
+        System.out.println(arrayGoodsList.contains(o2));
     }
 
     @Test
@@ -71,6 +77,7 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o10);
         arrayGoodsList.add(o11);
         arrayGoodsList.add(o12);
+
     }
 
     @Test
@@ -235,19 +242,23 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
 
+        final String o9 = new String("890");
         final ArrayList arrayGoodsList2 = new ArrayList();
         arrayGoodsList2.add(o5);
         arrayGoodsList2.add(o6);
-
+        arrayGoodsList2.add(o9);
+        arrayGoodsList2.add(o8);
 
         arrayGoodsList.retainAll(arrayGoodsList2);
 
         for (int i = 0; i <arrayGoodsList.size() ; i++) {
             System.out.println(arrayGoodsList.get(i));
-
         }
 
-
+        assertTrue(arrayGoodsList.contains(o5));
+        assertTrue(arrayGoodsList.contains(o6));
+        assertTrue(arrayGoodsList.contains(o8));
+        assertEquals(3, arrayGoodsList.size());
 
     }
 
@@ -278,4 +289,19 @@ public class ArrayGoodsListTest {
 
         }
     }
+
+    @Test
+    public void addAllTest() {
+        final ArrayGoodsList subject = new ArrayGoodsList();
+        for (int i = 0; i < 10; i++) {
+            subject.add(String.valueOf(i));
+        }
+        subject.addAll(5, Arrays.asList(String.valueOf(10), String.valueOf(11), String.valueOf(12)));
+        final List<String> expected = Stream.of(0, 1, 2, 3, 4, 10, 11, 12, 5, 6, 7, 8, 9).map(String::valueOf).collect(Collectors.toList());
+        System.out.println(Arrays.toString(subject.toArray()));
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), subject.get(i));
+        }
+    }
+
 }

@@ -88,16 +88,15 @@ public class ArrayGoodsList implements List {
         size += c.size();
         expandArrayIfNeeded();
         int elementToAdd = c.size();
-        int newPositionOfElement = size-1;
-        for (int i = newPositionOfElement; i > elementToAdd-1; i--) {
+        int newPositionOfElement = size - 1;
+        for (int i = newPositionOfElement; i > index - 1; i--) {
             list[i] = list[i - elementToAdd];
         }
         for (int i = 0; i < elementToAdd; i++) {
             for (Object o : c) {
-                list[index+i] = o;
+                list[index + i] = o;
                 i++;
             }
-
         }
         return !c.isEmpty();
     }
@@ -181,8 +180,26 @@ public class ArrayGoodsList implements List {
         }
         return -1;
     }
+
     @Override
     public boolean retainAll(Collection c) {
+        reList = new Object[size];
+        int indexOfRelist = 0;
+        size = 0;
+        for (Object o : c) {
+            if (contains(o)) {
+                reList[indexOfRelist] = o;
+                size++;
+                indexOfRelist++;
+            }
+        }
+        list = reList;
+        return !isEmpty();
+
+    }
+
+    @Override
+    public boolean removeAll(Collection c) {
         for (Object o : c) {
             remove(o);
         }
@@ -190,15 +207,10 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public boolean removeAll(Collection c) {
-
-        return false;
-    }
-
-    @Override
     public boolean containsAll(Collection c) {
         return false;
     }
+
     @Override
     public ListIterator listIterator() {
         return null;
