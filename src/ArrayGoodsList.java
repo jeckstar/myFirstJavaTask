@@ -2,18 +2,18 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class ArrayGoodsList implements List {
-    private Object[] goodsList;
-    private Object[] reList;
+    public static final int DEFAULT_LENGTH = 10;
+    private Object[] innerArray;
     private int size;
     private static final int EXPAND_MODIFIER = 2;
 
     public ArrayGoodsList() {
-        goodsList = new Object[10];
+        innerArray = new Object[DEFAULT_LENGTH];
         size = 0;
     }
 
     public ArrayGoodsList(int i) {
-        goodsList = new Object[i];
+        innerArray = new Object[i];
         size = 0;
     }
 
@@ -29,7 +29,7 @@ public class ArrayGoodsList implements List {
 
     @Override
     public boolean contains(Object o) {
-        for (Object o1 : goodsList) {
+        for (Object o1 : innerArray) {
             if (o.equals(o1)) {
                 return true;
             }
@@ -39,20 +39,18 @@ public class ArrayGoodsList implements List {
 
     @Override
     public Object[] toArray() {
-        Object[] a = new Object[size];
-        for (int i = 0; i < size(); i++) {
-            a[i] = goodsList[i];
-        }
+        Object [] a = new Object[size];
+        System.arraycopy(innerArray, 0, a, 0, a.length);
         return a;
     }
 
     @Override
     public boolean add(Object o) {
-        if (size != goodsList.length) {
-            goodsList[size++] = o;
+        if (size != innerArray.length) {
+            innerArray[size++] = o;
         } else {
             expandArrayIfNeeded();
-            goodsList[size] = o;
+            innerArray[size] = o;
             size++;
         }
         return true;
@@ -60,12 +58,12 @@ public class ArrayGoodsList implements List {
 
     @Override
     public boolean remove(Object o) {
-        for (int i = 0; i < goodsList.length; i++) {
-            if (o.equals(goodsList[i])) {
-                goodsList[i] = null;
+        for (int i = 0; i < innerArray.length; i++) {
+            if (o.equals(innerArray[i])) {
+                innerArray[i] = null;
                 size--;
-                for (int j = i + 1; j < goodsList.length; j++) {
-                    goodsList[i] = goodsList[j];
+                for (int j = i + 1; j < innerArray.length; j++) {
+                    innerArray[i] = innerArray[j];
                     i++;
                 }
                 return true;
@@ -90,11 +88,11 @@ public class ArrayGoodsList implements List {
         int elementToAdd = c.size();
         int newPositionOfElement = size - 1;
         for (int i = newPositionOfElement; i > index - 1; i--) {
-            goodsList[i] = goodsList[i - elementToAdd];
+            innerArray[i] = innerArray[i - elementToAdd];
         }
         for (int i = 0; i < elementToAdd; i++) {
             for (Object o : c) {
-                goodsList[index + i] = o;
+                innerArray[index + i] = o;
                 i++;
             }
         }
@@ -104,7 +102,7 @@ public class ArrayGoodsList implements List {
     @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
-            goodsList[i] = null;
+            innerArray[i] = null;
             size = 0;
         }
     }
@@ -112,14 +110,14 @@ public class ArrayGoodsList implements List {
     @Override
     public Object get(int index) {
         checkThatIndexIsInAcceptableRange(index);
-        return goodsList[index];
+        return innerArray[index];
     }
 
     @Override
     public Object set(int index, Object element) {
         checkThatIndexIsInAcceptableRange(index);
-        Object o = goodsList[index];
-        goodsList[index] = element;
+        Object o = innerArray[index];
+        innerArray[index] = element;
         return o;
     }
 
@@ -135,28 +133,28 @@ public class ArrayGoodsList implements List {
         size++;
         expandArrayIfNeeded();
         for (int i = size; i > index; i--) {
-            goodsList[i] = goodsList[i - 1];
+            innerArray[i] = innerArray[i - 1];
         }
-        goodsList[index] = element;
+        innerArray[index] = element;
     }
 
     private void expandArrayIfNeeded() {
-        if (size > goodsList.length) {
-            reList = new Object[goodsList.length * EXPAND_MODIFIER];
-            for (int i = 0; i < goodsList.length; i++) {
-                reList[i] = goodsList[i];
+        if (size > innerArray.length) {
+            Object [] temporaryList = new Object[innerArray.length * EXPAND_MODIFIER];
+            for (int i = 0; i < innerArray.length; i++) {
+                temporaryList[i] = innerArray[i];
             }
-            goodsList = reList;
+            innerArray = temporaryList;
         }
     }
 
     @Override
     public Object remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
-        Object o = goodsList[index];
-        goodsList[index] = null;
+        Object o = innerArray[index];
+        innerArray[index] = null;
         for (int i = index; i < size; i++) {
-            goodsList[index] = goodsList[index + 1];
+            innerArray[index] = innerArray[index + 1];
         }
         size--;
         return o;
@@ -165,8 +163,8 @@ public class ArrayGoodsList implements List {
     @Override
     public int indexOf(Object o) {
 
-        for (int i = 0; i < goodsList.length; i++) {
-            if (o.equals(goodsList[i]))
+        for (int i = 0; i < innerArray.length; i++) {
+            if (o.equals(innerArray[i]))
                 return i;
         }
         return -1;
@@ -174,8 +172,8 @@ public class ArrayGoodsList implements List {
 
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = 0; i < goodsList.length; i++) {
-            if (o.equals(goodsList[i]) && i < size)
+        for (int i = 0; i < innerArray.length; i++) {
+            if (o.equals(innerArray[i]) && i < size)
                 return ++i;
         }
         return -1;
@@ -183,17 +181,17 @@ public class ArrayGoodsList implements List {
 
     @Override
     public boolean retainAll(Collection c) {
-        reList = new Object[size];
+        Object [] temporaryList = new Object[size];
         int indexOfRelist = 0;
         size = 0;
         for (Object o : c) {
             if (contains(o)) {
-                reList[indexOfRelist] = o;
+                temporaryList[indexOfRelist] = o;
                 size++;
                 indexOfRelist++;
             }
         }
-        goodsList = reList;
+        innerArray = temporaryList;
         return !isEmpty();
 
     }

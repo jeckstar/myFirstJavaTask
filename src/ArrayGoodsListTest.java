@@ -199,6 +199,18 @@ public class ArrayGoodsListTest {
         System.out.println("");
         System.out.println(arrayGoodsList.size());
     }
+    @Test
+    public void toArrayTest() {
+        ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add("1");
+        arrayGoodsList.add("2");
+        arrayGoodsList.add("3");
+        Object [] newArray = arrayGoodsList.toArray();
+        for (int i = 0; i < newArray.length; i++) {
+            System.out.println(newArray[i]);
+        }
+    }
+
 
     @Test
     public void systemArrayCopyTest() {
