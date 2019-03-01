@@ -197,6 +197,11 @@ public class ArrayGoodsList implements List {
 
     @Override
     public boolean containsAll(Collection c) {
+        for (Object o1 : innerArray) {
+            if (c.contains(o1)) {
+                return true;
+            }
+        }
         return false;
     }
 
