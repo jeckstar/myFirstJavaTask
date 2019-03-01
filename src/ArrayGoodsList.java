@@ -39,17 +39,15 @@ public class ArrayGoodsList implements List {
 
     @Override
     public Object[] toArray() {
-        Object [] a = new Object[size];
+        Object[] a = new Object[size];
         System.arraycopy(innerArray, 0, a, 0, a.length);
         return a;
     }
 
     @Override
     public boolean add(Object o) {
-        if (size >= innerArray.length) {
-            expandArrayIfNeeded();
-        }
-            innerArray[size++] = o;
+        expandArrayIfNeeded();
+        innerArray[size++] = o;
         return true;
     }
 
@@ -57,12 +55,9 @@ public class ArrayGoodsList implements List {
     public boolean remove(Object o) {
         for (int i = 0; i < innerArray.length; i++) {
             if (o.equals(innerArray[i])) {
-                innerArray[i] = null;
                 size--;
-                for (int j = i + 1; j < innerArray.length; j++) {
-                    innerArray[i] = innerArray[j];
-                    i++;
-                }
+                int shift = i;
+                System.arraycopy(innerArray, ++shift, innerArray, --shift, size - i);
                 return true;
             }
         }
@@ -82,12 +77,12 @@ public class ArrayGoodsList implements List {
         checkThatIndexIsInAcceptableRange(index);
         size += c.size();
         expandArrayIfNeeded();
-        int elementToAdd = c.size();
+        int elementsToAdd = c.size();
         int newPositionOfElement = size - 1;
         for (int i = newPositionOfElement; i > index - 1; i--) {
-            innerArray[i] = innerArray[i - elementToAdd];
+            innerArray[i] = innerArray[i - elementsToAdd];
         }
-        for (int i = 0; i < elementToAdd; i++) {
+        for (int i = 0; i < elementsToAdd; i++) {
             for (Object o : c) {
                 innerArray[index + i] = o;
                 i++;
@@ -137,7 +132,7 @@ public class ArrayGoodsList implements List {
 
     private void expandArrayIfNeeded() {
         if (size >= innerArray.length) {
-            Object [] temporaryList = new Object[innerArray.length * EXPAND_MODIFIER];
+            Object[] temporaryList = new Object[innerArray.length * EXPAND_MODIFIER];
             for (int i = 0; i < innerArray.length; i++) {
                 temporaryList[i] = innerArray[i];
             }
@@ -178,7 +173,7 @@ public class ArrayGoodsList implements List {
 
     @Override
     public boolean retainAll(Collection c) {
-        Object [] temporaryList = new Object[size];
+        Object[] temporaryList = new Object[size];
         int indexOfRelist = 0;
         size = 0;
         for (Object o : c) {
