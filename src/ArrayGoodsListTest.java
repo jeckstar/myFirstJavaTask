@@ -51,18 +51,20 @@ public class ArrayGoodsListTest {
 
     @Test
     public void addTest() {
-        final Object o1 = new Object();
-        final Object o2 = new Object();
-        final Object o3 = new Object();
-        final Object o4 = new Object();
-        final Object o5 = new Object();
-        final Object o6 = new Object();
-        final Object o7 = new Object();
-        final Object o8 = new Object();
-        final Object o9 = new Object();
-        final Object o10 = new Object();
-        final Object o11 = new Object();
-        final Object o12 = new Object();
+        final String o1 = new String("0");
+        final String o2 = new String("1");
+        final String o3 = new String("2");
+        final String o4 = new String("3");
+        final String o5 = new String("4");
+        final String o6 = new String("5");
+        final String o7 = new String("6");
+        final String o8 = new String("7");
+        final String o9 = new String("8");
+        final String o10 = new String("9");
+        final String o11 = new String("10");
+        final String o12 = new String("11");
+
+
         final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
@@ -73,10 +75,13 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
         arrayGoodsList.add(o9);
-        arrayGoodsList.add(o9);
         arrayGoodsList.add(o10);
         arrayGoodsList.add(o11);
         arrayGoodsList.add(o12);
+
+        for (int i = 0; i < arrayGoodsList.size(); i++) {
+            System.out.println(arrayGoodsList.get(i));
+        }
 
     }
 
@@ -93,19 +98,18 @@ public class ArrayGoodsListTest {
 
     @Test
     public void addElementByIndex() {
-        final String o1 = new String("0");
-        final String o2 = new String("1");
-        final String o3 = new String("2");
-        final String o4 = new String("3");
-        final String o5 = new String("4");
-        final String o6 = new String("5");
-        final String o7 = new String("6");
-        final String o8 = new String("7");
-        final String o9 = new String("8");
-        final String o10 = new String("9");
-        final String o11 = new String("10");
-        final String o12 = new String("11");
+        final String o0 = new String("0");
+        final String o1 = new String("1");
+        final String o2 = new String("2");
+        final String o3 = new String("3");
+        final String o4 = new String("4");
+        final String o5 = new String("5");
+        final String o6 = new String("6");
+        final String o7 = new String("7");
+        final String o8 = new String("8");
+        final String o9 = new String("9");
         final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add(o0);
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(0, o3);
@@ -115,11 +119,11 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
         arrayGoodsList.add(o9);
-        arrayGoodsList.add(o10);
-        arrayGoodsList.add(5, o11);
-        arrayGoodsList.add(o12);
-        arrayGoodsList.remove(11);
+
+
+
         System.out.println(arrayGoodsList.size());
+        System.out.println(" ");
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println((i) + " " + arrayGoodsList.get(i));
         }
@@ -180,9 +184,9 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o8);
 
 
-        final String o05 = new String("8");
-        final String o06 = new String("9");
-        final String o07 = new String("10");
+        final String o05 = new String("11");
+        final String o06 = new String("11");
+        final String o07 = new String("11");
         final String o08 = new String("11");
 
         final ArrayList arrayGoodsList2 = new ArrayList();
@@ -196,16 +200,17 @@ public class ArrayGoodsListTest {
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
         }
-        System.out.println("");
+        System.out.println();
         System.out.println(arrayGoodsList.size());
     }
+
     @Test
     public void toArrayTest() {
         ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
         arrayGoodsList.add("1");
         arrayGoodsList.add("2");
         arrayGoodsList.add("3");
-        Object [] newArray = arrayGoodsList.toArray();
+        Object[] newArray = arrayGoodsList.toArray();
         for (int i = 0; i < newArray.length; i++) {
             System.out.println(newArray[i]);
         }
@@ -233,6 +238,7 @@ public class ArrayGoodsListTest {
             destArray[i] = "dest" + i;
         }
     }
+
     @Test
     public void retainAllTest() {
         final String o1 = new String("0");
@@ -263,7 +269,7 @@ public class ArrayGoodsListTest {
 
         arrayGoodsList.retainAll(arrayGoodsList2);
 
-        for (int i = 0; i <arrayGoodsList.size() ; i++) {
+        for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
         }
 
@@ -295,11 +301,13 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
 
-        arrayGoodsList.remove(o2);
-        for (int i = 0; i <arrayGoodsList.size() ; i++) {
+        arrayGoodsList.remove(o5);
+        for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
 
         }
+        System.out.println(" ");
+        System.out.println(arrayGoodsList.size());
     }
 
     @Test
@@ -323,6 +331,20 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add("b");
         arrayGoodsList.add("a");
         assertEquals(3, arrayGoodsList.lastIndexOf("a"));
+    }
+
+    @Test
+    public void remove_verifyRemoveWorksCorrectlyWithSingleRemoveInTheMiddle() {
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        for (int i = 1; i < 6; i++) {
+            arrayGoodsList.add(String.valueOf(i));
+        }
+        arrayGoodsList.remove("3");
+        for (int i = 1; i < 6; i++) {
+            if (i != 3) {
+                assertTrue(arrayGoodsList.contains(String.valueOf(i)));
+            }
+        }
     }
 
 }

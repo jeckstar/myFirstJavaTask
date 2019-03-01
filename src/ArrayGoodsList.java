@@ -77,17 +77,11 @@ public class ArrayGoodsList implements List {
         checkThatIndexIsInAcceptableRange(index);
         size += c.size();
         expandArrayIfNeeded();
-        int elementsToAdd = c.size();
-        int newPositionOfElement = size - 1;
-        for (int i = newPositionOfElement; i > index - 1; i--) {
-            innerArray[i] = innerArray[i - elementsToAdd];
-        }
-        for (int i = 0; i < elementsToAdd; i++) {
-            for (Object o : c) {
-                innerArray[index + i] = o;
-                i++;
-            }
-        }
+        Object[] arrayOfElementsToAdd = c.toArray();
+        Object[] arrayOfLastElements = new Object[size - index - c.size()];
+        System.arraycopy(innerArray, index, arrayOfLastElements, 0, arrayOfLastElements.length);
+        System.arraycopy(arrayOfElementsToAdd, 0, innerArray, index, c.size());
+        System.arraycopy(arrayOfLastElements, 0, innerArray, size - arrayOfLastElements.length, arrayOfLastElements.length);
         return !c.isEmpty();
     }
 
@@ -124,9 +118,8 @@ public class ArrayGoodsList implements List {
         checkThatIndexIsInAcceptableRange(index);
         size++;
         expandArrayIfNeeded();
-        for (int i = size; i > index; i--) {
-            innerArray[i] = innerArray[i - 1];
-        }
+        int indexToRemove = index+1;
+        System.arraycopy(innerArray, index, innerArray, indexToRemove, size-index);
         innerArray[index] = element;
     }
 
