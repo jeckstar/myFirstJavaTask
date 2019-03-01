@@ -50,9 +50,10 @@ public class ArrayGoodsList implements List {
             innerArray[size++] = o;
         } else {
             expandArrayIfNeeded();
-            innerArray[size] = o;
-            size++;
+            innerArray[size++] = o;
+
         }
+
         return true;
     }
 
@@ -139,7 +140,7 @@ public class ArrayGoodsList implements List {
     }
 
     private void expandArrayIfNeeded() {
-        if (size > innerArray.length) {
+        if (size >= innerArray.length) {
             Object [] temporaryList = new Object[innerArray.length * EXPAND_MODIFIER];
             for (int i = 0; i < innerArray.length; i++) {
                 temporaryList[i] = innerArray[i];
