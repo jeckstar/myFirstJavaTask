@@ -330,7 +330,19 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add("a");
         arrayGoodsList.add("b");
         arrayGoodsList.add("a");
-        assertEquals(3, arrayGoodsList.lastIndexOf("a"));
+        assertEquals(2, arrayGoodsList.lastIndexOf("a"));
+    }
+
+    @Test
+    public void lastIndexOf() {
+        final Object o1 = new Object();
+        final Object o2 = new Object();
+        final Object o3 = new Object();
+        final Object o4 = new Object();
+        final Object o5 = new Object();
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.addAll(Arrays.asList(o1, o3, o2, o3, o4, o5));
+        assertEquals(3, arrayGoodsList.lastIndexOf(o3));
     }
 
     @Test

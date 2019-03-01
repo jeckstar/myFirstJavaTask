@@ -3,6 +3,7 @@ import java.util.function.UnaryOperator;
 
 public class ArrayGoodsList implements List {
     public static final int DEFAULT_LENGTH = 10;
+    public static final int NO_INDEX = -1;
     private Object[] innerArray;
     private int size;
     private static final int EXPAND_MODIFIER = 2;
@@ -118,8 +119,8 @@ public class ArrayGoodsList implements List {
         checkThatIndexIsInAcceptableRange(index);
         size++;
         expandArrayIfNeeded();
-        int indexToRemove = index+1;
-        System.arraycopy(innerArray, index, innerArray, indexToRemove, size-index);
+        int indexToRemove = index + 1;
+        System.arraycopy(innerArray, index, innerArray, indexToRemove, size - index);
         innerArray[index] = element;
     }
 
@@ -157,11 +158,11 @@ public class ArrayGoodsList implements List {
 
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = 0; i < innerArray.length; i++) {
-            if (o.equals(innerArray[i]) && i < size)
-                return ++i;
+        for (int i = size - 1; i >= 0; i--) {
+            if (o.equals(innerArray[i]))
+                return i;
         }
-        return -1;
+        return NO_INDEX;
     }
 
     @Override
