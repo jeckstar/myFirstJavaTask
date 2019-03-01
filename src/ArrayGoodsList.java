@@ -46,14 +46,10 @@ public class ArrayGoodsList implements List {
 
     @Override
     public boolean add(Object o) {
-        if (size != innerArray.length) {
-            innerArray[size++] = o;
-        } else {
+        if (size >= innerArray.length) {
             expandArrayIfNeeded();
-            innerArray[size++] = o;
-
         }
-
+            innerArray[size++] = o;
         return true;
     }
 
