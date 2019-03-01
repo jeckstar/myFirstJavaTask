@@ -304,4 +304,13 @@ public class ArrayGoodsListTest {
         }
     }
 
+    @Test
+    public void lastIndexOf_shouldReturn2_ifStringWasAddedToTheStartAndToTheEnd() {
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        arrayGoodsList.add("a");
+        arrayGoodsList.add("b");
+        arrayGoodsList.add("a");
+        assertEquals(3, arrayGoodsList.lastIndexOf("a"));
+    }
+
 }
