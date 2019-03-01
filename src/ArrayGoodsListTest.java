@@ -301,7 +301,7 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
 
-        arrayGoodsList.remove(o5);
+        arrayGoodsList.remove(6);
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
 

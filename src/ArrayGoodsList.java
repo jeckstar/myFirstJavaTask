@@ -139,10 +139,15 @@ public class ArrayGoodsList implements List {
         checkThatIndexIsInAcceptableRange(index);
         Object o = innerArray[index];
         innerArray[index] = null;
-        for (int i = index; i < size; i++) {
+        size--;
+        int lengthOfElement = size - index;
+        System.arraycopy(innerArray, ++index, innerArray, --index, lengthOfElement);
+
+       /* for (int i = index; i < size; i++) {
             innerArray[index] = innerArray[index + 1];
         }
-        size--;
+        */
+
         return o;
     }
 
