@@ -202,11 +202,14 @@ public class ArrayGoodsListTest {
 
     @Test
     public void toArrayTest() {
-        ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
-        arrayGoodsList.add("1");
-        arrayGoodsList.add("2");
-        arrayGoodsList.add("3");
-        Object[] newArray = arrayGoodsList.toArray();
+        List<String> arrayGoodsList = new ArrayGoodsList<String>();
+        arrayGoodsList.add("new element in array number 0");
+        arrayGoodsList.add("new element in array number 1");
+        arrayGoodsList.add("element number 2 - if myArray.length>size the next must be \"null\"");
+        String [] myArray = {"0","1","2","3","4","5"};
+        //String [] myArray = {"0","1"};
+
+        String [] newArray = arrayGoodsList.toArray(myArray);
         for (int i = 0; i < newArray.length; i++) {
             System.out.println(newArray[i]);
         }
@@ -246,7 +249,7 @@ public class ArrayGoodsListTest {
         final String o7 = new String("6");
         final String o8 = new String("7");
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        final ArrayGoodsList<String> arrayGoodsList = new ArrayGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -256,14 +259,13 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
 
-        final String o9 = new String("890");
-        final ArrayList arrayGoodsList2 = new ArrayList();
+        final ArrayList<String> arrayGoodsList2 = new ArrayList<>();
         arrayGoodsList2.add(o5);
         arrayGoodsList2.add(o6);
-        arrayGoodsList2.add(o9);
+        arrayGoodsList2.add(o7);
         arrayGoodsList2.add(o8);
 
-        arrayGoodsList.retainAll(arrayGoodsList2);
+        assertTrue(arrayGoodsList.retainAll(arrayGoodsList2));
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
@@ -272,8 +274,7 @@ public class ArrayGoodsListTest {
         assertTrue(arrayGoodsList.contains(o5));
         assertTrue(arrayGoodsList.contains(o6));
         assertTrue(arrayGoodsList.contains(o8));
-        assertEquals(3, arrayGoodsList.size());
-
+        assertEquals(4, arrayGoodsList.size());
     }
 
     @Test
