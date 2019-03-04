@@ -204,7 +204,10 @@ public class ArrayGoodsList implements List {
         }
         return false;
     }
-
+    public Object[] toArray(Object[] a) {
+        System.arraycopy(innerArray, 0, a, 0, a.length);
+        return a;
+    }
     @Override
     public ListIterator listIterator() {
         return null;
@@ -226,13 +229,31 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public Object[] toArray(Object[] a) {
-
-        return new Object[0];
-    }
-
-    @Override
     public Iterator iterator() {
-        return null;
+        return new GoodsIterator();
+    }
+    private class GoodsIterator implements Iterator {
+        private int indexOfNextElement;
+
+        @Override
+        public boolean hasNext() {
+            return indexOfNextElement != size;
+        }
+
+        @Override
+        public Object next() {
+            int index = indexOfNextElement;
+            if (index != size && index < size)
+                indexOfNextElement = index + 1;
+            return innerArray[index];
+        }
+
+        @Override
+        public void remove() {
+            int index = indexOfNextElement;
+            if (index != size && index < size) {
+                ArrayGoodsList.this.remove(index);
+            }
+        }
     }
 }
