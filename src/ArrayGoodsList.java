@@ -1,20 +1,19 @@
 import java.util.*;
-import java.util.function.UnaryOperator;
 
-public class ArrayGoodsList implements List {
+public class ArrayGoodsList<E> implements List<E> {
     public static final int DEFAULT_LENGTH = 10;
     public static final int NO_INDEX = -1;
-    private Object[] innerArray;
+    private E[] innerArray;
     private int size;
     private static final int EXPAND_MODIFIER = 2;
 
     public ArrayGoodsList() {
-        innerArray = new Object[DEFAULT_LENGTH];
+        innerArray = (E[]) new Object[DEFAULT_LENGTH];
         size = 0;
     }
 
     public ArrayGoodsList(int i) {
-        innerArray = new Object[i];
+        innerArray = (E[]) new Object[i];
         size = 0;
     }
 
@@ -39,14 +38,7 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public Object[] toArray() {
-        Object[] a = new Object[size];
-        System.arraycopy(innerArray, 0, a, 0, a.length);
-        return a;
-    }
-
-    @Override
-    public boolean add(Object o) {
+    public boolean add(E o) {
         expandArrayIfNeeded();
         innerArray[size++] = o;
         return true;
@@ -56,9 +48,9 @@ public class ArrayGoodsList implements List {
     public boolean remove(Object o) {
         for (int i = 0; i < innerArray.length; i++) {
             if (o.equals(innerArray[i])) {
-                size--;
                 int shift = i;
                 System.arraycopy(innerArray, ++shift, innerArray, --shift, size - i);
+                size--;
                 return true;
             }
         }
@@ -66,8 +58,8 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public boolean addAll(Collection c) {
-        for (Object o : c) {
+    public boolean addAll(Collection<? extends E> c) {
+        for (E o : c) {
             add(o);
         }
         return !c.isEmpty();
@@ -95,27 +87,27 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         checkThatIndexIsInAcceptableRange(index);
         return innerArray[index];
     }
 
     @Override
-    public Object set(int index, Object element) {
+    public E set(int index, E element) {
         checkThatIndexIsInAcceptableRange(index);
-        Object o = innerArray[index];
+        E o = innerArray[index];
         innerArray[index] = element;
         return o;
     }
 
     private void checkThatIndexIsInAcceptableRange(final int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index is " + index + ", and size is " + size);
         }
     }
 
     @Override
-    public void add(int index, Object element) {
+    public void add(int index, E element) {
         checkThatIndexIsInAcceptableRange(index);
         size++;
         expandArrayIfNeeded();
@@ -126,7 +118,7 @@ public class ArrayGoodsList implements List {
 
     private void expandArrayIfNeeded() {
         if (size >= innerArray.length) {
-            Object[] temporaryList = new Object[innerArray.length * EXPAND_MODIFIER];
+            E[] temporaryList = (E[]) new Object[innerArray.length * EXPAND_MODIFIER];
             for (int i = 0; i < innerArray.length; i++) {
                 temporaryList[i] = innerArray[i];
             }
@@ -135,19 +127,13 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public Object remove(int index) {
+    public E remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
-        Object o = innerArray[index];
+        E o = innerArray[index];
         innerArray[index] = null;
         size--;
         int lengthOfElement = size - index;
         System.arraycopy(innerArray, ++index, innerArray, --index, lengthOfElement);
-
-       /* for (int i = index; i < size; i++) {
-            innerArray[index] = innerArray[index + 1];
-        }
-        */
-
         return o;
     }
 
@@ -171,20 +157,18 @@ public class ArrayGoodsList implements List {
     }
 
     @Override
-    public boolean retainAll(Collection c) {
-        Object[] temporaryList = new Object[size];
-        int indexOfRelist = 0;
-        size = 0;
+    public boolean retainAll(final Collection c) {
+        final int sizeBeforeRetain = size;
+        final List<E> temporaryList = new ArrayGoodsList<>();
         for (Object o : c) {
-            if (contains(o)) {
-                temporaryList[indexOfRelist] = o;
-                size++;
-                indexOfRelist++;
+            final int indexOf = indexOf(o);
+            if (indexOf != -1) {
+                temporaryList.add(get(indexOf));
             }
         }
-        innerArray = temporaryList;
-        return !isEmpty();
-
+        clear();
+        addAll(temporaryList);
+        return size != sizeBeforeRetain;
     }
 
     @Override
@@ -204,10 +188,25 @@ public class ArrayGoodsList implements List {
         }
         return false;
     }
-    public Object[] toArray(Object[] a) {
+
+    @Override
+    public Object[] toArray() {
+        Object[] a = new Object[size];
         System.arraycopy(innerArray, 0, a, 0, a.length);
         return a;
     }
+
+    public <T> T[] toArray(T[] a) {
+        if (size > a.length) {
+            return (T[]) Arrays.copyOf(innerArray, size, a.getClass());
+        }
+        System.arraycopy(innerArray, 0, a, 0, size);
+        if (size < a.length) {
+            a[size] = null;
+        }
+        return a;
+    }
+
     @Override
     public ListIterator listIterator() {
         return null;
@@ -232,6 +231,7 @@ public class ArrayGoodsList implements List {
     public Iterator iterator() {
         return new GoodsIterator();
     }
+
     private class GoodsIterator implements Iterator {
         private int indexOfNextElement;
 
@@ -243,7 +243,7 @@ public class ArrayGoodsList implements List {
         @Override
         public Object next() {
             int index = indexOfNextElement;
-            if(!hasNext()){
+            if (!hasNext()) {
                 return new NoSuchElementException();
             }
             //if (index != size && index < size)
