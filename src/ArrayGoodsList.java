@@ -243,8 +243,11 @@ public class ArrayGoodsList implements List {
         @Override
         public Object next() {
             int index = indexOfNextElement;
-            if (index != size && index < size)
-                indexOfNextElement = index + 1;
+            if(!hasNext()){
+                return new NoSuchElementException();
+            }
+            //if (index != size && index < size)
+            indexOfNextElement = index + 1;
             return innerArray[index];
         }
 
