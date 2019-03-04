@@ -455,20 +455,23 @@ public class ArrayGoodsListTest {
         assertFalse(testSubject.contains(o3));
     }
 
-    @Test(expected = ConcurrentModificationException.class)
+    @Test
     public void iterator_verifyConcurrentModificationException() {
-        final ArrayList<Object> objects = new ArrayList<>();
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
-        objects.add(new Object());
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("3");
+        objects.add("4");
+        objects.add("5");
+        objects.add("6");
         final Iterator<Object> iterator = objects.iterator();
-        iterator.next();
-        final Iterator<Object> iterator1 = objects.iterator();
-        iterator1.next();
-        iterator.remove();
-        iterator1.next();
+        assertEquals("1", iterator.next());
+        objects.add(1, "2");
+        assertEquals("3", iterator.next());
+        assertEquals("4", iterator.next());
+        assertEquals("5", iterator.next());
+        assertEquals("6", iterator.next());
+
+
     }
 
     private static class TestEntry {

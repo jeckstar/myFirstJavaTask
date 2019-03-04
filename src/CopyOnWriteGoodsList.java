@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class CopyOnWriteGoodsList<E> implements List<E> {
@@ -15,6 +16,14 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
     public CopyOnWriteGoodsList(int i) {
         innerArray = (E[]) new Object[i];
         size = 0;
+    }
+
+    private E[] getArray() {
+        return innerArray;
+    }
+
+    private void setArray(E[] a) {
+        innerArray = a;
     }
 
     @Override
@@ -40,20 +49,22 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
     @Override
     public boolean add(E o) {
         expandArrayIfNeeded();
-        innerArray[size++] = o;
+        E[] a1 = getArray();
+        a1[size++] = o;
+        setArray(a1);
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        for (int i = 0; i < innerArray.length; i++) {
-            if (o.equals(innerArray[i])) {
-                int shift = i;
-                System.arraycopy(innerArray, ++shift, innerArray, --shift, size - i);
-                size--;
+        E[] a1 = (E[]) toArray();
+        for (int i = 0; i < a1.length; i++) {
+            if (o.equals(a1[i])) {
+                System.arraycopy(a1, i + 1, a1, i, --size - i);
                 return true;
             }
         }
+        setArray(a1);
         return false;
     }
 
@@ -110,10 +121,11 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
     public void add(int index, E element) {
         checkThatIndexIsInAcceptableRange(index);
         size++;
-        expandArrayIfNeeded();
-        int indexToRemove = index + 1;
-        System.arraycopy(innerArray, index, innerArray, indexToRemove, size - index);
-        innerArray[index] = element;
+        E[] newArray = (E[]) new Object[size];
+        System.arraycopy(innerArray, 0, newArray, 0, index);
+        newArray[index] = element;
+        System.arraycopy(innerArray, index , newArray, index + 1, size - index - 1);
+        setArray(newArray);
     }
 
     private void expandArrayIfNeeded() {
@@ -122,7 +134,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
             for (int i = 0; i < innerArray.length; i++) {
                 temporaryList[i] = innerArray[i];
             }
-            innerArray = temporaryList;
+            setArray(temporaryList);
         }
     }
 
@@ -232,8 +244,11 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         return new GoodsIterator();
     }
 
-    private class GoodsIterator implements Iterator {
+
+    private class GoodsIterator implements Iterator<E> {
         private int indexOfNextElement;
+        private E[] array = CopyOnWriteGoodsList.this.innerArray;
+        private final int size = CopyOnWriteGoodsList.this.size;
 
         @Override
         public boolean hasNext() {
@@ -241,14 +256,13 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         }
 
         @Override
-        public Object next() {
+        public E next() {
             int index = indexOfNextElement;
             if (!hasNext()) {
-                return new NoSuchElementException();
+                throw new NoSuchElementException();
             }
-            //if (index != size && index < size)
             indexOfNextElement = index + 1;
-            return innerArray[index];
+            return array[index];
         }
 
         @Override
@@ -257,6 +271,29 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
             if (index != size && index < size) {
                 CopyOnWriteGoodsList.this.remove(index);
             }
+        }
+    }
+
+    private class CopyOnWriteIterator implements Iterator<E> {
+
+        private int indexOfNextElement;
+        private E[] iteratorArray = (E[]) CopyOnWriteGoodsList.this.toArray();
+        private int iteratorArraySize = size;
+
+        @Override
+        public boolean hasNext() {
+            return indexOfNextElement != iteratorArraySize;
+        }
+
+        @Override
+        public E next() {
+            int index = indexOfNextElement;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            //if (index != size && index < size)
+            indexOfNextElement = index + 1;
+            return iteratorArray[index];
         }
     }
 }
