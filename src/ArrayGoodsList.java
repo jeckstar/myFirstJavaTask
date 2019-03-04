@@ -1,21 +1,19 @@
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.function.UnaryOperator;
 
-public class ArrayGoodsList<T> implements List<T> {
+public class ArrayGoodsList<E> implements List<E> {
     public static final int DEFAULT_LENGTH = 10;
     public static final int NO_INDEX = -1;
-    private T[] innerArray;
+    private E[] innerArray;
     private int size;
     private static final int EXPAND_MODIFIER = 2;
 
     public ArrayGoodsList() {
-        innerArray = (T[]) new Object[DEFAULT_LENGTH];
+        innerArray = (E[]) new Object[DEFAULT_LENGTH];
         size = 0;
     }
 
     public ArrayGoodsList(int i) {
-        innerArray = (T[]) new Object[i];
+        innerArray = (E[]) new Object[i];
         size = 0;
     }
 
@@ -40,7 +38,7 @@ public class ArrayGoodsList<T> implements List<T> {
     }
 
     @Override
-    public boolean add(T o) {
+    public boolean add(E o) {
         expandArrayIfNeeded();
         innerArray[size++] = o;
         return true;
@@ -50,9 +48,9 @@ public class ArrayGoodsList<T> implements List<T> {
     public boolean remove(Object o) {
         for (int i = 0; i < innerArray.length; i++) {
             if (o.equals(innerArray[i])) {
-                size--;
                 int shift = i;
                 System.arraycopy(innerArray, ++shift, innerArray, --shift, size - i);
+                size--;
                 return true;
             }
         }
@@ -60,8 +58,8 @@ public class ArrayGoodsList<T> implements List<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        for (T o : c) {
+    public boolean addAll(Collection<? extends E> c) {
+        for (E o : c) {
             add(o);
         }
         return !c.isEmpty();
@@ -89,15 +87,15 @@ public class ArrayGoodsList<T> implements List<T> {
     }
 
     @Override
-    public T get(int index) {
+    public E get(int index) {
         checkThatIndexIsInAcceptableRange(index);
         return innerArray[index];
     }
 
     @Override
-    public T set(int index, T element) {
+    public E set(int index, E element) {
         checkThatIndexIsInAcceptableRange(index);
-        T o = innerArray[index];
+        E o = innerArray[index];
         innerArray[index] = element;
         return o;
     }
@@ -109,7 +107,7 @@ public class ArrayGoodsList<T> implements List<T> {
     }
 
     @Override
-    public void add(int index, T element) {
+    public void add(int index, E element) {
         checkThatIndexIsInAcceptableRange(index);
         size++;
         expandArrayIfNeeded();
@@ -120,7 +118,7 @@ public class ArrayGoodsList<T> implements List<T> {
 
     private void expandArrayIfNeeded() {
         if (size >= innerArray.length) {
-            T [] temporaryList = (T[]) new Object[innerArray.length * EXPAND_MODIFIER];
+            E[] temporaryList = (E[]) new Object[innerArray.length * EXPAND_MODIFIER];
             for (int i = 0; i < innerArray.length; i++) {
                 temporaryList[i] = innerArray[i];
             }
@@ -129,9 +127,9 @@ public class ArrayGoodsList<T> implements List<T> {
     }
 
     @Override
-    public T remove(int index) {
+    public E remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
-        T o = innerArray[index];
+        E o = innerArray[index];
         innerArray[index] = null;
         size--;
         int lengthOfElement = size - index;
@@ -161,7 +159,7 @@ public class ArrayGoodsList<T> implements List<T> {
     @Override
     public boolean retainAll(final Collection c) {
         final int sizeBeforeRetain = size;
-        final List<T> temporaryList = new ArrayGoodsList<>();
+        final List<E> temporaryList = new ArrayGoodsList<>();
         for (Object o : c) {
             final int indexOf = indexOf(o);
             if (indexOf != -1) {
@@ -198,13 +196,13 @@ public class ArrayGoodsList<T> implements List<T> {
         return a;
     }
 
-    public <T> T[] toArray(T [] a) {
-        if (size >a.length){
+    public <T> T[] toArray(T[] a) {
+        if (size > a.length) {
             return (T[]) Arrays.copyOf(innerArray, size, a.getClass());
         }
         System.arraycopy(innerArray, 0, a, 0, size);
-        if (size < a.length){
-            a[size]=null;
+        if (size < a.length) {
+            a[size] = null;
         }
         return a;
     }

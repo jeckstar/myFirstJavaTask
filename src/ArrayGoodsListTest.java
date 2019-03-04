@@ -36,14 +36,17 @@ public class ArrayGoodsListTest {
 
     @Test
     public void removeShouldDeleteThePreviouslyAddedObject() {
-        final Object persisted = new Object();
-        final Object toAddAndRemove = new Object();
-        final ArrayGoodsList subject = new ArrayGoodsList();
+        final String persisted = new String("123");
+        final String toAddAndRemove = new String("456");
+        final List <String> subject = new ArrayGoodsList<String>();
         subject.add(persisted);
         subject.add(toAddAndRemove);
         assertTrue(subject.remove(toAddAndRemove));
         assertEquals(1, subject.size());
         assertFalse(subject.contains(toAddAndRemove));
+        for (String s: subject) {
+            System.out.println(s);
+        }
     }
 
     @Test
@@ -206,10 +209,10 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add("new element in array number 0");
         arrayGoodsList.add("new element in array number 1");
         arrayGoodsList.add("element number 2 - if myArray.length>size the next must be \"null\"");
-        String [] myArray = {"0","1","2","3","4","5"};
+        String[] myArray = {"0", "1", "2", "3", "4", "5"};
         //String [] myArray = {"0","1"};
 
-        String [] newArray = arrayGoodsList.toArray(myArray);
+        String[] newArray = arrayGoodsList.toArray(myArray);
         for (int i = 0; i < newArray.length; i++) {
             System.out.println(newArray[i]);
         }
@@ -411,9 +414,9 @@ public class ArrayGoodsListTest {
 
         Iterator iterator = arrayGoodsList.iterator();
 
-       // while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-       // }
+        // while (iterator.hasNext()) {
+        System.out.println(iterator.next());
+        // }
     }
 
     @Test
@@ -450,6 +453,34 @@ public class ArrayGoodsListTest {
         iterator.remove();
         assertEquals(4, testSubject.size());
         assertFalse(testSubject.contains(o3));
+    }
+
+    private static class TestEntry {
+        private final String text;
+
+        private TestEntry(String text) {
+            this.text = text;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TestEntry testEntry = (TestEntry) o;
+            return Objects.equals(text, testEntry.text);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(text);
+        }
+
+        @Override
+        public String toString() {
+            return "TestEntry{" +
+                    "text='" + text + '\'' +
+                    '}';
+        }
     }
 
 }
