@@ -1,9 +1,6 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,7 +116,6 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
         arrayGoodsList.add(o9);
-
 
 
         System.out.println(arrayGoodsList.size());
@@ -358,6 +354,7 @@ public class ArrayGoodsListTest {
             }
         }
     }
+
     @Test
     public void contacontainsAllTest() {
         final String o1 = new String("0");
@@ -388,6 +385,70 @@ public class ArrayGoodsListTest {
         arrayGoodsList2.add(o8);
         arrayGoodsList.containsAll(arrayGoodsList2);
 
+    }
+
+    @Test
+    public void theIteratorShouldReturnNextElementOfGoodsList() {
+        final String o1 = new String("0");
+        final String o2 = new String("1");
+        final String o3 = new String("2");
+        final String o4 = new String("3");
+        final String o5 = new String("4");
+        final String o6 = new String("5");
+        final String o7 = new String("6");
+        final String o8 = new String("7");
+
+        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+       /* arrayGoodsList.add(o1);
+        arrayGoodsList.add(o2);
+        arrayGoodsList.add(o3);
+        arrayGoodsList.add(o4);
+        arrayGoodsList.add(o5);
+        arrayGoodsList.add(o6);
+        arrayGoodsList.add(o7);
+        arrayGoodsList.add(o8); */
+
+        Iterator iterator = arrayGoodsList.iterator();
+
+       // while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+       // }
+    }
+
+    @Test
+    public void iterator_verifySequenceAdequacy() {
+        final List<Object> plainList = Arrays.asList(new Object(), new Object(), new Object(), new Object(), new Object());
+        final ArrayGoodsList testSubject = new ArrayGoodsList();
+        testSubject.addAll(plainList);
+        final Iterator iterator = testSubject.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            assertEquals(plainList.get(i), iterator.next());
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void iterator_verifyNoSuchElementException_ifListIsEmpty() {
+        final ArrayGoodsList testSubject = new ArrayGoodsList();
+        final Iterator iterator = testSubject.iterator();
+        iterator.next();
+    }
+
+    @Test
+    public void iterator_verifyRemoveWillDeleteSecondElement() {
+        final Object o1 = new Object();
+        final Object o2 = new Object();
+        final Object o3 = new Object();
+        final Object o4 = new Object();
+        final Object o5 = new Object();
+        final List<Object> plainList = Arrays.asList(o1, o2, o3, o4, o5);
+        final ArrayGoodsList testSubject = new ArrayGoodsList();
+        testSubject.addAll(plainList);
+        final Iterator iterator = testSubject.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.remove();
+        assertEquals(4, testSubject.size());
+        assertFalse(testSubject.contains(o3));
     }
 
 }
