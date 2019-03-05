@@ -82,11 +82,10 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         size += c.size();
         E[] newArray = (E[]) new Object[size];//временный массив
         Object[] arrayOfElementsToAdd = c.toArray(); //массив элементов для добавления
-        Object[] arrayOfLastElements = new Object[size - index - c.size()]; //массив элементов после индекса добавления
+        int lastElements = size - index - c.size(); //кол-во элементов после индекса
         System.arraycopy(innerArray, 0, newArray, 0, index); // копируем элементы из нашего массива по индекс
-        System.arraycopy(innerArray, index, arrayOfLastElements, 0, arrayOfLastElements.length); //добавляем в новый массив элементы после индекса
+        System.arraycopy(innerArray, index, newArray, size - lastElements, lastElements); // сдвигаем последние елементы
         System.arraycopy(arrayOfElementsToAdd, 0, newArray, index, c.size()); //добавляем элементы новой коллекции в масив
-        System.arraycopy(arrayOfLastElements, 0, newArray, size - arrayOfLastElements.length, arrayOfLastElements.length);
         setArray(newArray);
         return !c.isEmpty();
     }
