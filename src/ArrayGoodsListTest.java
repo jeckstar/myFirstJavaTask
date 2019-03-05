@@ -36,14 +36,17 @@ public class ArrayGoodsListTest {
 
     @Test
     public void removeShouldDeleteThePreviouslyAddedObject() {
-        final Object persisted = new Object();
-        final Object toAddAndRemove = new Object();
-        final ArrayGoodsList subject = new ArrayGoodsList();
+        final String persisted = new String("123");
+        final String toAddAndRemove = new String("456");
+        final List <String> subject = new ArrayGoodsList<String>();
         subject.add(persisted);
         subject.add(toAddAndRemove);
         assertTrue(subject.remove(toAddAndRemove));
         assertEquals(1, subject.size());
         assertFalse(subject.contains(toAddAndRemove));
+        for (String s: subject) {
+            System.out.println(s);
+        }
     }
 
     @Test
@@ -60,9 +63,11 @@ public class ArrayGoodsListTest {
         final String o10 = new String("9");
         final String o11 = new String("10");
         final String o12 = new String("11");
+        final String o13 = new String("12");
 
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+
+        final CopyOnWriteGoodsList<String> arrayGoodsList = new CopyOnWriteGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -75,10 +80,13 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o10);
         arrayGoodsList.add(o11);
         arrayGoodsList.add(o12);
+        arrayGoodsList.add(o13);
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
         }
+        System.out.println(" ");
+        System.out.println(arrayGoodsList.size());
 
     }
 
@@ -169,7 +177,7 @@ public class ArrayGoodsListTest {
         final String o7 = new String("6");
         final String o8 = new String("7");
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        final CopyOnWriteGoodsList<String> arrayGoodsList = new CopyOnWriteGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -185,13 +193,13 @@ public class ArrayGoodsListTest {
         final String o07 = new String("11");
         final String o08 = new String("11");
 
-        final ArrayList arrayGoodsList2 = new ArrayList();
+        final CopyOnWriteGoodsList<String> arrayGoodsList2 = new CopyOnWriteGoodsList<>();
         arrayGoodsList2.add(o05);
         arrayGoodsList2.add(o06);
         arrayGoodsList2.add(o07);
         arrayGoodsList2.add(o08);
 
-        arrayGoodsList.addAll(6, arrayGoodsList2);
+        arrayGoodsList.addAll(arrayGoodsList2);
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
@@ -202,11 +210,14 @@ public class ArrayGoodsListTest {
 
     @Test
     public void toArrayTest() {
-        ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
-        arrayGoodsList.add("1");
-        arrayGoodsList.add("2");
-        arrayGoodsList.add("3");
-        Object[] newArray = arrayGoodsList.toArray();
+        List<String> arrayGoodsList = new ArrayGoodsList<String>();
+        arrayGoodsList.add("new element in array number 0");
+        arrayGoodsList.add("new element in array number 1");
+        arrayGoodsList.add("element number 2 - if myArray.length>size the next must be \"null\"");
+        String[] myArray = {"0", "1", "2", "3", "4", "5"};
+        //String [] myArray = {"0","1"};
+
+        String[] newArray = arrayGoodsList.toArray(myArray);
         for (int i = 0; i < newArray.length; i++) {
             System.out.println(newArray[i]);
         }
@@ -246,7 +257,7 @@ public class ArrayGoodsListTest {
         final String o7 = new String("6");
         final String o8 = new String("7");
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        final ArrayGoodsList<String> arrayGoodsList = new ArrayGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -256,14 +267,13 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o7);
         arrayGoodsList.add(o8);
 
-        final String o9 = new String("890");
-        final ArrayList arrayGoodsList2 = new ArrayList();
+        final ArrayList<String> arrayGoodsList2 = new ArrayList<>();
         arrayGoodsList2.add(o5);
         arrayGoodsList2.add(o6);
-        arrayGoodsList2.add(o9);
+        arrayGoodsList2.add(o7);
         arrayGoodsList2.add(o8);
 
-        arrayGoodsList.retainAll(arrayGoodsList2);
+        assertTrue(arrayGoodsList.retainAll(arrayGoodsList2));
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
@@ -272,8 +282,7 @@ public class ArrayGoodsListTest {
         assertTrue(arrayGoodsList.contains(o5));
         assertTrue(arrayGoodsList.contains(o6));
         assertTrue(arrayGoodsList.contains(o8));
-        assertEquals(3, arrayGoodsList.size());
-
+        assertEquals(4, arrayGoodsList.size());
     }
 
     @Test
@@ -308,7 +317,7 @@ public class ArrayGoodsListTest {
 
     @Test
     public void addAllTest() {
-        final ArrayGoodsList subject = new ArrayGoodsList();
+        final CopyOnWriteGoodsList<String> subject = new CopyOnWriteGoodsList<>();
         for (int i = 0; i < 10; i++) {
             subject.add(String.valueOf(i));
         }
@@ -410,9 +419,9 @@ public class ArrayGoodsListTest {
 
         Iterator iterator = arrayGoodsList.iterator();
 
-       // while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-       // }
+        // while (iterator.hasNext()) {
+        System.out.println(iterator.next());
+        // }
     }
 
     @Test
@@ -449,6 +458,75 @@ public class ArrayGoodsListTest {
         iterator.remove();
         assertEquals(4, testSubject.size());
         assertFalse(testSubject.contains(o3));
+    }
+
+    @Test
+    public void iterator_verifyConcurrentModificationException() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("3");
+        objects.add("4");
+        objects.add("5");
+        objects.add("6");
+        final Iterator<Object> iterator = objects.iterator();
+        assertEquals("1", iterator.next());
+        objects.remove("3");
+        assertEquals("3", iterator.next());
+        assertEquals("4", iterator.next());
+        assertEquals("5", iterator.next());
+        assertEquals("6", iterator.next());
+
+    }
+
+    @Test
+    public void iterator_verifyClearRemovesAllElements() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("3");
+        objects.clear();
+        assertFalse(objects.contains("1"));
+        assertFalse(objects.contains("3"));
+    }
+
+    @Test
+    public void containsAll_verifyFalse_ifNotAllElementsAreContainedInTheCollection() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("2");
+        objects.add("3");
+        final CopyOnWriteGoodsList<Object> toCompare = new CopyOnWriteGoodsList<>();
+        toCompare.add("2");
+        toCompare.add("3");
+        toCompare.add("4");
+        assertFalse(objects.containsAll(toCompare));
+    }
+
+    private static class TestEntry {
+        private final String text;
+
+        private TestEntry(String text) {
+            this.text = text;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TestEntry testEntry = (TestEntry) o;
+            return Objects.equals(text, testEntry.text);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(text);
+        }
+
+        @Override
+        public String toString() {
+            return "TestEntry{" +
+                    "text='" + text + '\'' +
+                    '}';
+        }
     }
 
 }
