@@ -63,9 +63,11 @@ public class ArrayGoodsListTest {
         final String o10 = new String("9");
         final String o11 = new String("10");
         final String o12 = new String("11");
+        final String o13 = new String("12");
 
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+
+        final CopyOnWriteGoodsList<String> arrayGoodsList = new CopyOnWriteGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -78,10 +80,13 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o10);
         arrayGoodsList.add(o11);
         arrayGoodsList.add(o12);
+        arrayGoodsList.add(o13);
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
         }
+        System.out.println(" ");
+        System.out.println(arrayGoodsList.size());
 
     }
 

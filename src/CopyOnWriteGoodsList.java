@@ -45,9 +45,18 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean add(E o) {
-        expandArrayIfNeeded();
-        innerArray[size++] = o;
-        return true;
+        E[] newArray;
+        if (size >= innerArray.length) {
+            newArray = createEmptyArrayBySize(size*EXPAND_MODIFIER);
+            System.arraycopy(innerArray, 0, newArray, 0, size);
+            newArray[size++] = o;
+            setArray(newArray);
+            return true;
+        }
+        else {
+            innerArray[size++] = o;
+            return true;
+        }
     }
 
     @Override
@@ -132,15 +141,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         setArray(newArray);
     }
 
-    private void expandArrayIfNeeded() {
-        if (size >= innerArray.length) {
-            E[] temporaryList = createEmptyArrayBySize(innerArray.length * EXPAND_MODIFIER);
-            for (int i = 0; i < innerArray.length; i++) {
-                temporaryList[i] = innerArray[i];
-            }
-            setArray(temporaryList);
-        }
-    }
+
 
     @Override
     public E remove(int index) {
