@@ -71,12 +71,11 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        E[] cArray = (E[]) c.toArray();
-        E[] newArray = createEmptyArrayBySize(size + cArray.length);
+        E[] newArray = createEmptyArrayBySize(size + c.size());
         System.arraycopy(innerArray, 0, newArray, 0, size);
-        System.arraycopy(cArray, 0, newArray, size, cArray.length);
+        System.arraycopy(c.toArray(), 0, newArray, size, c.size());
         setArray(newArray);
-        size += cArray.length;
+        size += c.size();
         return !c.isEmpty();
     }
 
