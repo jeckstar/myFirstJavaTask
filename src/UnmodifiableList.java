@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class UnmodifiableList<E> implements List<E> {
+public class UnmodifiableList<T> implements List<T> {
 
-    private final List<E> unmodifiablePart;
-    private final List<E> modifiablePart;
+    private final List<T> unmodifiablePart;
+    private final List<T> modifiablePart;
 
-    public UnmodifiableList(List<E> unmodifiablePart, List<E> modifiablePart) {
+    public UnmodifiableList(List<T> unmodifiablePart, List<T> modifiablePart) {
         this.unmodifiablePart = unmodifiablePart;
         this.modifiablePart = modifiablePart;
     }
@@ -26,23 +26,35 @@ public class UnmodifiableList<E> implements List<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public Iterator<T> iterator() {
         return null;
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object [] arrayToReturn = new Object[unmodifiablePart.size() + modifiablePart.size()];
+        System.arraycopy(unmodifiablePart.toArray(), 0, arrayToReturn, 0, unmodifiablePart.size());
+        System.arraycopy(modifiablePart.toArray(), 0, arrayToReturn, unmodifiablePart.size(), modifiablePart.size());
+        return arrayToReturn;
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
+    public <E> E[] toArray(E[] a) {
+        int size = unmodifiablePart.size()+modifiablePart.size();
+        if (size > a.length) {
+            return (E[]) Arrays.copyOf(new Object [size], size, a.getClass());
+        }
+        System.arraycopy(unmodifiablePart.toArray(), 0, a, 0, unmodifiablePart.size());
+        System.arraycopy(modifiablePart.toArray(), 0, a, unmodifiablePart.size(), modifiablePart.size());
+        if (size < a.length) {
+            a[size] = null;
+        }
+        return a;
     }
 
     @Override
-    public boolean add(E e) {
-        return modifiablePart.add(e);
+    public boolean add(T t) {
+        return modifiablePart.add(t);
     }
 
     @Override
@@ -52,16 +64,21 @@ public class UnmodifiableList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
+        for (Object o1 : c) {
+            if (!contains(o1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
         return false;
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public boolean addAll(int index, Collection<? extends T> c) {
         return false;
     }
 
@@ -81,22 +98,22 @@ public class UnmodifiableList<E> implements List<E> {
     }
 
     @Override
-    public E get(int index) {
+    public T get(int index) {
         return null;
     }
 
     @Override
-    public E set(int index, E element) {
+    public T set(int index, T element) {
         return null;
     }
 
     @Override
-    public void add(int index, E element) {
+    public void add(int index, T element) {
 
     }
 
     @Override
-    public E remove(int index) {
+    public T remove(int index) {
         return null;
     }
 
@@ -110,18 +127,27 @@ public class UnmodifiableList<E> implements List<E> {
         return 0;
     }
 
+
+
+
+
+
+
+
+
+
     @Override
-    public ListIterator<E> listIterator() {
+    public ListIterator<T> listIterator() {
         return null;
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<T> listIterator(int index) {
         return null;
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
+    public List<T> subList(int fromIndex, int toIndex) {
         return null;
     }
 }

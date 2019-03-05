@@ -38,13 +38,13 @@ public class ArrayGoodsListTest {
     public void removeShouldDeleteThePreviouslyAddedObject() {
         final String persisted = new String("123");
         final String toAddAndRemove = new String("456");
-        final List <String> subject = new ArrayGoodsList<String>();
+        final List<String> subject = new ArrayGoodsList<String>();
         subject.add(persisted);
         subject.add(toAddAndRemove);
         assertTrue(subject.remove(toAddAndRemove));
         assertEquals(1, subject.size());
         assertFalse(subject.contains(toAddAndRemove));
-        for (String s: subject) {
+        for (String s : subject) {
             System.out.println(s);
         }
     }
@@ -64,7 +64,6 @@ public class ArrayGoodsListTest {
         final String o11 = new String("10");
         final String o12 = new String("11");
         final String o13 = new String("12");
-
 
 
         final CopyOnWriteGoodsList<String> arrayGoodsList = new CopyOnWriteGoodsList<>();
@@ -526,6 +525,28 @@ public class ArrayGoodsListTest {
             return "TestEntry{" +
                     "text='" + text + '\'' +
                     '}';
+        }
+    }
+
+    @Test
+    public void UnmodifiableListToArrayTest() {
+        ArrayList<Integer> unmodList = new ArrayList<>();
+        unmodList.add(1);
+        unmodList.add(2);
+        unmodList.add(3);
+        ArrayList<Integer> modList = new ArrayList<>();
+        modList.add(4);
+        modList.add(5);
+        modList.add(6);
+        modList.add(7);
+        modList.add(8);
+        UnmodifiableList<Integer> testList = new UnmodifiableList<>(unmodList, modList);
+        Integer[] bigArray = {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27};
+        Integer[] smallArray = {11, 12, 13, 14, 15, 26, 27, 28, 29, 30};
+
+        final Object[] integers = testList.toArray(smallArray);
+        for (int i = 0; i < integers.length; i++) {
+            System.out.println(integers[i]);
         }
     }
 
