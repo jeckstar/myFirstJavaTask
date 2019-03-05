@@ -124,16 +124,23 @@ public class UnmodifiableList<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        return null;
+        checkThatIndexIsInAcceptableRange(index);
+        if (index < unmodifiablePart.size()) {
+            throw new PartiallySupportedOperationException();
+        }
+        return modifiablePart.set(index - unmodifiablePart.size(), element);
     }
 
     @Override
     public void add(int index, T element) {
+        checkThatIndexIsInAcceptableRange(index);
 
     }
 
     @Override
     public T remove(int index) {
+        checkThatIndexIsInAcceptableRange(index);
+
         return null;
     }
 

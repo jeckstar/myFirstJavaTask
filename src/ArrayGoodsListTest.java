@@ -550,7 +550,8 @@ public class ArrayGoodsListTest {
         reteinList.add(4);
         reteinList.add(5);
         reteinList.add(9);
-        testList.clear();
+        //testList.clear();
+        testList.set(3,1);
         //final Object[] integers = testList.toArray(smallArray);
         for (int i = 0; i < testList.size(); i++) {
             System.out.println(testList.get(i));
