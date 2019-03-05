@@ -96,12 +96,8 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public void clear() {
-        E[] newArray = getArray();
-        for (int i = 0; i < size; i++) {
-            newArray[i] = null;
-            size = 0;
-        }
-        setArray(newArray);
+        size = 0;
+        setArray((E[]) new Object[0]);
     }
 
     @Override
@@ -207,12 +203,14 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection c) {
-        for (Object o1 : innerArray) {
-            if (c.contains(o1)) {
-                return true;
+        boolean result = false;
+        for (Object o1 : c) {
+            if (indexOf(o1) >= 0) {
+                result = true;
             }
+            else result = false;
         }
-        return false;
+        return result;
     }
 
     @Override

@@ -463,17 +463,37 @@ public class ArrayGoodsListTest {
         objects.add("4");
         objects.add("5");
         objects.add("6");
-        final CopyOnWriteGoodsList<String> objects2 = new CopyOnWriteGoodsList<>();
-        objects2.add("3");
-        objects2.add("4");
         final Iterator<Object> iterator = objects.iterator();
         assertEquals("1", iterator.next());
-        objects.retainAll(objects2);
+        objects.clear();
         assertEquals("3", iterator.next());
         assertEquals("4", iterator.next());
         assertEquals("5", iterator.next());
         assertEquals("6", iterator.next());
 
+    }
+
+    @Test
+    public void iterator_verifyClearRemovesAllElements() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("3");
+        objects.clear();
+        assertFalse(objects.contains("1"));
+        assertFalse(objects.contains("3"));
+    }
+
+    @Test
+    public void containsAll_verifyFalse_ifNotAllElementsAreContainedInTheCollection() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("2");
+        objects.add("3");
+        final CopyOnWriteGoodsList<Object> toCompare = new CopyOnWriteGoodsList<>();
+        toCompare.add("2");
+        toCompare.add("3");
+        toCompare.add("4");
+        assertFalse(objects.containsAll(toCompare));
     }
 
     private static class TestEntry {
