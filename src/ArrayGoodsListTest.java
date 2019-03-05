@@ -463,14 +463,16 @@ public class ArrayGoodsListTest {
         objects.add("4");
         objects.add("5");
         objects.add("6");
+        final CopyOnWriteGoodsList<String> objects2 = new CopyOnWriteGoodsList<>();
+        objects2.add("3");
+        objects2.add("4");
         final Iterator<Object> iterator = objects.iterator();
         assertEquals("1", iterator.next());
-        objects.add(1, "2");
+        objects.retainAll(objects2);
         assertEquals("3", iterator.next());
         assertEquals("4", iterator.next());
         assertEquals("5", iterator.next());
         assertEquals("6", iterator.next());
-
 
     }
 

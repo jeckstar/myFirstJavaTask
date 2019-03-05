@@ -57,14 +57,16 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        E[] a1 = (E[]) toArray();
-        for (int i = 0; i < a1.length; i++) {
-            if (o.equals(a1[i])) {
-                System.arraycopy(a1, i + 1, a1, i, --size - i);
+        E[] newArray = (E[]) new Object[size];
+        System.arraycopy(innerArray, 0, newArray, 0, size);
+        for (int i = 0; i < newArray.length; i++) {
+            if (o.equals(newArray[i])) {
+                System.arraycopy(newArray, i + 1, newArray, i, --size - i);
+                setArray(newArray);
                 return true;
             }
         }
-        setArray(a1);
+
         return false;
     }
 
@@ -81,20 +83,25 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         checkThatIndexIsInAcceptableRange(index);
         size += c.size();
         expandArrayIfNeeded();
-        Object[] arrayOfElementsToAdd = c.toArray();
-        Object[] arrayOfLastElements = new Object[size - index - c.size()];
-        System.arraycopy(innerArray, index, arrayOfLastElements, 0, arrayOfLastElements.length);
-        System.arraycopy(arrayOfElementsToAdd, 0, innerArray, index, c.size());
-        System.arraycopy(arrayOfLastElements, 0, innerArray, size - arrayOfLastElements.length, arrayOfLastElements.length);
+        E[] newArray = (E[]) new Object[size];//временный массив
+        Object[] arrayOfElementsToAdd = c.toArray(); //массив элементов для добавления
+        Object[] arrayOfLastElements = new Object[size - index - c.size()]; //массив элементов после индекса добавления
+        System.arraycopy(innerArray, 0, newArray, 0, index); // копируем элементы из нашего массива по индекс
+        System.arraycopy(innerArray, index, arrayOfLastElements, 0, arrayOfLastElements.length); //добавляем в новый массив элементы после индекса
+        System.arraycopy(arrayOfElementsToAdd, 0, newArray, index, c.size()); //добавляем элементы новой коллекции в масив
+        System.arraycopy(arrayOfLastElements, 0, newArray, size - arrayOfLastElements.length, arrayOfLastElements.length);
+        setArray(newArray);
         return !c.isEmpty();
     }
 
     @Override
     public void clear() {
+        E[] newArray = getArray();
         for (int i = 0; i < size; i++) {
-            innerArray[i] = null;
+            newArray[i] = null;
             size = 0;
         }
+        setArray(newArray);
     }
 
     @Override
@@ -106,8 +113,11 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
     @Override
     public E set(int index, E element) {
         checkThatIndexIsInAcceptableRange(index);
-        E o = innerArray[index];
-        innerArray[index] = element;
+        E[] newArray = (E[]) new Object[size];
+        System.arraycopy(innerArray, 0, newArray, 0, size);
+        E o = newArray[index];
+        newArray[index] = element;
+        setArray(newArray);
         return o;
     }
 
@@ -141,11 +151,14 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
     @Override
     public E remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
-        E o = innerArray[index];
-        innerArray[index] = null;
+        E[] newArray = (E[]) new Object[size];
+        System.arraycopy(innerArray, 0, newArray, 0, size);
+        E o = newArray[index];
+        newArray[index] = null;
         size--;
         int lengthOfElement = size - index;
-        System.arraycopy(innerArray, ++index, innerArray, --index, lengthOfElement);
+        System.arraycopy(newArray, ++index, newArray, --index, lengthOfElement);
+        setArray(newArray);
         return o;
     }
 
@@ -170,7 +183,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean retainAll(final Collection c) {
-        final int sizeBeforeRetain = size;
+        final int sizeBeforeRetain = size; // для проверки изменения
         final List<E> temporaryList = new CopyOnWriteGoodsList<>();
         for (Object o : c) {
             final int indexOf = indexOf(o);
@@ -178,8 +191,9 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
                 temporaryList.add(get(indexOf));
             }
         }
-        clear();
-        addAll(temporaryList);
+        E[] temporaryArray = (E[]) temporaryList.toArray();
+        size = temporaryArray.length;
+        setArray(temporaryArray);
         return size != sizeBeforeRetain;
     }
 
