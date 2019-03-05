@@ -203,14 +203,12 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection c) {
-        boolean result = false;
         for (Object o1 : c) {
-            if (indexOf(o1) >= 0) {
-                result = true;
+            if (!contains(o1)) {
+                return false;
             }
-            else result = false;
         }
-        return result;
+        return true;
     }
 
     @Override
