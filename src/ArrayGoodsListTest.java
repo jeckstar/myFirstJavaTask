@@ -63,9 +63,11 @@ public class ArrayGoodsListTest {
         final String o10 = new String("9");
         final String o11 = new String("10");
         final String o12 = new String("11");
+        final String o13 = new String("12");
 
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+
+        final CopyOnWriteGoodsList<String> arrayGoodsList = new CopyOnWriteGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -78,10 +80,13 @@ public class ArrayGoodsListTest {
         arrayGoodsList.add(o10);
         arrayGoodsList.add(o11);
         arrayGoodsList.add(o12);
+        arrayGoodsList.add(o13);
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
         }
+        System.out.println(" ");
+        System.out.println(arrayGoodsList.size());
 
     }
 
@@ -172,7 +177,7 @@ public class ArrayGoodsListTest {
         final String o7 = new String("6");
         final String o8 = new String("7");
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        final CopyOnWriteGoodsList<String> arrayGoodsList = new CopyOnWriteGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -188,13 +193,13 @@ public class ArrayGoodsListTest {
         final String o07 = new String("11");
         final String o08 = new String("11");
 
-        final ArrayList arrayGoodsList2 = new ArrayList();
+        final CopyOnWriteGoodsList<String> arrayGoodsList2 = new CopyOnWriteGoodsList<>();
         arrayGoodsList2.add(o05);
         arrayGoodsList2.add(o06);
         arrayGoodsList2.add(o07);
         arrayGoodsList2.add(o08);
 
-        arrayGoodsList.addAll(6, arrayGoodsList2);
+        arrayGoodsList.addAll(arrayGoodsList2);
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
@@ -312,7 +317,7 @@ public class ArrayGoodsListTest {
 
     @Test
     public void addAllTest() {
-        final ArrayGoodsList subject = new ArrayGoodsList();
+        final CopyOnWriteGoodsList<String> subject = new CopyOnWriteGoodsList<>();
         for (int i = 0; i < 10; i++) {
             subject.add(String.valueOf(i));
         }
@@ -453,6 +458,47 @@ public class ArrayGoodsListTest {
         iterator.remove();
         assertEquals(4, testSubject.size());
         assertFalse(testSubject.contains(o3));
+    }
+
+    @Test
+    public void iterator_verifyConcurrentModificationException() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("3");
+        objects.add("4");
+        objects.add("5");
+        objects.add("6");
+        final Iterator<Object> iterator = objects.iterator();
+        assertEquals("1", iterator.next());
+        objects.remove("3");
+        assertEquals("3", iterator.next());
+        assertEquals("4", iterator.next());
+        assertEquals("5", iterator.next());
+        assertEquals("6", iterator.next());
+
+    }
+
+    @Test
+    public void iterator_verifyClearRemovesAllElements() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("3");
+        objects.clear();
+        assertFalse(objects.contains("1"));
+        assertFalse(objects.contains("3"));
+    }
+
+    @Test
+    public void containsAll_verifyFalse_ifNotAllElementsAreContainedInTheCollection() {
+        final CopyOnWriteGoodsList<String> objects = new CopyOnWriteGoodsList<>();
+        objects.add("1");
+        objects.add("2");
+        objects.add("3");
+        final CopyOnWriteGoodsList<Object> toCompare = new CopyOnWriteGoodsList<>();
+        toCompare.add("2");
+        toCompare.add("3");
+        toCompare.add("4");
+        assertFalse(objects.containsAll(toCompare));
     }
 
     private static class TestEntry {
