@@ -172,7 +172,7 @@ public class ArrayGoodsListTest {
         final String o7 = new String("6");
         final String o8 = new String("7");
 
-        final ArrayGoodsList arrayGoodsList = new ArrayGoodsList();
+        final CopyOnWriteGoodsList<String> arrayGoodsList = new CopyOnWriteGoodsList<>();
         arrayGoodsList.add(o1);
         arrayGoodsList.add(o2);
         arrayGoodsList.add(o3);
@@ -188,13 +188,13 @@ public class ArrayGoodsListTest {
         final String o07 = new String("11");
         final String o08 = new String("11");
 
-        final ArrayList arrayGoodsList2 = new ArrayList();
+        final CopyOnWriteGoodsList<String> arrayGoodsList2 = new CopyOnWriteGoodsList<>();
         arrayGoodsList2.add(o05);
         arrayGoodsList2.add(o06);
         arrayGoodsList2.add(o07);
         arrayGoodsList2.add(o08);
 
-        arrayGoodsList.addAll(6, arrayGoodsList2);
+        arrayGoodsList.addAll(arrayGoodsList2);
 
         for (int i = 0; i < arrayGoodsList.size(); i++) {
             System.out.println(arrayGoodsList.get(i));
@@ -312,7 +312,7 @@ public class ArrayGoodsListTest {
 
     @Test
     public void addAllTest() {
-        final ArrayGoodsList subject = new ArrayGoodsList();
+        final CopyOnWriteGoodsList<String> subject = new CopyOnWriteGoodsList<>();
         for (int i = 0; i < 10; i++) {
             subject.add(String.valueOf(i));
         }
@@ -465,7 +465,7 @@ public class ArrayGoodsListTest {
         objects.add("6");
         final Iterator<Object> iterator = objects.iterator();
         assertEquals("1", iterator.next());
-        objects.clear();
+        objects.remove("3");
         assertEquals("3", iterator.next());
         assertEquals("4", iterator.next());
         assertEquals("5", iterator.next());

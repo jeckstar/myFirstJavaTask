@@ -18,10 +18,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         size = 0;
     }
 
-    private E[] getArray() {
-        return innerArray;
-    }
-
+   // private E[] getArray() { return innerArray; }
     private void setArray(E[] a) {
         innerArray = a;
     }
@@ -48,10 +45,8 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean add(E o) {
-        E[] newArray = (E[]) new Object[size++];
-        System.arraycopy(innerArray, 0, newArray, 0, size);
-        newArray[size] = o;
-        setArray(newArray);
+        expandArrayIfNeeded();
+        innerArray[size++] = o;
         return true;
     }
 
@@ -72,9 +67,12 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        for (E o : c) {
-            add(o);
-        }
+        E[] cArray = (E[]) c.toArray();
+        E[] newArray = (E[]) new Object[size+cArray.length];
+        System.arraycopy(innerArray, 0, newArray, 0, size);
+        System.arraycopy(cArray, 0, newArray, size, cArray.length);
+        setArray(newArray);
+        size+=cArray.length;
         return !c.isEmpty();
     }
 
@@ -133,7 +131,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         setArray(newArray);
     }
 
-    /*private void expandArrayIfNeeded() {
+    private void expandArrayIfNeeded() {
         if (size >= innerArray.length) {
             E[] temporaryList = (E[]) new Object[innerArray.length * EXPAND_MODIFIER];
             for (int i = 0; i < innerArray.length; i++) {
@@ -142,7 +140,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
             setArray(temporaryList);
         }
     }
-*/
+
     @Override
     public E remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
