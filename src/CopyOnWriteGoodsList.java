@@ -48,10 +48,10 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
 
     @Override
     public boolean add(E o) {
-        expandArrayIfNeeded();
-        E[] a1 = getArray();
-        a1[size++] = o;
-        setArray(a1);
+        E[] newArray = (E[]) new Object[size++];
+        System.arraycopy(innerArray, 0, newArray, 0, size);
+        newArray[size] = o;
+        setArray(newArray);
         return true;
     }
 
@@ -82,7 +82,6 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
     public boolean addAll(int index, Collection c) {
         checkThatIndexIsInAcceptableRange(index);
         size += c.size();
-        expandArrayIfNeeded();
         E[] newArray = (E[]) new Object[size];//временный массив
         Object[] arrayOfElementsToAdd = c.toArray(); //массив элементов для добавления
         Object[] arrayOfLastElements = new Object[size - index - c.size()]; //массив элементов после индекса добавления
@@ -134,7 +133,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
         setArray(newArray);
     }
 
-    private void expandArrayIfNeeded() {
+    /*private void expandArrayIfNeeded() {
         if (size >= innerArray.length) {
             E[] temporaryList = (E[]) new Object[innerArray.length * EXPAND_MODIFIER];
             for (int i = 0; i < innerArray.length; i++) {
@@ -143,7 +142,7 @@ public class CopyOnWriteGoodsList<E> implements List<E> {
             setArray(temporaryList);
         }
     }
-
+*/
     @Override
     public E remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
