@@ -541,13 +541,35 @@ public class ArrayGoodsListTest {
         modList.add(7);
         modList.add(8);
         UnmodifiableList<Integer> testList = new UnmodifiableList<>(unmodList, modList);
-        Integer[] bigArray = {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27};
-        Integer[] smallArray = {11, 12, 13, 14, 15, 26, 27, 28, 29, 30};
-
-        final Object[] integers = testList.toArray(smallArray);
-        for (int i = 0; i < integers.length; i++) {
-            System.out.println(integers[i]);
+        //Integer[] bigArray = {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27};
+        //Integer[] smallArray = {11, 12, 13, 14, 15, 26, 27, 28, 29, 30};
+        ArrayList<Integer> reteinList = new ArrayList<>();
+        reteinList.add(1);
+        reteinList.add(2);
+        reteinList.add(3);
+        reteinList.add(4);
+        reteinList.add(5);
+        reteinList.add(9);
+        testList.clear();
+        //final Object[] integers = testList.toArray(smallArray);
+        for (int i = 0; i < testList.size(); i++) {
+            System.out.println(testList.get(i));
         }
+    }
+    @Test
+    public void retainAllInArrayList() {
+        final List<Integer> objects = new ArrayList<>();
+        objects.add(1);
+        objects.add(1);
+        objects.add(1);
+        objects.add(1);
+        final List<Integer> objects2 = new ArrayList<>();
+        objects2.add(1);
+        objects.retainAll(objects2);
+        for (int i = 0; i < objects.size(); i++) {
+            System.out.println(objects.get(i));
+        }
+
     }
 
 }

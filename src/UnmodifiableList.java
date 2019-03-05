@@ -10,6 +10,13 @@ public class UnmodifiableList<T> implements List<T> {
         this.modifiablePart = modifiablePart;
     }
 
+    private void checkThatIndexIsInAcceptableRange(final int index) {
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index is " + index + ", and size is " + size());
+        }
+    }
+
+
     @Override
     public int size() {
         return unmodifiablePart.size() + modifiablePart.size();
@@ -32,7 +39,7 @@ public class UnmodifiableList<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        Object [] arrayToReturn = new Object[unmodifiablePart.size() + modifiablePart.size()];
+        Object[] arrayToReturn = new Object[unmodifiablePart.size() + modifiablePart.size()];
         System.arraycopy(unmodifiablePart.toArray(), 0, arrayToReturn, 0, unmodifiablePart.size());
         System.arraycopy(modifiablePart.toArray(), 0, arrayToReturn, unmodifiablePart.size(), modifiablePart.size());
         return arrayToReturn;
@@ -40,9 +47,9 @@ public class UnmodifiableList<T> implements List<T> {
 
     @Override
     public <E> E[] toArray(E[] a) {
-        int size = unmodifiablePart.size()+modifiablePart.size();
+        int size = unmodifiablePart.size() + modifiablePart.size();
         if (size > a.length) {
-            return (E[]) Arrays.copyOf(new Object [size], size, a.getClass());
+            return (E[]) Arrays.copyOf(new Object[size], size, a.getClass());
         }
         System.arraycopy(unmodifiablePart.toArray(), 0, a, 0, unmodifiablePart.size());
         System.arraycopy(modifiablePart.toArray(), 0, a, unmodifiablePart.size(), modifiablePart.size());
@@ -74,32 +81,45 @@ public class UnmodifiableList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        return modifiablePart.addAll(c);
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        return false;
+        checkThatIndexIsInAcceptableRange(index);
+        return modifiablePart.addAll(index, c);
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        return modifiablePart.removeAll(c);
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        for (Object o : unmodifiablePart) {
+            if (!c.contains(o)) {
+                throw new PartiallySupportedOperationException();
+            }
+        }
+        return modifiablePart.retainAll(c);
     }
 
     @Override
     public void clear() {
-
+        if (!unmodifiablePart.isEmpty()){
+            throw new PartiallySupportedOperationException();
+        }
+        modifiablePart.clear();
     }
 
     @Override
     public T get(int index) {
-        return null;
+        checkThatIndexIsInAcceptableRange(index);
+        if (index < unmodifiablePart.size()) {
+            return unmodifiablePart.get(index);
+        }
+        return modifiablePart.get(index - unmodifiablePart.size());
     }
 
     @Override
@@ -126,14 +146,6 @@ public class UnmodifiableList<T> implements List<T> {
     public int lastIndexOf(Object o) {
         return 0;
     }
-
-
-
-
-
-
-
-
 
 
     @Override
