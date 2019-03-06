@@ -532,13 +532,13 @@ public class ArrayGoodsListTest {
     public void UnmodifiableListToArrayTest() {
         ArrayList<Integer> unmodList = new ArrayList<>();
         unmodList.add(1);
-        unmodList.add(2);
-        unmodList.add(3);
+        unmodList.add(1);
+        unmodList.add(4);
         ArrayList<Integer> modList = new ArrayList<>();
         modList.add(4);
-        modList.add(5);
+        modList.add(0);
         modList.add(6);
-        modList.add(7);
+        modList.add(4);
         modList.add(8);
         UnmodifiableList<Integer> testList = new UnmodifiableList<>(unmodList, modList);
         //Integer[] bigArray = {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27};
@@ -551,7 +551,8 @@ public class ArrayGoodsListTest {
         reteinList.add(5);
         reteinList.add(9);
         //testList.clear();
-        testList.set(3,1);
+        System.out.println(testList.lastIndexOf(1));
+        System.out.println(" ");
         //final Object[] integers = testList.toArray(smallArray);
         for (int i = 0; i < testList.size(); i++) {
             System.out.println(testList.get(i));

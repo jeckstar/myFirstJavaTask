@@ -32,10 +32,6 @@ public class UnmodifiableList<T> implements List<T> {
         return unmodifiablePart.contains(o) || modifiablePart.contains(o);
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return null;
-    }
 
     @Override
     public Object[] toArray() {
@@ -107,7 +103,7 @@ public class UnmodifiableList<T> implements List<T> {
 
     @Override
     public void clear() {
-        if (!unmodifiablePart.isEmpty()){
+        if (!unmodifiablePart.isEmpty()) {
             throw new PartiallySupportedOperationException();
         }
         modifiablePart.clear();
@@ -134,26 +130,52 @@ public class UnmodifiableList<T> implements List<T> {
     @Override
     public void add(int index, T element) {
         checkThatIndexIsInAcceptableRange(index);
-
+        if (index < unmodifiablePart.size()) {
+            throw new PartiallySupportedOperationException();
+        }
+        modifiablePart.add(index - unmodifiablePart.size(), element);
     }
 
     @Override
     public T remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
+        if (index < unmodifiablePart.size()) {
+            throw new PartiallySupportedOperationException();
+        }
+        return modifiablePart.remove(index - unmodifiablePart.size());
 
-        return null;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        final int indexInUnmod = unmodifiablePart.indexOf(o);
+        if (indexInUnmod != -1) {
+            return indexInUnmod;
+        }
+        final int indexInMod = modifiablePart.indexOf(o);
+        if (indexInMod != -1) {
+            return indexInMod + unmodifiablePart.size();
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        final int indexInMod = modifiablePart.lastIndexOf(o);
+        if (indexInMod != -1) {
+            return indexInMod + unmodifiablePart.size();
+        }
+        final int indexInUnmod = unmodifiablePart.lastIndexOf(o);
+        if (indexInUnmod != -1) {
+            return indexInUnmod;
+        }
+        return -1;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return null;
+    }
 
     @Override
     public ListIterator<T> listIterator() {
