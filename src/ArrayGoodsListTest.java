@@ -558,6 +558,7 @@ public class ArrayGoodsListTest {
             System.out.println(testList.get(i));
         }
     }
+
     @Test
     public void retainAllInArrayList() {
         final List<Integer> objects = new ArrayList<>();
@@ -571,6 +572,33 @@ public class ArrayGoodsListTest {
         for (int i = 0; i < objects.size(); i++) {
             System.out.println(objects.get(i));
         }
+
+    }
+
+    @Test
+    public void unmodifiableIteratorTest() {
+        ArrayList<String> unmodList = new ArrayList<>();
+        unmodList.add("0");
+        unmodList.add("1");
+        unmodList.add("2");
+        ArrayList<String> modList = new ArrayList<>();
+        modList.add("3");
+        modList.add("4");
+        modList.add("5");
+        modList.add("6");
+        modList.add("7");
+        UnmodifiableList<String> testList = new UnmodifiableList<>(unmodList, modList);
+
+        Iterator<String> iterator = testList.iterator();
+
+        assertEquals("0", iterator.next());
+        assertEquals("1", iterator.next());
+        assertEquals("2", iterator.next());
+        assertEquals("3", iterator.next());
+        assertEquals("4", iterator.next());
+        assertEquals("5", iterator.next());
+        assertEquals("6", iterator.next());
+        assertEquals("7", iterator.next());
 
     }
 

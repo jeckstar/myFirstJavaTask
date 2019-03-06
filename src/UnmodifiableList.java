@@ -174,7 +174,27 @@ public class UnmodifiableList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new InnerIterator();
+    }
+
+    private class InnerIterator implements Iterator<T> {
+        private Iterator<T> unmodIterator = unmodifiablePart.iterator();
+        private Iterator<T> modIterator = modifiablePart.iterator();
+
+        @Override
+        public boolean hasNext() {
+            if (unmodIterator.hasNext()) return true;
+            if (!unmodIterator.hasNext() && modIterator.hasNext()) return true;
+            else return false;
+        }
+
+        @Override
+        public T next() {
+            if (unmodIterator.hasNext()) return unmodIterator.next();
+            if (!unmodIterator.hasNext() && modIterator.hasNext()) return  modIterator.next();
+            else throw new NoSuchElementException();
+
+        }
     }
 
     @Override
