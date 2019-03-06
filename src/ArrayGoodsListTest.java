@@ -671,4 +671,10 @@ public class ArrayGoodsListTest {
             System.out.println(strings.get(i));
         }
     }
+
+    @Test
+    public void hashTest() {
+        MyString myString = new MyString("Sunset");
+        System.out.println(myString.hashCode1());
+    }
 }
