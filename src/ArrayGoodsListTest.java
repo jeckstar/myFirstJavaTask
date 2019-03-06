@@ -591,6 +591,7 @@ public class ArrayGoodsListTest {
 
         Iterator<String> iterator = testList.iterator();
 
+
         assertEquals("0", iterator.next());
         assertEquals("1", iterator.next());
         assertEquals("2", iterator.next());
@@ -599,6 +600,22 @@ public class ArrayGoodsListTest {
         assertEquals("5", iterator.next());
         assertEquals("6", iterator.next());
         assertEquals("7", iterator.next());
+    }
+
+    @Test
+    public void setByIndex_verifyThatItemWillBeReSet_ifAnItemWasReplacedByEqualOne() {
+        final String s1 = "1";
+        final String s2 = "2";
+
+        final String s3 = "3";
+        final String s4 = "4";
+        final String s5 = "5";
+        final UnmodifiableList<String> strings = new UnmodifiableList<>(
+                new ArrayList<>(Arrays.asList(s1, s2)),
+                new ArrayList<>(Arrays.asList(s3, s4, s5))
+        );
+        final String actual = strings.set(1, s2);
+        assertEquals(s2, actual);
 
     }
 

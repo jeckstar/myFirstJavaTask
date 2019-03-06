@@ -121,6 +121,9 @@ public class UnmodifiableList<T> implements List<T> {
     @Override
     public T set(int index, T element) {
         checkThatIndexIsInAcceptableRange(index);
+        if (index < unmodifiablePart.size() && element.equals(unmodifiablePart.get(index))){
+            return unmodifiablePart.get(index);
+        }
         if (index < unmodifiablePart.size()) {
             throw new PartiallySupportedOperationException();
         }
@@ -183,17 +186,13 @@ public class UnmodifiableList<T> implements List<T> {
 
         @Override
         public boolean hasNext() {
-            if (unmodIterator.hasNext()) return true;
-            if (!unmodIterator.hasNext() && modIterator.hasNext()) return true;
-            else return false;
+            return unmodIterator.hasNext() || modIterator.hasNext();
         }
 
         @Override
         public T next() {
             if (unmodIterator.hasNext()) return unmodIterator.next();
-            if (!unmodIterator.hasNext() && modIterator.hasNext()) return  modIterator.next();
-            else throw new NoSuchElementException();
-
+            else return  modIterator.next();
         }
     }
 
