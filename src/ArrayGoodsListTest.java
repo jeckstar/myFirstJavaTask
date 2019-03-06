@@ -652,7 +652,7 @@ public class ArrayGoodsListTest {
         strings.addAll(1, addList);
     }
 
-    @Test
+    @Test(expected = PartiallySupportedOperationException.class)
     public void removeAllElementOfCollection() {
         final String s1 = "1";
         final String s2 = "2";
@@ -663,18 +663,94 @@ public class ArrayGoodsListTest {
                 new ArrayList<>(Arrays.asList(s1, s2)),
                 new ArrayList<>(Arrays.asList(s3, s4, s5))
         );
-        ArrayList<String> removeList= new ArrayList<>();
+        ArrayList<String> removeList = new ArrayList<>();
         removeList.add("2");
         removeList.add("5");
         strings.removeAll(removeList);
-        for (int i = 0; i <strings.size() ; i++) {
+        for (int i = 0; i < strings.size(); i++) {
             System.out.println(strings.get(i));
         }
     }
 
     @Test
-    public void hashTest() {
-        MyString myString = new MyString("Sunset");
-        System.out.println(myString.hashCode1());
+    public void hashMapTest() {
+        StringHashCodeIsLengthOfString goods1 = new StringHashCodeIsLengthOfString("Iphone");
+        StringHashCodeIsLengthOfString goods2 = new StringHashCodeIsLengthOfString("Samsung");
+        StringHashCodeIsLengthOfString goods3 = new StringHashCodeIsLengthOfString("Philips");
+        StringHashCodeIsLengthOfString goods4 = new StringHashCodeIsLengthOfString("Sony");
+        StringHashCodeIsLengthOfString goods5 = new StringHashCodeIsLengthOfString("Lg");
+        StringHashCodeIsLengthOfString goods6 = new StringHashCodeIsLengthOfString("Nokia");
+        StringHashCodeIsLengthOfString goods7 = new StringHashCodeIsLengthOfString("Meizu");
+        StringHashCodeIsLengthOfString goods8 = new StringHashCodeIsLengthOfString("Huawei");
+        Map<String, StringHashCodeIsLengthOfString> hashCodeIsLength = new HashMap<>();
+        hashCodeIsLength.put("строка 1", goods1);
+        hashCodeIsLength.put("строка 2", goods2);
+        hashCodeIsLength.put("строка 3", goods3);
+        hashCodeIsLength.put("строка 4", goods4);
+        hashCodeIsLength.put("строка 5", goods5);
+        hashCodeIsLength.put("строка 6", goods6);
+        hashCodeIsLength.put("строка 7", goods7);
+        hashCodeIsLength.put("строка 8", goods8);
+        for (Map.Entry<String, StringHashCodeIsLengthOfString> entry : hashCodeIsLength.entrySet()) {
+            String key = entry.getKey();
+            StringHashCodeIsLengthOfString value = entry.getValue();
+            System.out.println(key + " " + value);
+        }
+        System.out.println(" ");
+        Map<String, StringHashCodeIsLengthOfString> hashCodeIsLengthLinkedHasMap = new LinkedHashMap<>();
+        hashCodeIsLengthLinkedHasMap.put("строка 1", goods1);
+        hashCodeIsLengthLinkedHasMap.put("строка 2", goods2);
+        hashCodeIsLengthLinkedHasMap.put("строка 3", goods3);
+        hashCodeIsLengthLinkedHasMap.put("строка 4", goods4);
+        hashCodeIsLengthLinkedHasMap.put("строка 5", goods5);
+        hashCodeIsLengthLinkedHasMap.put("строка 6", goods6);
+        hashCodeIsLengthLinkedHasMap.put("строка 7", goods7);
+        hashCodeIsLengthLinkedHasMap.put("строка 8", goods8);
+        for (Map.Entry<String, StringHashCodeIsLengthOfString> entry : hashCodeIsLengthLinkedHasMap.entrySet()) {
+            String key = entry.getKey();
+            StringHashCodeIsLengthOfString value = entry.getValue();
+            System.out.println(key + " " + value);
+        }
+    }
+
+    @Test
+    public void hashLinkedMapTest() {
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar1 = new StringHashCodeIsSumOfFirstFoursChar("AKM74");
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar2 = new StringHashCodeIsSumOfFirstFoursChar("PM");
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar3 = new StringHashCodeIsSumOfFirstFoursChar("AK74U");
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar4 = new StringHashCodeIsSumOfFirstFoursChar("Uzi");
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar5 = new StringHashCodeIsSumOfFirstFoursChar("Fort12");
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar6 = new StringHashCodeIsSumOfFirstFoursChar("AK47");
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar7 = new StringHashCodeIsSumOfFirstFoursChar("Flaber");
+        StringHashCodeIsSumOfFirstFoursChar sumOfChar8 = new StringHashCodeIsSumOfFirstFoursChar("DIgle");
+        Map<String, StringHashCodeIsSumOfFirstFoursChar> hashCodeIsSum4FirstChar = new HashMap<>();
+        hashCodeIsSum4FirstChar.put("строка 1", sumOfChar1);
+        hashCodeIsSum4FirstChar.put("строка 2", sumOfChar2);
+        hashCodeIsSum4FirstChar.put("строка 3", sumOfChar3);
+        hashCodeIsSum4FirstChar.put("строка 4", sumOfChar4);
+        hashCodeIsSum4FirstChar.put("строка 5", sumOfChar5);
+        hashCodeIsSum4FirstChar.put("строка 6", sumOfChar6);
+        hashCodeIsSum4FirstChar.put("строка 7", sumOfChar7);
+        hashCodeIsSum4FirstChar.put("строка 8", sumOfChar8);
+        for (Map.Entry<String, StringHashCodeIsSumOfFirstFoursChar> entry : hashCodeIsSum4FirstChar.entrySet()) {
+            String key = entry.getKey();
+            StringHashCodeIsSumOfFirstFoursChar value = entry.getValue();
+            System.out.println(key + " " + value);
+        }
+        System.out.println(" ");
+        Map<String, StringHashCodeIsSumOfFirstFoursChar> hashCodeIsSum4FirstCharLinkedHasMap = new LinkedHashMap<>();
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 1", sumOfChar1);
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 2", sumOfChar2);
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 3", sumOfChar3);
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 4", sumOfChar4);
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 5", sumOfChar5);
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 6", sumOfChar6);
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 7", sumOfChar7);
+        hashCodeIsSum4FirstCharLinkedHasMap.put("строка 8", sumOfChar8);
+        for (Map.Entry<String, StringHashCodeIsSumOfFirstFoursChar> entry : hashCodeIsSum4FirstCharLinkedHasMap.entrySet()) {
+            String key = entry.getKey();
+            StringHashCodeIsSumOfFirstFoursChar value = entry.getValue();
+            System.out.println(key + " " + value);
+        }
     }
 }
