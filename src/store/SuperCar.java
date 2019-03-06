@@ -1,3 +1,5 @@
+package store;
+
 public class SuperCar extends Car {
     private boolean canFly;
     private boolean canTransform;

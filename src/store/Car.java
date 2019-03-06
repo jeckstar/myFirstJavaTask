@@ -1,4 +1,6 @@
-public class Car extends Vehicle{
+package store;
+
+public class Car extends Vehicle {
     private String machineSeries;
     private int maxPassengers;
 
