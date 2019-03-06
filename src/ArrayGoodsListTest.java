@@ -606,7 +606,6 @@ public class ArrayGoodsListTest {
     public void setByIndex_verifyThatItemWillBeReSet_ifAnItemWasReplacedByEqualOne() {
         final String s1 = "1";
         final String s2 = "2";
-
         final String s3 = "3";
         final String s4 = "4";
         final String s5 = "5";
@@ -616,7 +615,60 @@ public class ArrayGoodsListTest {
         );
         final String actual = strings.set(1, s2);
         assertEquals(s2, actual);
+    }
+
+    @Test(expected = PartiallySupportedOperationException.class)
+    public void remove_verifyThatExceptionWasThrown_ifRemoveIsConcernedWithUnmodifiablePart() {
+        final String s1 = "1";
+        final String s2 = "2";
+        final String s3 = "3";
+        final String s4 = "4";
+        final String s5 = "5";
+        final UnmodifiableList<String> strings = new UnmodifiableList<>(
+                new ArrayList<>(Arrays.asList(s1, s2)),
+                new ArrayList<>(Arrays.asList(s3, s4, s5))
+        );
+        strings.remove("1");
 
     }
 
+    @Test(expected = PartiallySupportedOperationException.class)
+    public void addAllByIndex() {
+        final String s1 = "1";
+        final String s2 = "2";
+        final String s3 = "3";
+        final String s4 = "4";
+        final String s5 = "5";
+        final UnmodifiableList<String> strings = new UnmodifiableList<>(
+                new ArrayList<>(Arrays.asList(s1, s2)),
+                new ArrayList<>(Arrays.asList(s3, s4, s5))
+        );
+        ArrayList<String> addList = new ArrayList<>();
+        addList.add("2");
+        addList.add("4");
+        addList.add("5");
+        addList.add("6");
+        addList.add("7");
+        strings.addAll(1, addList);
+    }
+
+    @Test
+    public void removeAllElementOfCollection() {
+        final String s1 = "1";
+        final String s2 = "2";
+        final String s3 = "3";
+        final String s4 = "4";
+        final String s5 = "5";
+        final UnmodifiableList<String> strings = new UnmodifiableList<>(
+                new ArrayList<>(Arrays.asList(s1, s2)),
+                new ArrayList<>(Arrays.asList(s3, s4, s5))
+        );
+        ArrayList<String> removeList= new ArrayList<>();
+        removeList.add("2");
+        removeList.add("5");
+        strings.removeAll(removeList);
+        for (int i = 0; i <strings.size() ; i++) {
+            System.out.println(strings.get(i));
+        }
+    }
 }

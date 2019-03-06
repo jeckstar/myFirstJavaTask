@@ -32,7 +32,6 @@ public class UnmodifiableList<T> implements List<T> {
         return unmodifiablePart.contains(o) || modifiablePart.contains(o);
     }
 
-
     @Override
     public Object[] toArray() {
         Object[] arrayToReturn = new Object[unmodifiablePart.size() + modifiablePart.size()];
@@ -62,6 +61,7 @@ public class UnmodifiableList<T> implements List<T> {
 
     @Override
     public boolean remove(Object o) {
+        if (unmodifiablePart.contains(o)) throw new PartiallySupportedOperationException();
         return modifiablePart.remove(o);
     }
 
@@ -83,11 +83,17 @@ public class UnmodifiableList<T> implements List<T> {
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         checkThatIndexIsInAcceptableRange(index);
+        throwExceptionIfIndexIsInUnmodifiablePart(index);
         return modifiablePart.addAll(index, c);
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
+        for (Object o: c ) {
+            if (unmodifiablePart.contains(o)){
+                throw new PartiallySupportedOperationException();
+            }
+        }
         return modifiablePart.removeAll(c);
     }
 
@@ -121,30 +127,37 @@ public class UnmodifiableList<T> implements List<T> {
     @Override
     public T set(int index, T element) {
         checkThatIndexIsInAcceptableRange(index);
-        if (index < unmodifiablePart.size() && element.equals(unmodifiablePart.get(index))){
-            return unmodifiablePart.get(index);
-        }
         if (index < unmodifiablePart.size()) {
-            throw new PartiallySupportedOperationException();
+            return insertIfItemIsTheSame(index, element);
         }
         return modifiablePart.set(index - unmodifiablePart.size(), element);
+    }
+
+    private T insertIfItemIsTheSame(int index, T element) {
+        if (element.equals(unmodifiablePart.get(index))) {
+            return unmodifiablePart.get(index);
+        } else {
+            throw new PartiallySupportedOperationException();
+        }
     }
 
     @Override
     public void add(int index, T element) {
         checkThatIndexIsInAcceptableRange(index);
+        throwExceptionIfIndexIsInUnmodifiablePart(index);
+        modifiablePart.add(index - unmodifiablePart.size(), element);
+    }
+
+    private void throwExceptionIfIndexIsInUnmodifiablePart(int index) {
         if (index < unmodifiablePart.size()) {
             throw new PartiallySupportedOperationException();
         }
-        modifiablePart.add(index - unmodifiablePart.size(), element);
     }
 
     @Override
     public T remove(int index) {
         checkThatIndexIsInAcceptableRange(index);
-        if (index < unmodifiablePart.size()) {
-            throw new PartiallySupportedOperationException();
-        }
+        throwExceptionIfIndexIsInUnmodifiablePart(index);
         return modifiablePart.remove(index - unmodifiablePart.size());
 
     }
@@ -192,7 +205,7 @@ public class UnmodifiableList<T> implements List<T> {
         @Override
         public T next() {
             if (unmodIterator.hasNext()) return unmodIterator.next();
-            else return  modIterator.next();
+            else return modIterator.next();
         }
     }
 
