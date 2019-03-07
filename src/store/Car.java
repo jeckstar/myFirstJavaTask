@@ -2,20 +2,25 @@ package store;
 
 public class Car extends Vehicle {
     private String machineSeries;
-    private int maxPassengers;
+    private int price;
 
     public Car() {
     }
-    public Car(String model, String color, int maxSpeed, String machineSeries, int maxPassengers){
+    public Car(String model, String color, int maxSpeed, String machineSeries, int price){
         super(model, color,maxSpeed);
         this.machineSeries = machineSeries;
-        this.maxPassengers = maxPassengers;
+        this.price = price;
     }
+
+    public int getPrice() {
+        return price;
+    }
+
     public boolean equals(Car car){
-        return this.getModel() == car.getModel() && this.getColor() == car.getColor() && this.getMaxSpeed() == car.getMaxSpeed() && this.maxPassengers == car.maxPassengers && this.machineSeries == car.machineSeries;
+        return this.getModel() == car.getModel() && this.getColor() == car.getColor() && this.getMaxSpeed() == car.getMaxSpeed() && this.price == car.price && this.machineSeries == car.machineSeries;
     }
     public String toString(){
-        return this.getModel()+" "+this.getColor()+" "+this.getMaxSpeed()+" "+this.machineSeries+" "+this.maxPassengers;
+        return this.getModel()+" "+this.getColor()+" "+this.getMaxSpeed()+" "+this.machineSeries+" "+this.price;
     }
 
     public String getMachineSeries() {
@@ -25,10 +30,10 @@ public class Car extends Vehicle {
         this.machineSeries = machineSeries;
     }
     public int getMaxPassengers() {
-        return maxPassengers;
+        return price;
     }
     public void setMaxPassengers(int maxPassengers) {
-        this.maxPassengers = maxPassengers;
+        this.price = maxPassengers;
     }
 
     public static void main(String[] args) {
