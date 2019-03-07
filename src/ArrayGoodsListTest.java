@@ -758,8 +758,8 @@ public class ArrayGoodsListTest {
     @Test
     public void hren() {
         final HashMap<Vehicle, String> map = new HashMap<>();
-        final Vehicle vehicle1 = new Vehicle("1", "1", 1);
-        final Vehicle vehicle2 = new Vehicle("2", "1", 1);
+        final Vehicle vehicle1 = new Vehicle("1", "1", 1, 1);
+        final Vehicle vehicle2 = new Vehicle("2", "1", 1,1);
         map.put(vehicle1, "1");
         map.put(vehicle2, "2");
         vehicle2.setModel("1");

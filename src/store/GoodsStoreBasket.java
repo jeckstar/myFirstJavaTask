@@ -1,5 +1,6 @@
 package store;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,6 +8,10 @@ public class GoodsStoreBasket {
     private Map<Vehicle, Integer> basket = new LinkedHashMap<>();
     private Map<String, Vehicle> keys = new LinkedHashMap<>();
     private PrinterOfStore printer = new PrinterOfStore();
+    private ArrayList<Vehicle> last5Add = new ArrayList<>();
+    //private Vehicle[] last5Add = new Vehicle[5];
+    private int count = 0;
+    private int countNum = 0;
 
 
     public GoodsStoreBasket() {
@@ -18,10 +23,16 @@ public class GoodsStoreBasket {
             int num = basket.get(vehicleStore.getVehicle(car));
             basket.put(vehicleStore.getVehicle(car), ++num);
             printer.addElementIsTrue();
+
+            lastFiveGoods(vehicleStore.getVehicle(car));
+
         } else if (!basket.containsKey(vehicleStore) && vehicleStore.containsVehicle(car)) {
             basket.put(vehicleStore.getVehicle(car), 1);
             keys.put(car, vehicleStore.getVehicle(car));
             printer.addElementIsTrue();
+
+            lastFiveGoods(vehicleStore.getVehicle(car));
+
         } else if (!vehicleStore.containsVehicle(car)) {
             printer.addElementIsFalse();
         }
@@ -30,7 +41,6 @@ public class GoodsStoreBasket {
     public Vehicle getElementOfBasket(String key) {
         return keys.get(key);
     }
-
 
     public void removeVehicle(GoodsStoreBasket goodsStoreBasket, String car) {
         Vehicle carToRemove = goodsStoreBasket.getElementOfBasket(car);
@@ -47,37 +57,39 @@ public class GoodsStoreBasket {
     }
 
     public void buyBasketContents() {
+        int priceSum = 0;
+        for (Map.Entry<Vehicle, Integer> entry : this.basket.entrySet()) {
+            Vehicle key = entry.getKey();
+            priceSum += key.getPrice();
+        }
+        printer.buyResult(priceSum);
+    }
 
+    public void lastFiveGoods(Vehicle vehicle) {
+        if (count > 4) {
+            if (countNum > 4) {
+                count = 0;
+                last5Add.set(count, vehicle);
+            }
+            last5Add.set(countNum, vehicle);
+            countNum++;
+        }
+        else last5Add.add(vehicle);
+        count++;
     }
 
     public void lookLastFiveGoods() {
-
+        for (int i = 0; i < last5Add.size(); i++) {
+            System.out.println(last5Add.get(i));
+        }
     }
 
     public void printBasketList() {
-        printer.BasketList(this.basket);
+        printer.basketList(this.basket);
     }
 
     public void printBeforeRemove() {
-        System.out.println("Выберете товар для удаления.\n" +
-                "Для возврата в меню нажмите 0 + еnter");
-        for (Map.Entry<Vehicle, Integer> entry : this.basket.entrySet()) {
-            Vehicle key = entry.getKey();
-            Integer value = entry.getValue();
-            String carToString = this.carToStringByKey(key);
-            System.out.println("Автомобиль \"" + key + "$, в наличии " + value + "\" экземпляр(ов/а). " + "Для удаления введите - " + carToString);
-        }
-    }
+        printer.beforeRemove(this.basket, this.keys);
 
-    private String carToStringByKey(Vehicle key) {
-        String vehicleName = "";
-        for (Map.Entry<String, Vehicle> entryPair : this.keys.entrySet()) {
-            String innerKey = entryPair.getKey();
-            Vehicle innerValue = entryPair.getValue();
-            if (key.equals(innerValue)) {
-                vehicleName = innerKey;
-            }
-        }
-        return vehicleName;
     }
 }

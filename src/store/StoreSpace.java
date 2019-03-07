@@ -18,6 +18,9 @@ public class StoreSpace {
             if (command.equals("2")) {
                 storeBasket.printBasketList();
             }
+            if (command.equals("buy")) {
+                storeBasket.buyBasketContents();
+            }
             if (command.equals("add")) {
                 vehicleStore.listOfItem();
                 BufferedReader reader2 = new BufferedReader(new InputStreamReader(System.in));
@@ -33,6 +36,9 @@ public class StoreSpace {
                     printer.menu();
                 }
             }
+            if (command.equals("last")) storeBasket.lookLastFiveGoods();
+            if (command.equals("menu")) printer.menu();
+
             if (command.equals("-1")) break;
         }
     }

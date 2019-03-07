@@ -13,10 +13,10 @@ public class SuperCar extends Car {
         this.canTransform = canTransform;
     }
     public String toString(){
-        return "Model: "+this.getModel()+", Color: "+this.getColor()+", Max Speed: "+this.getMaxSpeed()+", Series: "+this.getMachineSeries()+", Max Passengers "+this.getMaxPassengers()+", Can Fly: "+ this.canFly+", Can Transform: "+this.canTransform+".";
+        return "Model: "+this.getModel()+", Color: "+this.getColor()+", Max Speed: "+this.getMaxSpeed()+", Series: "+this.getMachineSeries()+", Max Passengers "+this.getPrice()+", Can Fly: "+ this.canFly+", Can Transform: "+this.canTransform+".";
     }
     public boolean equals(SuperCar car){
-        return this.getModel() == car.getModel() && this.getColor() == car.getColor() && this.getMaxSpeed() == car.getMaxSpeed() && this.getMaxPassengers() == car.getMaxPassengers() && this.getMachineSeries() == car.getMachineSeries() && this.canFly == car.canFly && this.canTransform == car.canTransform;
+        return this.getModel() == car.getModel() && this.getColor() == car.getColor() && this.getMaxSpeed() == car.getMaxSpeed() && this.getPrice() == car.getPrice() && this.getMachineSeries() == car.getMachineSeries() && this.canFly == car.canFly && this.canTransform == car.canTransform;
     }
 
 

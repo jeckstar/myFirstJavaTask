@@ -1,44 +1,49 @@
 package store;
 
+import java.util.Objects;
+
 public class Car extends Vehicle {
     private String machineSeries;
-    private int price;
+
 
     public Car() {
     }
-    public Car(String model, String color, int maxSpeed, String machineSeries, int price){
-        super(model, color,maxSpeed);
+
+    public Car(String model, String color, int maxSpeed, String machineSeries, int price) {
+        super(model, color, maxSpeed, price);
         this.machineSeries = machineSeries;
-        this.price = price;
     }
 
-    public int getPrice() {
-        return price;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Car car = (Car) o;
+        return Objects.equals(machineSeries, car.machineSeries);
     }
 
-    public boolean equals(Car car){
-        return this.getModel() == car.getModel() && this.getColor() == car.getColor() && this.getMaxSpeed() == car.getMaxSpeed() && this.price == car.price && this.machineSeries == car.machineSeries;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), machineSeries);
     }
-    public String toString(){
-        return this.getModel()+" "+this.getColor()+" "+this.getMaxSpeed()+" "+this.machineSeries+" "+this.price;
+
+    public String toString() {
+        return "Модель - " + this.getModel() + ", цвет - " + this.getColor() + ", максимальная скорость - " + this.getMaxSpeed() + ", серия - " + this.machineSeries + ", стоимость - " + this.getPrice();
     }
 
     public String getMachineSeries() {
         return machineSeries;
     }
+
     public void setMachineSeries(String machineSeries) {
         this.machineSeries = machineSeries;
     }
-    public int getMaxPassengers() {
-        return price;
-    }
-    public void setMaxPassengers(int maxPassengers) {
-        this.price = maxPassengers;
-    }
 
     public static void main(String[] args) {
-        Car car = new Car("a","b",123,"chi",4);
-        Car car2 = new Car("a","b",123,"chi",4);
+        Car car = new Car("a", "b", 123, "chi", 4);
+        Car car2 = new Car("a", "b", 123, "chi", 4);
 
         System.out.println(car.toString());
         System.out.println(car.equals(car2));
