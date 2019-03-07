@@ -15,8 +15,8 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String date = reader.readLine();
         SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy");
-        Date y = s.parse(date);
-        System.out.println(s.format(y));
+        orderDay = s.parse(date);
+        System.out.println(s.format(orderDay));
     }
 
     public Date getOrderDay() {
@@ -27,9 +27,6 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
     public int compareTo(DateOfOrder o) {
         Date firstDay = this.getOrderDay();
         Date sacondDay = o.getOrderDay();
-        if (firstDay == null){
-            throw new NullPointerException();
-        }
         return firstDay.compareTo(sacondDay);
     }
 
@@ -50,7 +47,8 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
         } catch (ParseException e) {
             System.out.println("Так не пойдет - ParseException, бро");
         }
-        n.compareTo(n2);
+        System.out.println(n.compareTo(n2));
+
 
     }
 
