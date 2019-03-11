@@ -7,7 +7,7 @@ public class ShowBasketCommand extends BaseChain {
     private final GoodsStoreBasket basket;
 
 
-    protected ShowBasketCommand(BaseChain next, String code, GoodsStoreBasket basket) {
+    public ShowBasketCommand(BaseChain next, String code, GoodsStoreBasket basket) {
         super(next, code);
         this.basket = basket;
     }

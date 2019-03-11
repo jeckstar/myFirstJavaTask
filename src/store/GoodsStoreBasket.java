@@ -47,7 +47,7 @@ public class GoodsStoreBasket {
 
     public void removeVehicle(GoodsStoreBasket goodsStoreBasket, String car) {
         Vehicle carToRemove = goodsStoreBasket.getElementOfBasket(car);
-        if (car.equals("0")) printer.menu();
+        if (car.equals("0")) System.out.println("Вы вернулись в главное меню.");
         else if (!this.basket.containsKey(carToRemove)) {
             System.out.println("Не верно выбранный товар.\n" +
                     "Для удаления из корзины введите - car");

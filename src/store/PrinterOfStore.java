@@ -26,13 +26,12 @@ public class PrinterOfStore {
                 "Для просмотра корзины введите 2 + enter");
     }
 
-    public void StoreList(Map<Vehicle, Integer> vehicleAvailability) {
+    public void storeList(Map<Vehicle, Integer> vehicleAvailability) {
         for (Map.Entry<Vehicle, Integer> entry : vehicleAvailability.entrySet()) {
             Vehicle key = entry.getKey();
             Integer value = entry.getValue();
             System.out.println("Автомобиль \"" + key + "$, в наличии " + value + "\" экземпляр(ов/а).");
         }
-        System.out.println("Для добавления в корзину введите - add + enter");
     }
 
     public void menu() {
@@ -63,20 +62,25 @@ public class PrinterOfStore {
     }
 
     public void beforeRemove(Map<Vehicle, Integer> basket, Map<String, Vehicle> keys) {
-        System.out.println("Выберете товар для удаления.\n" +
-                "Для возврата в меню нажмите 0 + еnter");
-        for (Map.Entry<Vehicle, Integer> entry : basket.entrySet()) {
-            Vehicle key = entry.getKey();
-            Integer value = entry.getValue();
-            String carToString = "";
-            for (Map.Entry<String, Vehicle> entryPair : keys.entrySet()) {
-                String innerKey = entryPair.getKey();
-                Vehicle innerValue = entryPair.getValue();
-                if (key.equals(innerValue)) {
-                    carToString = innerKey;
+        if (keys.isEmpty()){
+            System.out.println("Пусто");
+        }
+        else {
+            System.out.println("Выберете товар для удаления.\n" +
+                    "Для возврата в меню нажмите 0 + еnter");
+            for (Map.Entry<Vehicle, Integer> entry : basket.entrySet()) {
+                Vehicle key = entry.getKey();
+                Integer value = entry.getValue();
+                String carToString = "";
+                for (Map.Entry<String, Vehicle> entryPair : keys.entrySet()) {
+                    String innerKey = entryPair.getKey();
+                    Vehicle innerValue = entryPair.getValue();
+                    if (key.equals(innerValue)) {
+                        carToString = innerKey;
+                    }
                 }
+                System.out.println("Автомобиль \"" + key + "$ в наличии " + value + "\" экземпляр(ов/а). " + "Для удаления введите - " + carToString);
             }
-            System.out.println("Автомобиль \"" + key + "$ в наличии " + value + "\" экземпляр(ов/а). " + "Для удаления введите - " + carToString);
         }
     }
 

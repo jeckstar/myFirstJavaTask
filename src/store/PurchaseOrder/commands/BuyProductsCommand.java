@@ -6,7 +6,7 @@ public class BuyProductsCommand extends BaseChain {
     private final GoodsStoreBasket basket;
 
 
-    protected BuyProductsCommand(BaseChain next, String code, GoodsStoreBasket basket) {
+    public BuyProductsCommand(BaseChain next, String code, GoodsStoreBasket basket) {
         super(next, code);
         this.basket = basket;
     }
@@ -18,6 +18,6 @@ public class BuyProductsCommand extends BaseChain {
 
     @Override
     protected void printCommandGoal() {
-        System.out.println("Введите buy + enter для покупки товара из корзины.");
+        System.out.println("Для покупки товаров из корзины введите - buy + enter.");
     }
 }

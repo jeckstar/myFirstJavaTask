@@ -6,7 +6,7 @@ public class ShowProductsCommand extends BaseChain {
 
     private final VehicleStore vehicleStore;
 
-    protected ShowProductsCommand(BaseChain next, String code, VehicleStore vehicleStore) {
+    public ShowProductsCommand(BaseChain next, String code, VehicleStore vehicleStore) {
         super(next, code);
         this.vehicleStore = vehicleStore;
     }

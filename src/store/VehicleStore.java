@@ -48,7 +48,7 @@ public class VehicleStore {
     }
 
     public void printStoreList() {
-        printer.StoreList(this.vehicleAvailability);
+        printer.storeList(this.vehicleAvailability);
     }
 
     public void listOfItem() {
