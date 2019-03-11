@@ -19,13 +19,11 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
         String last = "12.12.2022";
         Date fromDate = s.parse(from);
         Date lastDate = s.parse(last);
-        if (s.parse(date).compareTo(fromDate) > -1 && s.parse(date).compareTo(lastDate) < 1){
+        if (s.parse(date).compareTo(fromDate) > -1 && s.parse(date).compareTo(lastDate) < 1) {
             orderDay = s.parse(date);
             System.out.println("Вы ввели - " + s.format(orderDay));
-        }
-        else {
+        } else {
             System.out.println("Вы ввели неверный формат даты, повторите ввод.");
-
         }
     }
 
@@ -45,27 +43,5 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
         SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy");
         return s.format(orderDay);
     }
-
-    /*public static void main(String[] args) throws NullPointerException{
-        DateOfOrder n = null;
-        DateOfOrder n2 = null;
-        try {
-            n = new DateOfOrder();
-        } catch (IOException e) {
-            System.out.println("Так не пойдет - IOException, бро");
-        } catch (ParseException e) {
-            System.out.println("Так не пойдет - ParseException, бро");
-        }
-        try {
-            n2 = new DateOfOrder();
-        } catch (IOException e) {
-            System.out.println("Так не пойдет - IOException, бро");
-        } catch (ParseException e) {
-            System.out.println("Так не пойдет - ParseException, бро");
-        }
-        System.out.println(n.compareTo(n2));
-
-
-    }*/
 
 }

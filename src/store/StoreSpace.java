@@ -48,8 +48,11 @@ public class StoreSpace {
                 }
             }
             if (command.equals("orderList")) orders.printAllOrders();
+            if (command.equals("orderTime")){
+
+            }
             if (command.equals("last")) storeBasket.lookLastFiveGoods();
-            if (command.equals("menu")) printer.menu(); 
+            if (command.equals("menu")) printer.menu();
             if (command.equals("-1")) break;
         }
     }

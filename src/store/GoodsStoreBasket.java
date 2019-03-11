@@ -64,10 +64,9 @@ public class GoodsStoreBasket {
 
     public void buyBasketContents() {
         int priceSum = 0;
-        if (this.basket.isEmpty()){
-             printer.buyResult(priceSum);
-        }
-        else {
+        if (this.basket.isEmpty()) {
+            printer.buyResult(priceSum);
+        } else {
             for (Map.Entry<Vehicle, Integer> entry : this.basket.entrySet()) {
                 Vehicle key = entry.getKey();
                 priceSum += key.getPrice();

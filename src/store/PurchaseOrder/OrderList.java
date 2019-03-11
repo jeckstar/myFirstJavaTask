@@ -19,7 +19,7 @@ public class OrderList {
         innerList = new ArrayList<>();
     }
 
-    public boolean addToOrderList(GoodsStoreBasket goodsStoreBasket){
+    public boolean addToOrderList(GoodsStoreBasket goodsStoreBasket) {
         Map<Vehicle, Integer> basket = goodsStoreBasket.getBasket();
         for (Map.Entry<Vehicle, Integer> entry : basket.entrySet()) {
             Vehicle key = entry.getKey();
@@ -29,12 +29,8 @@ public class OrderList {
                     innerList.add(key);
                     value--;
                 }
-            }
-            else innerList.add(key);
+            } else innerList.add(key);
         }
-       // for (int i = 0; i <innerList.size() ; i++) {
-        //    System.out.println(innerList.get(i));
-       // }
         return !basket.isEmpty();
     }
 

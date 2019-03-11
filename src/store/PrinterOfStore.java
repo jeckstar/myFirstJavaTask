@@ -41,6 +41,7 @@ public class PrinterOfStore {
                 "Введите 2 + enter для просмотра корзины\n" +
                 "Введите order + enter для выполнения заказа\n" +
                 "Введите orderList + enter для просмотра заказа\n" +
+                "Введите orderTime + enter для просмотра заказа\n" +
                 "Введите buy + enter для покупки товара из корзины");
     }
 
