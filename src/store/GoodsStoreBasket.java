@@ -54,11 +54,11 @@ public class GoodsStoreBasket {
         } else if (this.basket.get(carToRemove) != 0 && this.basket.get(carToRemove) > 1) {
             this.basket.put(carToRemove, this.basket.get(carToRemove) - 1);
             System.out.println("Одна единица товара успешно удалена.\n" + "");
-            printer.menu();
+            //printer.menu();
         } else {
             this.basket.remove(carToRemove);
             System.out.println("Товар успешно удалён.\n" + "");
-            printer.menu();
+            //printer.menu();
         }
     }
 
@@ -88,8 +88,13 @@ public class GoodsStoreBasket {
     }
 
     public void lookLastFiveGoods() {
-        for (int i = 0; i < last5Add.size(); i++) {
-            System.out.println(last5Add.get(i));
+        if(last5Add.isEmpty()){
+            System.out.println("Пусто");
+        }
+        else {
+            for (Vehicle vehicle : last5Add) {
+                System.out.println(vehicle);
+            }
         }
     }
 

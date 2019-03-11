@@ -34,7 +34,7 @@ public class PrinterOfStore {
         }
     }
 
-    public void menu() {
+    /*public void menu() {
         System.out.println("Введите 1 + enter для просмотра товара в наличии\n" +
                 "Введите -1 + enter завершение визита магазина\n" +
                 "Введите 2 + enter для просмотра корзины\n" +
@@ -42,7 +42,7 @@ public class PrinterOfStore {
                 "Введите orderList + enter для просмотра заказа\n" +
                 "Введите orderTime + enter для просмотра заказа\n" +
                 "Введите buy + enter для покупки товара из корзины");
-    }
+    }*/
 
     public void basketList(Map<Vehicle, Integer> basket) {
         if (basket.isEmpty()) {
@@ -53,11 +53,13 @@ public class PrinterOfStore {
                 Integer value = entry.getValue();
                 System.out.println("Автомобиль \"" + key + "$, в корзине " + value + "\" экземпляр(ов/а).");
             }
-            System.out.println("Для покупки товаров из корзины введите - buy + enter\n" +
+            System.out.println("Для удаления из корзины введите - car + enter\n");
+            /*System.out.println("Для покупки товаров из корзины введите - buy + enter\n" +
                     "Для оформления заказа введите order + enter\n" +
                     "Для удаления из корзины введите - car + enter\n" +
                     "Для просмотра информации о 5 последних добавленных таварах введите last + enter\n" +
                     "Для возврата в меню магазина введите menu + enter");
+                    */
         }
     }
 
