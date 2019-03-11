@@ -9,13 +9,16 @@ public class GoodsStoreBasket {
     private Map<String, Vehicle> keys = new LinkedHashMap<>();
     private PrinterOfStore printer = new PrinterOfStore();
     private ArrayList<Vehicle> last5Add = new ArrayList<>();
-    //private Vehicle[] last5Add = new Vehicle[5];
     private int count = 0;
     private int countNum = 0;
 
 
     public GoodsStoreBasket() {
         this.basket = basket;
+    }
+
+    public Map<Vehicle, Integer> getBasket() {
+        return basket;
     }
 
     public void addVehicle(VehicleStore vehicleStore, String car) {
@@ -44,25 +47,33 @@ public class GoodsStoreBasket {
 
     public void removeVehicle(GoodsStoreBasket goodsStoreBasket, String car) {
         Vehicle carToRemove = goodsStoreBasket.getElementOfBasket(car);
-        if (!this.basket.containsKey(carToRemove)) {
+        if (car.equals("0")) printer.menu();
+        else if (!this.basket.containsKey(carToRemove)) {
             System.out.println("Не верно выбранный товар.\n" +
                     "Для удаления из корзины введите - car");
         } else if (this.basket.get(carToRemove) != 0 && this.basket.get(carToRemove) > 1) {
             this.basket.put(carToRemove, this.basket.get(carToRemove) - 1);
-            System.out.println("Одна единица товара успешно удалена.");
+            System.out.println("Одна единица товара успешно удалена.\n" + "");
+            printer.menu();
         } else {
             this.basket.remove(carToRemove);
-            System.out.println("Товар успешно удалён.");
+            System.out.println("Товар успешно удалён.\n" + "");
+            printer.menu();
         }
     }
 
     public void buyBasketContents() {
         int priceSum = 0;
-        for (Map.Entry<Vehicle, Integer> entry : this.basket.entrySet()) {
-            Vehicle key = entry.getKey();
-            priceSum += key.getPrice();
+        if (this.basket.isEmpty()){
+             printer.buyResult(priceSum);
         }
-        printer.buyResult(priceSum);
+        else {
+            for (Map.Entry<Vehicle, Integer> entry : this.basket.entrySet()) {
+                Vehicle key = entry.getKey();
+                priceSum += key.getPrice();
+            }
+            printer.buyResult(priceSum);
+        }
     }
 
     public void lastFiveGoods(Vehicle vehicle) {
@@ -73,8 +84,7 @@ public class GoodsStoreBasket {
             }
             last5Add.set(countNum, vehicle);
             countNum++;
-        }
-        else last5Add.add(vehicle);
+        } else last5Add.add(vehicle);
         count++;
     }
 
@@ -91,5 +101,9 @@ public class GoodsStoreBasket {
     public void printBeforeRemove() {
         printer.beforeRemove(this.basket, this.keys);
 
+    }
+
+    public void printBasketListBeforeCopy() {
+        printer.beforeCopy(this.basket);
     }
 }

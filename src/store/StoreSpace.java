@@ -1,5 +1,9 @@
 package store;
 
+import store.PurchaseOrder.DateOfOrder;
+import store.PurchaseOrder.OrderList;
+import store.PurchaseOrder.Orders;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -9,6 +13,7 @@ public class StoreSpace {
         VehicleStore vehicleStore = new VehicleStore();
         GoodsStoreBasket storeBasket = new GoodsStoreBasket();
         PrinterOfStore printer = new PrinterOfStore();
+        Orders orders = new Orders();
         printer.menu();
         while (true) {
             String command = reader.readLine();
@@ -32,13 +37,19 @@ public class StoreSpace {
                 BufferedReader reader2 = new BufferedReader(new InputStreamReader(System.in));
                 String innerCommand = reader2.readLine();
                 storeBasket.removeVehicle(storeBasket, innerCommand);
-                if (innerCommand.equals("0")) {
-                    printer.menu();
+            }
+            if (command.equals("order")) {
+                if (storeBasket.getBasket().isEmpty())
+                storeBasket.printBasketListBeforeCopy();
+                else {
+                orders.addNewOrder(storeBasket);
+                printer.orderIsReady();
+                printer.menu();
                 }
             }
+            if (command.equals("orderList")) orders.printAllOrders();
             if (command.equals("last")) storeBasket.lookLastFiveGoods();
-            if (command.equals("menu")) printer.menu();
-
+            if (command.equals("menu")) printer.menu(); 
             if (command.equals("-1")) break;
         }
     }

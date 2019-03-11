@@ -11,12 +11,22 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
     private Date orderDay;
 
     public DateOfOrder() throws IOException, ParseException {
-        System.out.println("Введите дату в формате dd.MM.yyyy");
+        System.out.println("Введите дату в формате dd.MM.yyyy в диапазоне с 01.03.2019 по 12.12.2022");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String date = reader.readLine();
         SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy");
-        orderDay = s.parse(date);
-        System.out.println(s.format(orderDay));
+        String from = "01.03.2019";
+        String last = "12.12.2022";
+        Date fromDate = s.parse(from);
+        Date lastDate = s.parse(last);
+        if (s.parse(date).compareTo(fromDate) > -1 && s.parse(date).compareTo(lastDate) < 1){
+            orderDay = s.parse(date);
+            System.out.println("Вы ввели - " + s.format(orderDay));
+        }
+        else {
+            System.out.println("Вы ввели неверный формат даты, повторите ввод.");
+
+        }
     }
 
     public Date getOrderDay() {
@@ -30,7 +40,13 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
         return firstDay.compareTo(sacondDay);
     }
 
-    public static void main(String[] args) throws NullPointerException{
+    @Override
+    public String toString() {
+        SimpleDateFormat s = new SimpleDateFormat("dd.MM.yyyy");
+        return s.format(orderDay);
+    }
+
+    /*public static void main(String[] args) throws NullPointerException{
         DateOfOrder n = null;
         DateOfOrder n2 = null;
         try {
@@ -50,6 +66,6 @@ public class DateOfOrder implements Comparable<DateOfOrder> {
         System.out.println(n.compareTo(n2));
 
 
-    }
+    }*/
 
 }
