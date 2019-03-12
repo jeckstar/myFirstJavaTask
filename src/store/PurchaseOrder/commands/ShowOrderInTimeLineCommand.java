@@ -4,7 +4,6 @@ import store.PurchaseOrder.DateOfOrder;
 import store.PurchaseOrder.Orders;
 import store.Vehicle;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -19,7 +18,7 @@ public class ShowOrderInTimeLineCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         if (!orders.getInnerTreeMap().isEmpty()) {
             try {
                 DateOfOrder from = new DateOfOrder();
@@ -31,18 +30,17 @@ public class ShowOrderInTimeLineCommand extends BaseChain {
                         System.out.println("Заказы в заданом диапазоне:\n" +
                                 "Дата заказа - " + key + "\n" +
                                 "Ваш заказ:");
-                        for (int i = 0; i < value.size(); i++) {
-                            System.out.println(value.get(i));
+                        for (Vehicle vehicle : value) {
+                            System.out.println(vehicle);
                         }
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
+            } catch (IOException | ParseException e) {
                 e.printStackTrace();
             }
         } else System.out.println("Список заказов пуст.");
 
+        return true;
     }
 
     @Override

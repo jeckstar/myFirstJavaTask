@@ -11,8 +11,9 @@ public class LookLastFiveCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         basket.lookLastFiveGoods();
+        return true;
     }
 
     @Override

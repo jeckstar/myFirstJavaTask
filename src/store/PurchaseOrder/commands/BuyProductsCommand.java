@@ -12,8 +12,9 @@ public class BuyProductsCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         basket.buyBasketContents();
+        return true;
     }
 
     @Override

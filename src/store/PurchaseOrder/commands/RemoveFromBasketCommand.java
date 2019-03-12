@@ -18,7 +18,7 @@ public class RemoveFromBasketCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         basket.printBeforeRemove();
         String innerCommand = null;
         if (!basket.getBasket().isEmpty()) {
@@ -29,6 +29,7 @@ public class RemoveFromBasketCommand extends BaseChain {
             }
             basket.removeVehicle(basket, innerCommand);
         }
+        return true;
     }
 
     @Override

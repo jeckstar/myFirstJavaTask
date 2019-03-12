@@ -13,8 +13,9 @@ public class ShowBasketCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         basket.printBasketList();
+        return true;
     }
 
     @Override

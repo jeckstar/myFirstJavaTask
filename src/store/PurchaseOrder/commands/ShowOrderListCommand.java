@@ -11,8 +11,9 @@ public class ShowOrderListCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         orders.printAllOrders();
+        return true;
     }
 
     @Override

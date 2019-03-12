@@ -12,8 +12,9 @@ public class ShowProductsCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         vehicleStore.printStoreList();
+        return true;
     }
 
     @Override

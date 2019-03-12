@@ -7,9 +7,9 @@ public class BreakCommand extends BaseChain {
     }
 
     @Override
-    protected void execute() {
-
-
+    protected boolean execute() {
+        System.out.println("До встречи!");
+        return false;
     }
 
     @Override

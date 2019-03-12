@@ -21,19 +21,18 @@ public class MakeOrderCommand extends BaseChain{
     }
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         if (basket.getBasket().isEmpty())
             basket.printBasketListBeforeCopy();
         else {
             try {
                 orders.addNewOrder(basket);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
+            } catch (IOException | ParseException e) {
                 e.printStackTrace();
             }
             printer.orderIsReady();
         }
+        return true;
     }
 
     @Override

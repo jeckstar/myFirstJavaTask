@@ -5,7 +5,6 @@ import store.VehicleStore;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class AddProductToBasketCommand extends BaseChain {
     private final VehicleStore vehicleStore;
@@ -21,7 +20,7 @@ public class AddProductToBasketCommand extends BaseChain {
 
 
     @Override
-    protected void execute() {
+    protected boolean execute() {
         vehicleStore.listOfItem();
         String innerCommand = null;
         try {
@@ -30,6 +29,7 @@ public class AddProductToBasketCommand extends BaseChain {
             e.printStackTrace();
         }
         storeBasket.addVehicle(vehicleStore, innerCommand);
+        return true;
     }
 
     @Override
