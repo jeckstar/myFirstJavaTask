@@ -34,15 +34,6 @@ public class PrinterOfStore {
         }
     }
 
-    /*public void menu() {
-        System.out.println("Введите 1 + enter для просмотра товара в наличии\n" +
-                "Введите -1 + enter завершение визита магазина\n" +
-                "Введите 2 + enter для просмотра корзины\n" +
-                "Введите order + enter для выполнения заказа\n" +
-                "Введите orderList + enter для просмотра заказа\n" +
-                "Введите orderTime + enter для просмотра заказа\n" +
-                "Введите buy + enter для покупки товара из корзины");
-    }*/
 
     public void basketList(Map<Vehicle, Integer> basket) {
         if (basket.isEmpty()) {

@@ -15,7 +15,9 @@ public class Orders {
     private PrinterOfStore printer = new PrinterOfStore();
 
 
-
+    public TreeMap<DateOfOrder, List<Vehicle>> getInnerTreeMap() {
+        return innerTreeMap;
+    }
 
     public void addNewOrder(GoodsStoreBasket storeBasket) throws IOException, ParseException{
         OrderList listOfOrders = new OrderList();

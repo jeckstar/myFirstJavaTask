@@ -19,7 +19,6 @@ public class StoreSpace {
             String command = reader.readLine();
             commandsSequence.handleCommand(command);
 
-////            if (command.equals("orderTime"))
 ////            if (command.equals("exit")) break;
         }
     }
@@ -30,7 +29,8 @@ public class StoreSpace {
         VehicleStore vehicleStore = new VehicleStore();
         Orders orders = new Orders();
         PrinterOfStore printer = new PrinterOfStore();
-        final LookLastFiveCommand last = new LookLastFiveCommand(BaseChain.NO_OP_CHAIN, "last", storeBasket);
+        final BreakCommand breakCommand = new BreakCommand(BaseChain.NO_OP_CHAIN,"exit");
+        final LookLastFiveCommand last = new LookLastFiveCommand(breakCommand, "last", storeBasket);
         final ShowOrderInTimeLineCommand orderTime = new ShowOrderInTimeLineCommand(last, "orderTime", orders);
         final ShowOrderListCommand order = new ShowOrderListCommand(orderTime, "orderList", orders);
         final MakeOrderCommand orderCommand = new MakeOrderCommand(order, "order", storeBasket, orders, printer);

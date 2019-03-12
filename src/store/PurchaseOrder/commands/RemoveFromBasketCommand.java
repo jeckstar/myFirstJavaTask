@@ -21,12 +21,14 @@ public class RemoveFromBasketCommand extends BaseChain {
     protected void execute() {
         basket.printBeforeRemove();
         String innerCommand = null;
-        try {
-            innerCommand = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!basket.getBasket().isEmpty()) {
+            try {
+                innerCommand = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            basket.removeVehicle(basket, innerCommand);
         }
-        basket.removeVehicle(basket, innerCommand);
     }
 
     @Override
