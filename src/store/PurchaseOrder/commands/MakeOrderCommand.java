@@ -38,6 +38,6 @@ public class MakeOrderCommand extends BaseChain{
 
     @Override
     protected void printCommandGoal() {
-        System.out.println("Для оформления заказа введите order + enter");
+        System.out.println("Введите order + enter для оформления заказа.");
     }
 }

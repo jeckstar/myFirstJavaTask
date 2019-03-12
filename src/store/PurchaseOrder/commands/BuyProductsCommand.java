@@ -18,6 +18,6 @@ public class BuyProductsCommand extends BaseChain {
 
     @Override
     protected void printCommandGoal() {
-        System.out.println("Для покупки товаров из корзины введите - buy + enter.");
+        System.out.println("Введите buy + enter для покупки товаров из корзины.");
     }
 }

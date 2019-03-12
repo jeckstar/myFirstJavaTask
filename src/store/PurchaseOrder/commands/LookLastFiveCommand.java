@@ -17,6 +17,6 @@ public class LookLastFiveCommand extends BaseChain {
 
     @Override
     protected void printCommandGoal() {
-        System.out.println("Для просмотра информации о 5 последних добавленных таварах введите last + enter");
+        System.out.println("Введите last + enter для просмотра информации о 5 последних добавленных таварах.");
     }
 }

@@ -33,6 +33,6 @@ public class RemoveFromBasketCommand extends BaseChain {
 
     @Override
     protected void printCommandGoal() {
-        System.out.println("Для удаления из корзины введите - car + enter");
+        System.out.println("Введите car + enter для удаления из корзины.");
     }
 }
