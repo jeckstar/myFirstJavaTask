@@ -13,11 +13,6 @@ public class TextFile implements Iterable<String> {
         this.reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
     }
 
-    public String getPath() {
-        return path;
-    }
-
-
     public void readFile() {
         try{
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
@@ -36,7 +31,7 @@ public class TextFile implements Iterable<String> {
         return new TextIterator();
     }
 
-    private class TextIterator implements Iterator {
+    private class TextIterator implements Iterator<String> {
         private String nextLine = null;
 
         @Override
@@ -55,7 +50,7 @@ public class TextFile implements Iterable<String> {
         }
 
         @Override
-        public Object next() {
+        public String next() {
             if (nextLine != null || hasNext()) {
                 String line = nextLine;
                 nextLine = null;
