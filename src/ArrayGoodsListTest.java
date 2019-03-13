@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -752,5 +753,18 @@ public class ArrayGoodsListTest {
             StringHashCodeIsSumOfFirstFoursChar value = entry.getValue();
             System.out.println(key + " " + value);
         }
+    }
+
+    @Test
+    public void streams() {
+        final List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        integers.iterator();
+        for (Iterator<Integer> iterator = integers.iterator(); iterator.hasNext(); ) {
+            Integer integer = iterator.next();
+
+        }
+        Stream.of(1, 2, 3, 4, 5, 6)
+                .peek(System.out::println)
+                .forEach(i -> System.out.println(ArrayGoodsListTest.this));
     }
 }
