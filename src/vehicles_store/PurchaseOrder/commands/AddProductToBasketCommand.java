@@ -1,6 +1,8 @@
 package vehicles_store.PurchaseOrder.commands;
 
 import vehicles_store.GoodsStoreBasket;
+import vehicles_store.LastFiveCash;
+import vehicles_store.Vehicle;
 import vehicles_store.VehicleStore;
 
 import java.io.BufferedReader;
@@ -10,12 +12,14 @@ public class AddProductToBasketCommand extends BaseChain {
     private final VehicleStore vehicleStore;
     private final GoodsStoreBasket storeBasket;
     private final BufferedReader reader;
+    private final LastFiveCash lastFiveCash;
 
-    public AddProductToBasketCommand(BaseChain next, String code, VehicleStore vehicleStore, GoodsStoreBasket storeBasket, BufferedReader reader) {
+    public AddProductToBasketCommand(BaseChain next, String code, VehicleStore vehicleStore, GoodsStoreBasket storeBasket, BufferedReader reader, LastFiveCash lastFiveCash) {
         super(next, code);
         this.vehicleStore = vehicleStore;
         this.storeBasket = storeBasket;
         this.reader = reader;
+        this.lastFiveCash = lastFiveCash;
     }
 
 
@@ -28,7 +32,10 @@ public class AddProductToBasketCommand extends BaseChain {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        storeBasket.addVehicle(vehicleStore, innerCommand);
+        Vehicle vehicle = storeBasket.addVehicle(vehicleStore, innerCommand);
+        if (vehicle != null){
+            lastFiveCash.lastFiveGoods(vehicle);
+        }
         return true;
     }
 

@@ -1,18 +1,19 @@
 package vehicles_store.PurchaseOrder.commands;
 
 import vehicles_store.GoodsStoreBasket;
+import vehicles_store.LastFiveCash;
 
 public class LookLastFiveCommand extends BaseChain {
-    private final GoodsStoreBasket basket;
+    private final LastFiveCash lastFiveCash;
 
-    public LookLastFiveCommand(BaseChain next, String code, GoodsStoreBasket basket) {
+    public LookLastFiveCommand(BaseChain next, String code, LastFiveCash lastFiveCash) {
         super(next, code);
-        this.basket = basket;
+        this.lastFiveCash = lastFiveCash;
     }
 
     @Override
     protected boolean execute() {
-        basket.lookLastFiveGoods();
+        lastFiveCash.lookLastFiveGoods();
         return true;
     }
 

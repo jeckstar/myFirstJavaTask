@@ -8,33 +8,32 @@ public class GoodsStoreBasket {
     private Map<Vehicle, Integer> basket = new LinkedHashMap<>();
     private Map<String, Vehicle> keys = new LinkedHashMap<>();
     private PrinterOfStore printer = new PrinterOfStore();
-    private ArrayList<Vehicle> last5Add = new ArrayList<>();
-    private int count = 0;
-    private int countNum = 0;
-
 
     public Map<Vehicle, Integer> getBasket() {
         return basket;
     }
 
-    public void addVehicle(VehicleStore vehicleStore, String car) {
+    public Vehicle addVehicle(VehicleStore vehicleStore, String car) {
         if (vehicleStore.containsVehicle(car) && basket.containsKey(vehicleStore.getVehicle(car)) && basket.get(vehicleStore.getVehicle(car)) > 0) {
             int num = basket.get(vehicleStore.getVehicle(car));
             basket.put(vehicleStore.getVehicle(car), ++num);
             printer.addElementIsTrue();
-
-            lastFiveGoods(vehicleStore.getVehicle(car));
+            return vehicleStore.getVehicle(car);
+            //lastFiveGoods(vehicleStore.getVehicle(car));
 
         } else if (!basket.containsKey(vehicleStore) && vehicleStore.containsVehicle(car)) {
             basket.put(vehicleStore.getVehicle(car), 1);
             keys.put(car, vehicleStore.getVehicle(car));
             printer.addElementIsTrue();
+            return vehicleStore.getVehicle(car);
 
-            lastFiveGoods(vehicleStore.getVehicle(car));
+            //lastFiveGoods(vehicleStore.getVehicle(car));
 
         } else if (!vehicleStore.containsVehicle(car)) {
             printer.addElementIsFalse();
+            return null;
         }
+        return null;
     }
 
     public Vehicle getElementOfBasket(String key) {
@@ -84,27 +83,5 @@ public class GoodsStoreBasket {
         printer.beforeCopy(this.basket);
     }
 
-    public void lastFiveGoods(Vehicle vehicle) {
-        if (count > 4) {
-            if (countNum > 4) {
-                count = 0;
-                last5Add.set(count, vehicle);
-            }
-            last5Add.set(countNum, vehicle);
-            countNum++;
-        } else last5Add.add(vehicle);
-        count++;
-    }
-
-    public void lookLastFiveGoods() {
-        if(last5Add.isEmpty()){
-            System.out.println("Пусто");
-        }
-        else {
-            for (Vehicle vehicle : last5Add) {
-                System.out.println(vehicle);
-            }
-        }
-    }
 
 }
