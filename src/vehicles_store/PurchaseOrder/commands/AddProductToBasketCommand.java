@@ -1,7 +1,7 @@
-package store.PurchaseOrder.commands;
+package vehicles_store.PurchaseOrder.commands;
 
-import store.GoodsStoreBasket;
-import store.VehicleStore;
+import vehicles_store.GoodsStoreBasket;
+import vehicles_store.VehicleStore;
 
 import java.io.BufferedReader;
 import java.io.IOException;

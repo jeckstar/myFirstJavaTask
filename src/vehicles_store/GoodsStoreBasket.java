@@ -1,4 +1,4 @@
-package store;
+package vehicles_store;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,10 +12,6 @@ public class GoodsStoreBasket {
     private int count = 0;
     private int countNum = 0;
 
-
-    public GoodsStoreBasket() {
-        this.basket = basket;
-    }
 
     public Map<Vehicle, Integer> getBasket() {
         return basket;
@@ -75,6 +71,19 @@ public class GoodsStoreBasket {
         }
     }
 
+    public void printBasketList() {
+        printer.basketList(this.basket);
+    }
+
+    public void printBeforeRemove() {
+        printer.beforeRemove(this.basket, this.keys);
+
+    }
+
+    public void printBasketListBeforeCopy() {
+        printer.beforeCopy(this.basket);
+    }
+
     public void lastFiveGoods(Vehicle vehicle) {
         if (count > 4) {
             if (countNum > 4) {
@@ -98,16 +107,4 @@ public class GoodsStoreBasket {
         }
     }
 
-    public void printBasketList() {
-        printer.basketList(this.basket);
-    }
-
-    public void printBeforeRemove() {
-        printer.beforeRemove(this.basket, this.keys);
-
-    }
-
-    public void printBasketListBeforeCopy() {
-        printer.beforeCopy(this.basket);
-    }
 }

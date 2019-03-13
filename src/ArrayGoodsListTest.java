@@ -1,5 +1,4 @@
 import org.junit.Test;
-import store.Vehicle;
 
 import java.util.*;
 import java.util.stream.Collectors;

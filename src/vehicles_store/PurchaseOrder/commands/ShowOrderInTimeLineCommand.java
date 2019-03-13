@@ -1,8 +1,8 @@
-package store.PurchaseOrder.commands;
+package vehicles_store.PurchaseOrder.commands;
 
-import store.PurchaseOrder.DateOfOrder;
-import store.PurchaseOrder.Orders;
-import store.Vehicle;
+import vehicles_store.PurchaseOrder.DateOfOrder;
+import vehicles_store.PurchaseOrder.Orders;
+import vehicles_store.Vehicle;
 
 import java.io.IOException;
 import java.text.ParseException;

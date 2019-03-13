@@ -1,4 +1,4 @@
-package store;
+package vehicles_store;
 
 import java.util.Objects;
 

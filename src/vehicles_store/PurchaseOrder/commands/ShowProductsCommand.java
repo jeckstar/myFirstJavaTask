@@ -1,6 +1,6 @@
-package store.PurchaseOrder.commands;
+package vehicles_store.PurchaseOrder.commands;
 
-import store.VehicleStore;
+import vehicles_store.VehicleStore;
 
 public class ShowProductsCommand extends BaseChain {
 

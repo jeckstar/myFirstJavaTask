@@ -1,8 +1,7 @@
-package store.PurchaseOrder;
+package vehicles_store.PurchaseOrder;
 
-import store.GoodsStoreBasket;
-import store.StoreSpace;
-import store.Vehicle;
+import vehicles_store.GoodsStoreBasket;
+import vehicles_store.Vehicle;
 
 import java.io.IOException;
 import java.text.ParseException;

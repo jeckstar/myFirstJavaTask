@@ -1,4 +1,4 @@
-package store;
+package vehicles_store;
 
 import java.util.Objects;
 
@@ -40,5 +40,5 @@ public class Car extends Vehicle {
     public void setMachineSeries(String machineSeries) {
         this.machineSeries = machineSeries;
     }
-    
+
 }

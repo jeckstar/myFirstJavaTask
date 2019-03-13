@@ -1,6 +1,6 @@
-package store.PurchaseOrder.commands;
+package vehicles_store.PurchaseOrder.commands;
 
-import store.PurchaseOrder.Orders;
+import vehicles_store.PurchaseOrder.Orders;
 
 public class ShowOrderListCommand extends BaseChain {
     private final Orders orders;

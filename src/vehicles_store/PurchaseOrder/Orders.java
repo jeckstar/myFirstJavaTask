@@ -1,13 +1,12 @@
-package store.PurchaseOrder;
+package vehicles_store.PurchaseOrder;
 
-import store.GoodsStoreBasket;
-import store.PrinterOfStore;
-import store.Vehicle;
+import vehicles_store.GoodsStoreBasket;
+import vehicles_store.PrinterOfStore;
+import vehicles_store.Vehicle;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class Orders {

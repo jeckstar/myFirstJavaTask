@@ -1,4 +1,4 @@
-package store.PurchaseOrder;
+package vehicles_store.PurchaseOrder;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package store.PurchaseOrder.commands;
+package vehicles_store.PurchaseOrder.commands;
 
 public abstract class BaseChain implements ChainMaster {
 

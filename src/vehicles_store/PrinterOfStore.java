@@ -1,6 +1,6 @@
-package store;
+package vehicles_store;
 
-import store.PurchaseOrder.DateOfOrder;
+import vehicles_store.PurchaseOrder.DateOfOrder;
 
 import java.util.List;
 import java.util.Map;

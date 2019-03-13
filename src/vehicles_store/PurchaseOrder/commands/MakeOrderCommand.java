@@ -1,8 +1,8 @@
-package store.PurchaseOrder.commands;
+package vehicles_store.PurchaseOrder.commands;
 
-import store.GoodsStoreBasket;
-import store.PrinterOfStore;
-import store.PurchaseOrder.Orders;
+import vehicles_store.GoodsStoreBasket;
+import vehicles_store.PrinterOfStore;
+import vehicles_store.PurchaseOrder.Orders;
 
 import java.io.IOException;
 import java.text.ParseException;
