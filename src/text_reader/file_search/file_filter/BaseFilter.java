@@ -32,8 +32,6 @@ public abstract class BaseFilter implements FilterMaster {
 
     protected abstract boolean execute();
 
-
-
     protected abstract void printCommandGoal();
 
 }

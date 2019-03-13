@@ -1,6 +1,7 @@
 package text_reader.file_search.file_filter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class DateRangeFilter extends BaseFilter {
     private final BufferedReader reader;
@@ -12,6 +13,13 @@ public class DateRangeFilter extends BaseFilter {
 
     @Override
     protected boolean execute() {
+        try {
+            System.out.println("Введите диапазон дат изменения файла:");
+            String line = reader.readLine();
+            System.out.println(line);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
