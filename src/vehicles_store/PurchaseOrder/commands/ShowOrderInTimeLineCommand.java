@@ -19,7 +19,7 @@ public class ShowOrderInTimeLineCommand extends BaseChain {
 
     @Override
     protected boolean execute() {
-        if (!orders.getInnerTreeMap().isEmpty()) {
+        if (!orders.isEmpty()) {
             try {
                 DateOfOrder from = new DateOfOrder();
                 DateOfOrder to = new DateOfOrder();

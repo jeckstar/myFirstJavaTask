@@ -29,4 +29,8 @@ public class Orders {
 
     }
 
+    public boolean isEmpty(){
+        return innerTreeMap.isEmpty();
+    }
+
 }
