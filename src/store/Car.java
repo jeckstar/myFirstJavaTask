@@ -40,14 +40,5 @@ public class Car extends Vehicle {
     public void setMachineSeries(String machineSeries) {
         this.machineSeries = machineSeries;
     }
-
-    public static void main(String[] args) {
-        Car car = new Car("a", "b", 123, "chi", 4);
-        Car car2 = new Car("a", "b", 123, "chi", 4);
-
-        System.out.println(car.toString());
-        System.out.println(car.equals(car2));
-
-    }
-
+    
 }
