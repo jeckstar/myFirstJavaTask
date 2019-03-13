@@ -754,16 +754,4 @@ public class ArrayGoodsListTest {
             System.out.println(key + " " + value);
         }
     }
-
-    @Test
-    public void hren() {
-        final HashMap<Vehicle, String> map = new HashMap<>();
-        final Vehicle vehicle1 = new Vehicle("1", "1", 1, 1);
-        final Vehicle vehicle2 = new Vehicle("2", "1", 1,1);
-        map.put(vehicle1, "1");
-        map.put(vehicle2, "2");
-        vehicle2.setModel("1");
-        assertEquals("1", map.get(vehicle1));
-        assertEquals("2", map.get(vehicle2));
-    }
 }
