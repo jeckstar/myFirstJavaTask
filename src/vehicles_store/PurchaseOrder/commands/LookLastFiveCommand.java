@@ -1,6 +1,5 @@
 package vehicles_store.PurchaseOrder.commands;
 
-import vehicles_store.GoodsStoreBasket;
 import vehicles_store.LastFiveCash;
 
 public class LookLastFiveCommand extends BaseChain {
@@ -13,7 +12,7 @@ public class LookLastFiveCommand extends BaseChain {
 
     @Override
     protected boolean execute() {
-        lastFiveCash.lookLastFiveGoods();
+        lastFiveCash.lastFiveGoods();
         return true;
     }
 

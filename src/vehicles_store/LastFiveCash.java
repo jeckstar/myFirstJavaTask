@@ -1,31 +1,22 @@
 package vehicles_store;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class LastFiveCash {
-    private int count = 0;
-    private int countNum = 0;
-    private ArrayList<Vehicle> last5Add = new ArrayList<>();
+public class LastFiveCash extends LinkedHashMap<Integer, Vehicle> {
 
-    public void lastFiveGoods(Vehicle vehicle) {
-        if (count > 4) {
-            if (countNum > 4) {
-                count = 0;
-                last5Add.set(count, vehicle);
-            }
-            last5Add.set(countNum, vehicle);
-            countNum++;
-        } else last5Add.add(vehicle);
-        count++;
+    private int id;
+
+    public void add(Vehicle vehicle) {
+        put(id++, vehicle);
     }
 
-    public void lookLastFiveGoods() {
-        if (last5Add.isEmpty()) {
-            System.out.println("Пусто");
-        } else {
-            for (Vehicle vehicle : last5Add) {
-                System.out.println(vehicle);
-            }
-        }
+    public void lastFiveGoods() {
+        values().forEach(System.out::println);
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<Integer, Vehicle> eldest) {
+        return size() > 5;
     }
 }

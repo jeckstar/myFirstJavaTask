@@ -19,7 +19,7 @@ public class GoodsStoreBasket {
             basket.put(vehicleStore.getVehicle(car), ++num);
             printer.addElementIsTrue();
             return vehicleStore.getVehicle(car);
-            //lastFiveGoods(vehicleStore.getVehicle(car));
+            //add(vehicleStore.getVehicle(car));
 
         } else if (!basket.containsKey(vehicleStore) && vehicleStore.containsVehicle(car)) {
             basket.put(vehicleStore.getVehicle(car), 1);
@@ -27,7 +27,7 @@ public class GoodsStoreBasket {
             printer.addElementIsTrue();
             return vehicleStore.getVehicle(car);
 
-            //lastFiveGoods(vehicleStore.getVehicle(car));
+            //add(vehicleStore.getVehicle(car));
 
         } else if (!vehicleStore.containsVehicle(car)) {
             printer.addElementIsFalse();

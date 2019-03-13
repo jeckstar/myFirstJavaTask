@@ -34,7 +34,7 @@ public class AddProductToBasketCommand extends BaseChain {
         }
         Vehicle vehicle = storeBasket.addVehicle(vehicleStore, innerCommand);
         if (vehicle != null){
-            lastFiveCash.lastFiveGoods(vehicle);
+            lastFiveCash.add(vehicle);
         }
         return true;
     }
