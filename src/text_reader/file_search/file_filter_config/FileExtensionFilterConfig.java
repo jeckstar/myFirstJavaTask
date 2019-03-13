@@ -1,14 +1,16 @@
-package text_reader.file_search.file_filter;
+package text_reader.file_search.file_filter_config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class FileExtensionFilter extends BaseFilter {
+public class FileExtensionFilterConfig extends BaseFilterConfig {
     private final BufferedReader reader;
+    private final FilterConfig config;
 
-    public FileExtensionFilter(BaseFilter next, BufferedReader reader) {
+    public FileExtensionFilterConfig(BaseFilterConfig next, BufferedReader reader, FilterConfig config) {
         super(next);
         this.reader = reader;
+        this.config = config;
     }
 
     @Override
@@ -17,6 +19,7 @@ public class FileExtensionFilter extends BaseFilter {
             System.out.println("Введите расширение файла:");
             String line = reader.readLine();
             System.out.println(line);
+            config.setExtension(line);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,14 +1,15 @@
 package text_reader.file_search;
 
-import text_reader.file_search.file_filter.*;
+import text_reader.file_search.file_filter_config.*;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class SearchMenu {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         final FilterMaster commandsSequence = createCommandsSequence();
         while (waitForTheNextCommand(commandsSequence)) {
         }
@@ -24,12 +25,17 @@ public class SearchMenu {
         }
     }
 
-    private static FilterMaster createCommandsSequence() {
+    private static FilterMaster createCommandsSequence() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        final DateRangeFilter dateRangeFilter = new DateRangeFilter(null, reader);
-        final SizeRangeFilter sizeRenge = new SizeRangeFilter(dateRangeFilter, reader);
-        final FileExtensionFilter extetsion = new FileExtensionFilter(sizeRenge, reader);
-        return new NameFilter(extetsion, reader);
+        FileCatalog fileCatalog = new FileCatalog();
+        File[] filesInCatalog = fileCatalog.getFileList(); //список файлов в каталоге
+        FilteredFileList filteredFileList = new FilteredFileList(); // Которые подошли тут
+        FilterConfig config = new FilterConfig();
+        final DateRangeFilterConfig dateRangeFilter = new DateRangeFilterConfig(null, reader, config);
+        final SizeRangeFilterConfig sizeRenge = new SizeRangeFilterConfig(dateRangeFilter, reader, config);
+        final FileExtensionFilterConfig extetsion = new FileExtensionFilterConfig(sizeRenge, reader, config);
+        return new NameFilterConfig(extetsion, reader, config);
     }
 
 }
+//              "C://Users//User//Desktop//GIT BASH

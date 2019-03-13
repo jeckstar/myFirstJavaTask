@@ -1,14 +1,21 @@
-package text_reader.file_search.file_filter;
+package text_reader.file_search.file_filter_config;
+
+import text_reader.file_search.FilteredFileList;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 
-public class NameFilter extends BaseFilter {
+public class NameFilterConfig extends BaseFilterConfig {
     private final BufferedReader reader;
+    private final FilterConfig config;
+    private final FilteredFileList filteredFileList = null;
+    private final File[] filesInCatalog = null;
 
-    public NameFilter(BaseFilter next, BufferedReader reader) {
+    public NameFilterConfig(BaseFilterConfig next, BufferedReader reader, FilterConfig config) {
         super(next);
         this.reader = reader;
+        this.config = config;
     }
 
     @Override
@@ -16,7 +23,7 @@ public class NameFilter extends BaseFilter {
         try {
             System.out.println("Введите имя файла:");
             String line = reader.readLine();
-            System.out.println(line);
+            config.setName(line);
         } catch (IOException e) {
             e.printStackTrace();
         }

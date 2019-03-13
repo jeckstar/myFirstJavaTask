@@ -1,15 +1,16 @@
-package text_reader.file_search.file_filter;
+package text_reader.file_search.file_filter_config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public abstract class BaseFilter implements FilterMaster {
-    private final BaseFilter next;
+public abstract class BaseFilterConfig implements FilterMaster {
+    private final BaseFilterConfig next;
     private final String commandYes = "1";
     private final String commandNo = "0";
 
-    protected BaseFilter(BaseFilter next) {
+
+    protected BaseFilterConfig(BaseFilterConfig next) {
         this.next = next;
     }
 
@@ -24,7 +25,8 @@ public abstract class BaseFilter implements FilterMaster {
             e.printStackTrace();
         }
         if (code.equals(commandYes)) {
-            return execute();
+            execute();
+            return next.handleCommand();
         } else if (code.equals(commandNo)) {
             return next.handleCommand();
         } else return false;

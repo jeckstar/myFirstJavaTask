@@ -1,14 +1,16 @@
-package text_reader.file_search.file_filter;
+package text_reader.file_search.file_filter_config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class SizeRangeFilter extends BaseFilter {
+public class SizeRangeFilterConfig extends BaseFilterConfig {
     private final BufferedReader reader;
+    private final FilterConfig config;
 
-    public SizeRangeFilter(BaseFilter next, BufferedReader reader) {
+    public SizeRangeFilterConfig(BaseFilterConfig next, BufferedReader reader, FilterConfig config) {
         super(next);
         this.reader = reader;
+        this.config = config;
     }
 
     @Override
@@ -16,7 +18,9 @@ public class SizeRangeFilter extends BaseFilter {
         try {
             System.out.println("Введите диапазону размеров файла:");
             String line = reader.readLine();
-            System.out.println(line);
+            long size = Long.parseLong(line);
+            System.out.println(size);
+            config.setSize(size);
         } catch (IOException e) {
             e.printStackTrace();
         }
