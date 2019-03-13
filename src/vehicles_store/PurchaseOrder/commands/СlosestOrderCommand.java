@@ -1,5 +1,6 @@
 package vehicles_store.PurchaseOrder.commands;
 
+import vehicles_store.PurchaseOrder.CompletedOrder;
 import vehicles_store.PurchaseOrder.DateOfOrder;
 import vehicles_store.PurchaseOrder.Orders;
 import vehicles_store.Vehicle;
@@ -20,29 +21,24 @@ public class СlosestOrderCommand extends BaseChain {
 
     @Override
     protected boolean execute() {
-        if (!orders.getInnerTreeMap().isEmpty()) {
+        if (!orders.isEmpty()) {
             try {
-                List<DateOfOrder> datelist = new ArrayList<>();
+                final List<CompletedOrder> allOrdersInformation = orders.getAllOrdersInformation();
                 DateOfOrder closestDate = new DateOfOrder();
-                for (Map.Entry<DateOfOrder, List<Vehicle>> entry : orders.getInnerTreeMap().entrySet()) {
-                    DateOfOrder key = entry.getKey();
-                    List<Vehicle> value = entry.getValue();
-                    datelist.add(key);
-                }
-                DateOfOrder closestKey = null;
-                for (int i = datelist.size()-1; i > 0 ; i--) {
-                    if (closestDate.compareTo(datelist.get(i)) > -1) {
-                        closestKey = datelist.get(i);
+                CompletedOrder closestOrder = null;
+                for (int i = allOrdersInformation.size() - 1; i > 0; i--) {
+                    if (closestDate.compareTo(allOrdersInformation.get(i).getDate()) > -1) {
+                        closestOrder = allOrdersInformation.get(i);
                         break;
+                    } else {
+                        closestOrder = allOrdersInformation.get(0);
                     }
-                    else closestKey = datelist.get(0);
 
                 }
-
-                System.out.println("Ближайший заказ - " + closestKey + "\n" +
+                System.out.println("Ближайший заказ - " + closestOrder.getDate() + "\n" +
                         "Ваш заказ:");
-                List<Vehicle> vehicles = orders.getInnerTreeMap().get(closestKey);
-                for (Vehicle vehicle : vehicles) {
+
+                for (Vehicle vehicle : closestOrder.getVehicles()) {
                     System.out.println(vehicle);
                 }
             } catch (IOException | ParseException e) {

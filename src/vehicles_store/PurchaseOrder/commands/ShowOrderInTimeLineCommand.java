@@ -1,5 +1,6 @@
 package vehicles_store.PurchaseOrder.commands;
 
+import vehicles_store.PurchaseOrder.CompletedOrder;
 import vehicles_store.PurchaseOrder.DateOfOrder;
 import vehicles_store.PurchaseOrder.Orders;
 import vehicles_store.Vehicle;
@@ -23,14 +24,12 @@ public class ShowOrderInTimeLineCommand extends BaseChain {
             try {
                 DateOfOrder from = new DateOfOrder();
                 DateOfOrder to = new DateOfOrder();
-                for (Map.Entry<DateOfOrder, List<Vehicle>> entry : orders.getInnerTreeMap().entrySet()) {
-                    DateOfOrder key = entry.getKey();
-                    List<Vehicle> value = entry.getValue();
-                    if (key.compareTo(from) > -1 && key.compareTo(to) < 1) {
+                for (CompletedOrder completedOrder : orders.getAllOrdersInformation()) {
+                    if (completedOrder.getDate().compareTo(from) > -1 && completedOrder.getDate().compareTo(to) < 1) {
                         System.out.println("Заказы в заданом диапазоне:\n" +
-                                "Дата заказа - " + key + "\n" +
+                                "Дата заказа - " + completedOrder.getDate() + "\n" +
                                 "Ваш заказ:");
-                        for (Vehicle vehicle : value) {
+                        for (Vehicle vehicle : completedOrder.getVehicles()) {
                             System.out.println(vehicle);
                         }
                     }

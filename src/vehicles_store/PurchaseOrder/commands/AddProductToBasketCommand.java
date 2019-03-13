@@ -7,6 +7,7 @@ import vehicles_store.VehicleStore;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.ParseException;
 
 public class AddProductToBasketCommand extends BaseChain {
     private final VehicleStore vehicleStore;
