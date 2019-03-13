@@ -22,31 +22,36 @@ public class СlosestOrderCommand extends BaseChain {
     @Override
     protected boolean execute() {
         if (!orders.isEmpty()) {
-            try {
-                final List<CompletedOrder> allOrdersInformation = orders.getAllOrdersInformation();
-                DateOfOrder closestDate = new DateOfOrder();
-                CompletedOrder closestOrder = null;
-                for (int i = allOrdersInformation.size() - 1; i > 0; i--) {
-                    if (closestDate.compareTo(allOrdersInformation.get(i).getDate()) > -1) {
-                        closestOrder = allOrdersInformation.get(i);
-                        break;
-                    } else {
-                        closestOrder = allOrdersInformation.get(0);
-                    }
-
-                }
-                System.out.println("Ближайший заказ - " + closestOrder.getDate() + "\n" +
-                        "Ваш заказ:");
-
-                for (Vehicle vehicle : closestOrder.getVehicles()) {
-                    System.out.println(vehicle);
-                }
-            } catch (IOException | ParseException e) {
-                e.printStackTrace();
-            }
+            findClosestOrder();
         } else System.out.println("Список заказов пуст.");
-
         return true;
+    }
+
+    private void findClosestOrder() {
+        try {
+            final List<CompletedOrder> allOrdersInformation = orders.getAllOrdersInformation();
+            DateOfOrder closestDate = new DateOfOrder();
+            CompletedOrder closestOrder = null;
+            for (int i = allOrdersInformation.size() - 1; i > 0; i--) {
+                if (closestDate.compareTo(allOrdersInformation.get(i).getDate()) > -1) {
+                    closestOrder = allOrdersInformation.get(i);
+                    break;
+                } else {
+                    closestOrder = allOrdersInformation.get(0);
+                }
+            }
+            showClosestOrder(closestOrder);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void showClosestOrder(CompletedOrder closestOrder) {
+        System.out.println("Ближайший заказ - " + closestOrder.getDate() + "\n" +
+                "Ваш заказ:");
+        for (Vehicle vehicle : closestOrder.getVehicles()) {
+            System.out.println(vehicle);
+        }
     }
 
     @Override
