@@ -45,7 +45,7 @@ public class СlosestOrderCommand extends BaseChain {
             e.printStackTrace();
         }
     }
-    
+
     private void showClosestOrder(CompletedOrder closestOrder) {
         System.out.println("Ближайший заказ - " + closestOrder.getDate() + "\n" +
                 "Ваш заказ:");
