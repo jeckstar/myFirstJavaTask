@@ -6,28 +6,25 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 
-public class NameFilterConfig extends BaseFilterConfig {
+public class NameFilter extends BaseFilter {
     private final BufferedReader reader;
-    private final FilterConfig config;
     private final FilteredFileList filteredFileList = null;
     private final File[] filesInCatalog = null;
 
-    public NameFilterConfig(BaseFilterConfig next, BufferedReader reader, FilterConfig config) {
+    public NameFilter(BaseFilter next, BufferedReader reader) {
         super(next);
         this.reader = reader;
-        this.config = config;
     }
 
     @Override
-    protected boolean execute() {
+    protected void execute() {
         try {
             System.out.println("Введите имя файла:");
             String line = reader.readLine();
-            config.setName(line);
+            System.out.println(line);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
     }
 
     @Override

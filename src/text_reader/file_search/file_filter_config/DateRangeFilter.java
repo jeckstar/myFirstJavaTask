@@ -3,29 +3,23 @@ package text_reader.file_search.file_filter_config;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class DateRangeFilterConfig extends BaseFilterConfig {
+public class DateRangeFilter extends BaseFilter {
     private final BufferedReader reader;
-    private final FilterConfig config;
 
-    public DateRangeFilterConfig(BaseFilterConfig next, BufferedReader reader, FilterConfig config) {
+    public DateRangeFilter(BaseFilter next, BufferedReader reader) {
         super(next);
         this.reader = reader;
-        this.config = config;
     }
 
     @Override
-    protected boolean execute() {
+    protected void execute() {
         try {
             System.out.println("Введите диапазон дат изменения файла:");
             String line = reader.readLine();
-            long date = Long.parseLong(line);
             System.out.println(line);
-            config.setDate(date);
-            config.print();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
     }
 
     @Override

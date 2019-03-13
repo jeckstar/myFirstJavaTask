@@ -30,12 +30,12 @@ public class SearchMenu {
         FileCatalog fileCatalog = new FileCatalog();
         File[] filesInCatalog = fileCatalog.getFileList(); //список файлов в каталоге
         FilteredFileList filteredFileList = new FilteredFileList(); // Которые подошли тут
-        FilterConfig config = new FilterConfig();
-        final DateRangeFilterConfig dateRangeFilter = new DateRangeFilterConfig(null, reader, config);
-        final SizeRangeFilterConfig sizeRenge = new SizeRangeFilterConfig(dateRangeFilter, reader, config);
-        final FileExtensionFilterConfig extetsion = new FileExtensionFilterConfig(sizeRenge, reader, config);
-        return new NameFilterConfig(extetsion, reader, config);
+        final DateRangeFilter dateRangeFilter = new DateRangeFilter(null, reader);
+        final SizeRangeFilter sizeRenge = new SizeRangeFilter(dateRangeFilter, reader);
+        final FileExtensionFilter extetsion = new FileExtensionFilter(sizeRenge, reader);
+        return new NameFilter(extetsion, reader);
     }
+    
 
 }
 //              "C://Users//User//Desktop//GIT BASH

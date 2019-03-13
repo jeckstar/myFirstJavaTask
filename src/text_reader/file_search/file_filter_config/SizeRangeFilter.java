@@ -3,28 +3,23 @@ package text_reader.file_search.file_filter_config;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class SizeRangeFilterConfig extends BaseFilterConfig {
+public class SizeRangeFilter extends BaseFilter {
     private final BufferedReader reader;
-    private final FilterConfig config;
 
-    public SizeRangeFilterConfig(BaseFilterConfig next, BufferedReader reader, FilterConfig config) {
+    public SizeRangeFilter(BaseFilter next, BufferedReader reader) {
         super(next);
         this.reader = reader;
-        this.config = config;
     }
 
     @Override
-    protected boolean execute() {
+    protected void execute() {
         try {
             System.out.println("Введите диапазону размеров файла:");
             String line = reader.readLine();
-            long size = Long.parseLong(line);
-            System.out.println(size);
-            config.setSize(size);
+            System.out.println(line);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
     }
 
     @Override

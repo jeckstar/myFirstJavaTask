@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public abstract class BaseFilterConfig implements FilterMaster {
-    private final BaseFilterConfig next;
+public abstract class BaseFilter implements FilterMaster {
+    private final BaseFilter next;
     private final String commandYes = "1";
     private final String commandNo = "0";
 
 
-    protected BaseFilterConfig(BaseFilterConfig next) {
+    protected BaseFilter(BaseFilter next) {
         this.next = next;
     }
 
@@ -32,7 +32,7 @@ public abstract class BaseFilterConfig implements FilterMaster {
         } else return false;
     }
 
-    protected abstract boolean execute();
+    protected abstract void execute();
 
     protected abstract void printCommandGoal();
 

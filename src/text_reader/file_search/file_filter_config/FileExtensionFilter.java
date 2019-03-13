@@ -3,27 +3,23 @@ package text_reader.file_search.file_filter_config;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class FileExtensionFilterConfig extends BaseFilterConfig {
+public class FileExtensionFilter extends BaseFilter {
     private final BufferedReader reader;
-    private final FilterConfig config;
 
-    public FileExtensionFilterConfig(BaseFilterConfig next, BufferedReader reader, FilterConfig config) {
+    public FileExtensionFilter(BaseFilter next, BufferedReader reader) {
         super(next);
         this.reader = reader;
-        this.config = config;
     }
 
     @Override
-    protected boolean execute() {
+    protected void execute() {
         try {
             System.out.println("Введите расширение файла:");
             String line = reader.readLine();
             System.out.println(line);
-            config.setExtension(line);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
     }
 
     @Override
