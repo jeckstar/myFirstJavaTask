@@ -3,6 +3,7 @@ package text_reader.file_search.file_filter_config.ConfigFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 public class AddConfig {
 
@@ -10,8 +11,8 @@ public class AddConfig {
     private String type = null;
     private long fromSize = 0;
     private long toSize = 0;
-    private long fromDate = 0;
-    private long toDate = 0;
+    private Date fromDate = null;
+    private Date toDate = null;
 
     public void setName(String name) {
         this.name = name;
@@ -29,14 +30,13 @@ public class AddConfig {
         this.toSize = toSize;
     }
 
-    public void setFromDate(long fromDate) {
+    public void setFromDate(Date fromDate) {
         this.fromDate = fromDate;
     }
 
-    public void setToDate(long toDate) {
+    public void setToDate(Date toDate) {
         this.toDate = toDate;
     }
-
 
     public String getName() {
         return name;
@@ -54,11 +54,11 @@ public class AddConfig {
         return toSize;
     }
 
-    public long getFromDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
-    public long getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 }

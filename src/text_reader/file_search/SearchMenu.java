@@ -7,10 +7,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class SearchMenu {
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         final FilterMaster commandsSequence = createCommandsSequence();
         while (waitForTheNextCommand(commandsSequence)) {
         }
@@ -31,6 +36,9 @@ public class SearchMenu {
         AddConfig addConfig = new AddConfig();
         FileCatalog fileCatalog = new FileCatalog();
         File[] filesInCatalog = fileCatalog.getFileList(); //список файлов в каталоге
+        for (File f: filesInCatalog) {
+            System.out.println(f);
+        }
         FilteredFileList filteredFileList = new FilteredFileList(); // Которые подошли тут
         final Filter filter = new Filter(BaseFilter.NO_OP_CHAIN, addConfig, filesInCatalog, filteredFileList);
         final DateRangeConfig dateRangeFilter = new DateRangeConfig(filter, reader, addConfig);
@@ -38,7 +46,5 @@ public class SearchMenu {
         final FileExtensionConfig extetsion = new FileExtensionConfig(sizeRenge, reader, addConfig);
         return new NameConfig(extetsion, reader, addConfig);
     }
-    
-
 }
-//              "C://Users//User//Desktop//GIT BASH
+//              C://Users//User//Desktop//GIT BASH

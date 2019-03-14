@@ -1,9 +1,11 @@
 package text_reader.file_search.file_filter_config;
 
 import text_reader.file_search.file_filter_config.ConfigFilter.AddConfig;
+import text_reader.file_search.file_filter_config.ConfigFilter.LastModDate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.ParseException;
 
 public class DateRangeConfig extends BaseFilter {
     private final BufferedReader reader;
@@ -19,17 +21,11 @@ public class DateRangeConfig extends BaseFilter {
     @Override
     protected boolean execute() {
         try {
-            System.out.println("Введите диапазон дат изменения файла:\n" +
-                    "от:");
-            String line = reader.readLine();
-            System.out.println(line);
-            long fromDate = Long.parseLong(line);
-            addConfig.setFromDate(fromDate);
-            System.out.println("до:");
-            String line2 = reader.readLine();
-            System.out.println(line2);
-            long toDate = Long.parseLong(line2);
-            addConfig.setToDate(toDate);
+            LastModDate lastModDate = new LastModDate();
+            addConfig.setFromDate(lastModDate.getFromThisDate());
+            addConfig.setToDate(lastModDate.getToThisDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

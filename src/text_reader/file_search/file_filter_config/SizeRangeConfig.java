@@ -19,17 +19,17 @@ public class SizeRangeConfig extends BaseFilter {
     @Override
     protected boolean execute() {
         try {
-            System.out.println("Введите диапазону размеров файла:\n"+
-                    "от:");
+            System.out.println("Введите диапазон размеров файла в килобайтах:\n" +
+                    "от килобайт:");
             String line = reader.readLine();
-            System.out.println(line);
+            System.out.println(line + " килобайт");
             long fromSize = Long.parseLong(line);
-            addConfig.setFromSize(fromSize);
-            System.out.println("до:");
+            addConfig.setFromSize(1024 * fromSize);
+            System.out.println("до килобайт:");
             String line2 = reader.readLine();
-            System.out.println(line2);
+            System.out.println(line2 + " килобайт");
             long toSize = Long.parseLong(line2);
-            addConfig.setToSize(toSize);
+            addConfig.setToSize(1024 * toSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
