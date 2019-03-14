@@ -41,7 +41,6 @@ public class FileCatalog {
 
     public File[] getFileList() {
         File[] innerCatalog = catalog.listFiles();
-        //innerCatalog = checkFilesAndReturnArray(innerCatalog);
         return checkFilesAndReturnArray(innerCatalog);
     }
 
