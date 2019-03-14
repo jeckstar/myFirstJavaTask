@@ -1,6 +1,7 @@
 package text_reader.file_search;
 
 import text_reader.file_search.file_filter_config.*;
+import text_reader.file_search.file_filter_config.ConfigFilter.AddConfig;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,21 +20,23 @@ public class SearchMenu {
         System.out.println();
         try {
             return commandsSequence.handleCommand();
-        } catch (NoSuchCommandException e) {
-            System.out.println("ERROR! Команда введена неверно! Введите корректную команду.");
-            return true;
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Поиск завершен.");
+            return false;
         }
     }
 
     private static FilterMaster createCommandsSequence() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        AddConfig addConfig = new AddConfig();
         FileCatalog fileCatalog = new FileCatalog();
         File[] filesInCatalog = fileCatalog.getFileList(); //список файлов в каталоге
         FilteredFileList filteredFileList = new FilteredFileList(); // Которые подошли тут
-        final DateRangeFilter dateRangeFilter = new DateRangeFilter(null, reader);
-        final SizeRangeFilter sizeRenge = new SizeRangeFilter(dateRangeFilter, reader);
-        final FileExtensionFilter extetsion = new FileExtensionFilter(sizeRenge, reader);
-        return new NameFilter(extetsion, reader);
+        final Filter filter = new Filter(BaseFilter.NO_OP_CHAIN, addConfig, filesInCatalog, filteredFileList);
+        final DateRangeConfig dateRangeFilter = new DateRangeConfig(filter, reader, addConfig);
+        final SizeRangeConfig sizeRenge = new SizeRangeConfig(dateRangeFilter, reader, addConfig);
+        final FileExtensionConfig extetsion = new FileExtensionConfig(sizeRenge, reader, addConfig);
+        return new NameConfig(extetsion, reader, addConfig);
     }
     
 

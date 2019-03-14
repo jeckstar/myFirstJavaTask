@@ -9,8 +9,20 @@ public abstract class BaseFilter implements FilterMaster {
     private final String commandYes = "1";
     private final String commandNo = "0";
 
+    public static final BaseFilter NO_OP_CHAIN = new BaseFilter(null) {
+        @Override
+        protected boolean execute() {
+            throw new UnsupportedOperationException();
+        }
 
-    protected BaseFilter(BaseFilter next) {
+        @Override
+        protected void printCommandGoal() {
+            throw new UnsupportedOperationException();
+        }
+
+    };
+
+        protected BaseFilter(BaseFilter next) {
         this.next = next;
     }
 
@@ -26,13 +38,14 @@ public abstract class BaseFilter implements FilterMaster {
         }
         if (code.equals(commandYes)) {
             execute();
-            return next.handleCommand();
+            next.handleCommand();
+            return true;
         } else if (code.equals(commandNo)) {
             return next.handleCommand();
-        } else return false;
+        } else return true;
     }
 
-    protected abstract void execute();
+    protected abstract boolean execute();
 
     protected abstract void printCommandGoal();
 
