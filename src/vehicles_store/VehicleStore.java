@@ -1,9 +1,10 @@
 package vehicles_store;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class VehicleStore {
+public class VehicleStore implements Serializable {
     private Map<Vehicle, Integer> vehicleAvailability = new LinkedHashMap<>();
     private Map<String, Vehicle> keys = new LinkedHashMap<>();
     private PrinterOfStore printer = new PrinterOfStore();

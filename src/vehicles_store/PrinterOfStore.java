@@ -2,11 +2,12 @@ package vehicles_store;
 
 import vehicles_store.PurchaseOrder.DateOfOrder;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PrinterOfStore {
+public class PrinterOfStore implements Serializable {
 
     public PrinterOfStore() {
     }

@@ -1,9 +1,10 @@
 package vehicles_store;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LastFiveCash extends LinkedHashMap<Integer, Vehicle> {
+public class LastFiveCash extends LinkedHashMap<Integer, Vehicle> implements Serializable {
 
     private int id;
 

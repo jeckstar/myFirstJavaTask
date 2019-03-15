@@ -1,10 +1,11 @@
 package vehicles_store;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GoodsStoreBasket {
+public class GoodsStoreBasket implements Serializable {
     private Map<Vehicle, Integer> basket = new LinkedHashMap<>();
     private Map<String, Vehicle> keys = new LinkedHashMap<>();
     private PrinterOfStore printer = new PrinterOfStore();

@@ -1,8 +1,9 @@
 package vehicles_store;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Vehicle {
+public class Vehicle implements Serializable {
 
     private String model;
     private String color;
@@ -71,10 +72,4 @@ public class Vehicle {
         return this.model + " " + this.color + " " + this.maxSpeed + " " + this.price;
     }
 
-    public static void main(String[] args) {
-        Vehicle a = new Vehicle("a", "B", 123, 1);
-        Vehicle b = new Vehicle("a", "B", 123, 1);
-        System.out.println(b.toString());
-        System.out.println(a.equals(b));
-    }
 }
