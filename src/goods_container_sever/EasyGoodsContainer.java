@@ -37,5 +37,4 @@ public class EasyGoodsContainer implements Serializable {
         }
         return rerurnToString;
     }
-
 }

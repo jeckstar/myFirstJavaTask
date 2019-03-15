@@ -1,5 +1,6 @@
 package vehicles_store;
 
+import goods_container_sever.EasyConteinerReaderAndSaver;
 import vehicles_store.PurchaseOrder.Orders;
 import vehicles_store.PurchaseOrder.commands.*;
 
@@ -27,15 +28,20 @@ public class StoreSpace {
         }
     }
 
-    private static ChainMaster createCommandsSequence() {
+    private static ChainMaster createCommandsSequence() throws IOException, ClassNotFoundException {
         LastFiveCash lastFiveCash = new LastFiveCash();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        GoodsStoreBasket storeBasket = new GoodsStoreBasket();
+
+        EasyConteinerReaderAndSaver easyGoodsContainer = new EasyConteinerReaderAndSaver();
+        GoodsStoreBasket storeBasket = easyGoodsContainer.readBasket();
+
+       // GoodsStoreBasket storeBasket = new GoodsStoreBasket();
+
         VehicleStore vehicleStore = new VehicleStore();
         Orders orders = new Orders();
         PrinterOfStore printer = new PrinterOfStore();
         final СlosestOrderCommand closest = new СlosestOrderCommand(BaseChain.NO_OP_CHAIN, "closestOrder", orders);
-        final BreakCommand breakCommand = new BreakCommand(closest, "exit");
+        final BreakCommand breakCommand = new BreakCommand(closest, "exit", storeBasket);
         final LookLastFiveCommand last = new LookLastFiveCommand(breakCommand, "last", lastFiveCash);
         final ShowOrderInTimeLineCommand orderTime = new ShowOrderInTimeLineCommand(last, "orderTime", orders);
         final ShowOrderListCommand order = new ShowOrderListCommand(orderTime, "orderList", orders);

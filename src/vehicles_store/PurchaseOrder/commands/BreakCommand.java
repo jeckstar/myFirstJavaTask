@@ -1,13 +1,27 @@
 package vehicles_store.PurchaseOrder.commands;
 
-public class BreakCommand extends BaseChain {
+import goods_container_sever.EasyConteinerReaderAndSaver;
+import vehicles_store.GoodsStoreBasket;
 
-    public BreakCommand(BaseChain next, String code) {
+import java.io.IOException;
+
+public class BreakCommand extends BaseChain {
+    private EasyConteinerReaderAndSaver easyConteinerReaderAndSaver = new EasyConteinerReaderAndSaver();
+    private final GoodsStoreBasket storeBasket;
+
+
+    public BreakCommand(BaseChain next, String code, GoodsStoreBasket storeBasket) {
         super(next, code);
+        this.storeBasket = storeBasket;
     }
 
     @Override
     protected boolean execute() {
+        try {
+            easyConteinerReaderAndSaver.saveBasket(storeBasket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("До встречи!");
         return false;
     }
