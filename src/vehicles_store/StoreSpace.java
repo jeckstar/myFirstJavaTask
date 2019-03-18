@@ -28,7 +28,6 @@ public class StoreSpace {
         }
     }
 
-
     private static ChainMaster createCommandsSequence() throws IOException, ClassNotFoundException {
         LastFiveCash lastFiveCash = new LastFiveCash();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

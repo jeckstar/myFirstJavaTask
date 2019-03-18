@@ -40,13 +40,13 @@ public class VehicleStore implements Serializable {
         keys.put("car8", car8);
 
     }
-    public boolean addNewItem(String model, String color, int maxSpeed, String machineSeries, int prise, int countOfItem){
+    public boolean addNewVehicle(Vehicle vehicle, int countOfItem){
         countOfItemInStore++;
-        keys.put("car"+countOfItemInStore, new Car(model, color, maxSpeed, machineSeries, prise));
+        keys.put("car"+countOfItemInStore, vehicle);
         vehicleAvailability.put(keys.get("car"+countOfItemInStore), countOfItem);
         return true;
-
     }
+
 
     public boolean containsVehicle(String car) {
         return keys.containsKey(car);
