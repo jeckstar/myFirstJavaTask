@@ -1,6 +1,7 @@
-package vehicles_store.PurchaseOrder.commands.store_admin_config;
+package vehicles_store.PurchaseOrder.commands.store_admin_config.add_from_console;
 
-import vehicles_store.Car;
+import vehicles_store.PurchaseOrder.commands.store_admin_config.AddItemToStoreStrategies;
+import vehicles_store.SuperCar;
 import vehicles_store.Vehicle;
 import vehicles_store.VehicleStore;
 
@@ -8,11 +9,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class AddNewCarToStore implements AddItemToStore{
+public class AddNewSuperCarToStore implements AddItemToStoreStrategies {
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private VehicleStore vehicleStore;
 
-    public AddNewCarToStore(VehicleStore vehicleStore) {
+    public AddNewSuperCarToStore(VehicleStore vehicleStore) {
         this.vehicleStore = vehicleStore;
     }
 
@@ -21,10 +22,56 @@ public class AddNewCarToStore implements AddItemToStore{
         String color = getColor();
         int maxSpeed = getMaxSpeed();
         String machineSeries = getMachineSeries();
-        int prise = getPrise();
         int countOfItem = getCountOfItem();
-        Vehicle vehicle = new Car(model, color, maxSpeed, machineSeries, prise);
+        int prise = getPrise();
+        boolean canFly = isCanFly();
+        boolean canTransform = isCanTransform();
+        Vehicle vehicle = new SuperCar(model, color, maxSpeed, machineSeries, prise, canFly, canTransform);
         vehicleStore.addNewVehicle(vehicle, countOfItem);
+    }
+
+    private boolean isCanTransform() {
+        System.out.println("может ли суперкар трансформироваться? (y/n)");
+        String command = null;
+        boolean canTransform = false;
+        try {
+            command = reader.readLine();
+        } catch (IOException e) {
+            repMessage();
+        }
+        if (command.equals("y")) {
+            canTransform = true;
+        }
+        else if(command.equals("n")) {
+            canTransform = false;
+        } else {
+            repMessage();
+            canTransform = isCanTransform();
+        }
+
+        return canTransform;
+    }
+
+    private boolean isCanFly() {
+        System.out.println("может ли суперкар летать? (y/n)");
+        String command = null;
+        boolean canFly = false;
+        try {
+            command = reader.readLine();
+        } catch (IOException e) {
+            repMessage();
+        }
+        if (command.equals("y")) {
+            canFly = true;
+        }
+        else if(command.equals("n")) {
+            canFly = false;
+        } else {
+            repMessage();
+            canFly = isCanFly();
+        }
+
+        return canFly;
     }
 
     private int getCountOfItem() {
@@ -44,7 +91,7 @@ public class AddNewCarToStore implements AddItemToStore{
         }
         return countOfItem;
     }
-
+    
     private int getPrise() {
         System.out.println("введите стоимость авто:");
         int prise = 0;
@@ -112,7 +159,7 @@ public class AddNewCarToStore implements AddItemToStore{
     }
 
     private String getModel() {
-        System.out.println("введите модель авто (eng):");
+        System.out.println("введите модель суперкара(eng):");
         String model;
         try {
             model = reader.readLine();

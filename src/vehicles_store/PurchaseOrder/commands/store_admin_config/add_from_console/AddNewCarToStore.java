@@ -1,6 +1,7 @@
-package vehicles_store.PurchaseOrder.commands.store_admin_config;
+package vehicles_store.PurchaseOrder.commands.store_admin_config.add_from_console;
 
-import vehicles_store.Plane;
+import vehicles_store.Car;
+import vehicles_store.PurchaseOrder.commands.store_admin_config.AddItemToStoreStrategies;
 import vehicles_store.Vehicle;
 import vehicles_store.VehicleStore;
 
@@ -8,11 +9,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class AddNewPlaneToStore implements AddItemToStore {
+public class AddNewCarToStore implements AddItemToStoreStrategies {
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private VehicleStore vehicleStore;
 
-    public AddNewPlaneToStore(VehicleStore vehicleStore) {
+    public AddNewCarToStore(VehicleStore vehicleStore) {
         this.vehicleStore = vehicleStore;
     }
 
@@ -20,28 +21,11 @@ public class AddNewPlaneToStore implements AddItemToStore {
         String model = getModel();
         String color = getColor();
         int maxSpeed = getMaxSpeed();
-        int maxFlySpeed = getMaxFlySpeed();
+        String machineSeries = getMachineSeries();
         int prise = getPrise();
         int countOfItem = getCountOfItem();
-        Vehicle vehicle = new Plane(model, color, maxSpeed, maxFlySpeed, prise);
+        Vehicle vehicle = new Car(model, color, maxSpeed, machineSeries, prise);
         vehicleStore.addNewVehicle(vehicle, countOfItem);
-    }
-
-    private int getMaxFlySpeed() {
-        System.out.println("введите максимальную скорость полета");
-        int maxFlySpeed;
-        try {
-            maxFlySpeed = Integer.parseInt(reader.readLine());
-        } catch (IOException e) {
-            repMessage();
-            maxFlySpeed = getCountOfItem();
-        }
-        if (maxFlySpeed <= 0) {
-            System.out.println("повторите ввод!\n" +
-                    "вы ввели число меньше 0");
-            maxFlySpeed = getCountOfItem();
-        }
-        return maxFlySpeed;
     }
 
     private int getCountOfItem() {
@@ -79,6 +63,22 @@ public class AddNewPlaneToStore implements AddItemToStore {
         return prise;
     }
 
+    private String getMachineSeries() {
+        System.out.println("введите серию (eng):");
+        String machineSeries;
+        try {
+            machineSeries = reader.readLine();
+        } catch (IOException e) {
+            repMessage();
+            machineSeries = getMachineSeries();
+        }
+        if (machineSeries.isEmpty() || machineSeries.length() > 2) {
+            repMessage();
+            machineSeries = getMachineSeries();
+        }
+        return machineSeries;
+    }
+
     private int getMaxSpeed() {
         System.out.println("введите максимальную скорость (eng):");
         int maxSpeed = 0;
@@ -113,7 +113,7 @@ public class AddNewPlaneToStore implements AddItemToStore {
     }
 
     private String getModel() {
-        System.out.println("введите модель самолета (eng):");
+        System.out.println("введите модель авто (eng):");
         String model;
         try {
             model = reader.readLine();

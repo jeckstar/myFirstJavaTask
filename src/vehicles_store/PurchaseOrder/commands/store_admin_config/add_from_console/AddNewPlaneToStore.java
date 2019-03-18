@@ -1,7 +1,7 @@
-package vehicles_store.PurchaseOrder.commands.store_admin_config;
+package vehicles_store.PurchaseOrder.commands.store_admin_config.add_from_console;
 
 import vehicles_store.Plane;
-import vehicles_store.SuperCar;
+import vehicles_store.PurchaseOrder.commands.store_admin_config.AddItemToStoreStrategies;
 import vehicles_store.Vehicle;
 import vehicles_store.VehicleStore;
 
@@ -9,11 +9,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class AddNewSuperCarToStore implements AddItemToStore{
+public class AddNewPlaneToStore implements AddItemToStoreStrategies {
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private VehicleStore vehicleStore;
 
-    public AddNewSuperCarToStore(VehicleStore vehicleStore) {
+    public AddNewPlaneToStore(VehicleStore vehicleStore) {
         this.vehicleStore = vehicleStore;
     }
 
@@ -21,57 +21,28 @@ public class AddNewSuperCarToStore implements AddItemToStore{
         String model = getModel();
         String color = getColor();
         int maxSpeed = getMaxSpeed();
-        String machineSeries = getMachineSeries();
-        int countOfItem = getCountOfItem();
+        int maxFlySpeed = getMaxFlySpeed();
         int prise = getPrise();
-        boolean canFly = isCanFly();
-        boolean canTransform = isCanTransform();
-        Vehicle vehicle = new SuperCar(model, color, maxSpeed, machineSeries, prise, canFly, canTransform);
+        int countOfItem = getCountOfItem();
+        Vehicle vehicle = new Plane(model, color, maxSpeed, maxFlySpeed, prise);
         vehicleStore.addNewVehicle(vehicle, countOfItem);
     }
 
-    private boolean isCanTransform() {
-        System.out.println("может ли суперкар трансформироваться? (y/n)");
-        String command = null;
-        boolean canTransform = false;
+    private int getMaxFlySpeed() {
+        System.out.println("введите максимальную скорость полета");
+        int maxFlySpeed;
         try {
-            command = reader.readLine();
+            maxFlySpeed = Integer.parseInt(reader.readLine());
         } catch (IOException e) {
             repMessage();
+            maxFlySpeed = getCountOfItem();
         }
-        if (command.equals("y")) {
-            canTransform = true;
+        if (maxFlySpeed <= 0) {
+            System.out.println("повторите ввод!\n" +
+                    "вы ввели число меньше 0");
+            maxFlySpeed = getCountOfItem();
         }
-        else if(command.equals("n")) {
-            canTransform = false;
-        } else {
-            repMessage();
-            canTransform = isCanTransform();
-        }
-
-        return canTransform;
-    }
-
-    private boolean isCanFly() {
-        System.out.println("может ли суперкар летать? (y/n)");
-        String command = null;
-        boolean canFly = false;
-        try {
-            command = reader.readLine();
-        } catch (IOException e) {
-            repMessage();
-        }
-        if (command.equals("y")) {
-            canFly = true;
-        }
-        else if(command.equals("n")) {
-            canFly = false;
-        } else {
-            repMessage();
-            canFly = isCanFly();
-        }
-
-        return canFly;
+        return maxFlySpeed;
     }
 
     private int getCountOfItem() {
@@ -91,7 +62,7 @@ public class AddNewSuperCarToStore implements AddItemToStore{
         }
         return countOfItem;
     }
-    
+
     private int getPrise() {
         System.out.println("введите стоимость авто:");
         int prise = 0;
@@ -107,22 +78,6 @@ public class AddNewSuperCarToStore implements AddItemToStore{
             prise = getPrise();
         }
         return prise;
-    }
-
-    private String getMachineSeries() {
-        System.out.println("введите серию (eng):");
-        String machineSeries;
-        try {
-            machineSeries = reader.readLine();
-        } catch (IOException e) {
-            repMessage();
-            machineSeries = getMachineSeries();
-        }
-        if (machineSeries.isEmpty() || machineSeries.length() > 2) {
-            repMessage();
-            machineSeries = getMachineSeries();
-        }
-        return machineSeries;
     }
 
     private int getMaxSpeed() {
@@ -159,7 +114,7 @@ public class AddNewSuperCarToStore implements AddItemToStore{
     }
 
     private String getModel() {
-        System.out.println("введите модель суперкара(eng):");
+        System.out.println("введите модель самолета (eng):");
         String model;
         try {
             model = reader.readLine();

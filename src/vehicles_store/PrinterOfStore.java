@@ -31,7 +31,7 @@ public class PrinterOfStore implements Serializable {
         for (Map.Entry<Vehicle, Integer> entry : vehicleAvailability.entrySet()) {
             Vehicle key = entry.getKey();
             Integer value = entry.getValue();
-            System.out.println("Автомобиль \"" + key + "$, в наличии " + value + "\" экземпляр(ов/а).");
+            System.out.println("Товар \"" + key + "$, в наличии " + value + "\" экземпляр(ов/а).");
         }
     }
 
@@ -43,15 +43,9 @@ public class PrinterOfStore implements Serializable {
             for (Map.Entry<Vehicle, Integer> entry : basket.entrySet()) {
                 Vehicle key = entry.getKey();
                 Integer value = entry.getValue();
-                System.out.println("Автомобиль \"" + key + "$, в корзине " + value + "\" экземпляр(ов/а).");
+                System.out.println("Товар \"" + key + "$, в корзине " + value + "\" экземпляр(ов/а).");
             }
             System.out.println("Для удаления из корзины введите - car + enter\n");
-            /*System.out.println("Для покупки товаров из корзины введите - buy + enter\n" +
-                    "Для оформления заказа введите order + enter\n" +
-                    "Для удаления из корзины введите - car + enter\n" +
-                    "Для просмотра информации о 5 последних добавленных таварах введите last + enter\n" +
-                    "Для возврата в меню магазина введите menu + enter");
-                    */
         }
     }
 
@@ -73,7 +67,7 @@ public class PrinterOfStore implements Serializable {
                         carToString = innerKey;
                     }
                 }
-                System.out.println("Автомобиль \"" + key + "$ в наличии " + value + "\" экземпляр(ов/а). " + "Для удаления введите - " + carToString);
+                System.out.println("Товар \"" + key + "$ в наличии " + value + "\" экземпляр(ов/а). " + "Для удаления введите - " + carToString);
             }
         }
     }
@@ -94,7 +88,7 @@ public class PrinterOfStore implements Serializable {
             for (Map.Entry<Vehicle, Integer> entry : basket.entrySet()) {
                 Vehicle key = entry.getKey();
                 Integer value = entry.getValue();
-                System.out.println("Автомобиль \"" + key + "$, в корзине " + value + "\" экземпляр(ов/а).");
+                System.out.println("Товар \"" + key + "$, в корзине " + value + "\" экземпляр(ов/а).");
             }
         }
     }

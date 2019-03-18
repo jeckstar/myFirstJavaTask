@@ -5,6 +5,10 @@ import java.util.Objects;
 public class Plane extends Vehicle {
     private int maxFlySpeed;
 
+    public Plane(){
+
+    }
+
     public Plane(String model, String color, int maxSpeed,int maxFlySpeed, int price) {
         super(model, color, maxSpeed, price);
         this.maxFlySpeed = maxFlySpeed;
