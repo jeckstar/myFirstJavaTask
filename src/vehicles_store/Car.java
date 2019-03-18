@@ -29,6 +29,7 @@ public class Car extends Vehicle {
         return Objects.hash(super.hashCode(), machineSeries);
     }
 
+    @Override
     public String toString() {
         return "Модель - " + this.getModel() + ", цвет - " + this.getColor() + ", максимальная скорость - " + this.getMaxSpeed() + ", серия - " + this.machineSeries + ", стоимость - " + this.getPrice();
     }
