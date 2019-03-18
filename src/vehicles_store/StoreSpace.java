@@ -28,19 +28,17 @@ public class StoreSpace {
         }
     }
 
+
     private static ChainMaster createCommandsSequence() throws IOException, ClassNotFoundException {
         LastFiveCash lastFiveCash = new LastFiveCash();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
         EasyConteinerReaderAndSaver easyGoodsContainer = new EasyConteinerReaderAndSaver();
         GoodsStoreBasket storeBasket = easyGoodsContainer.readBasket();
-
-       // GoodsStoreBasket storeBasket = new GoodsStoreBasket();
-
         VehicleStore vehicleStore = new VehicleStore();
         Orders orders = new Orders();
         PrinterOfStore printer = new PrinterOfStore();
-        final СlosestOrderCommand closest = new СlosestOrderCommand(BaseChain.NO_OP_CHAIN, "closestOrder", orders);
+        final AddNewGoodsInStoreCatalogCommand addNew = new AddNewGoodsInStoreCatalogCommand(BaseChain.NO_OP_CHAIN, "newGoods", vehicleStore, reader);
+        final СlosestOrderCommand closest = new СlosestOrderCommand(addNew, "closestOrder", orders);
         final BreakCommand breakCommand = new BreakCommand(closest, "exit", storeBasket);
         final LookLastFiveCommand last = new LookLastFiveCommand(breakCommand, "last", lastFiveCash);
         final ShowOrderInTimeLineCommand orderTime = new ShowOrderInTimeLineCommand(last, "orderTime", orders);

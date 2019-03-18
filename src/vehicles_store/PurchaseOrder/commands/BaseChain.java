@@ -1,5 +1,7 @@
 package vehicles_store.PurchaseOrder.commands;
 
+import java.io.IOException;
+
 public abstract class BaseChain implements ChainMaster {
 
     public static final BaseChain NO_OP_CHAIN = new BaseChain(null, null) {
@@ -34,7 +36,7 @@ public abstract class BaseChain implements ChainMaster {
         }
     }
 
-    protected abstract boolean execute();
+    protected abstract boolean execute() ;
 
     @Override
     public void printCommandsSequence() {

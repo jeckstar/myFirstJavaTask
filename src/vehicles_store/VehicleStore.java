@@ -8,6 +8,7 @@ public class VehicleStore implements Serializable {
     private Map<Vehicle, Integer> vehicleAvailability = new LinkedHashMap<>();
     private Map<String, Vehicle> keys = new LinkedHashMap<>();
     private PrinterOfStore printer = new PrinterOfStore();
+    private int countOfItemInStore = 8;
 
 
     public VehicleStore() {
@@ -37,6 +38,13 @@ public class VehicleStore implements Serializable {
         keys.put("car6", car6);
         keys.put("car7", car7);
         keys.put("car8", car8);
+
+    }
+    public boolean addNewItem(String model, String color, int maxSpeed, String machineSeries, int prise, int countOfItem){
+        countOfItemInStore++;
+        keys.put("car"+countOfItemInStore, new Car(model, color, maxSpeed, machineSeries, prise));
+        vehicleAvailability.put(keys.get("car"+countOfItemInStore), countOfItem);
+        return true;
 
     }
 
