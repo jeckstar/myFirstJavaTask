@@ -40,11 +40,4 @@ public class SuperCar extends Car {
         this.canTransform = canTransform;
     }
 
-    public static void main(String[] args) {
-        SuperCar puperCar = new SuperCar("ace", "pad", 444, "Super", 2, true, false);
-        SuperCar IronCar = new SuperCar("Spidi", "Snack", 999, "SuperPuper", 1, true, true);
-        System.out.println(puperCar.toString());
-        System.out.println(puperCar.equals(IronCar));
-
-    }
 }
