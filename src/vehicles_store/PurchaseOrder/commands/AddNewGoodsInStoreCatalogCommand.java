@@ -43,8 +43,6 @@ public class AddNewGoodsInStoreCatalogCommand extends BaseChain {
     private AddItemToStoreStrategies strategies() {
         System.out.println("Добавить товар вручную - 1 ?\n" +
         "Добавить товар случайно - 2 ?");
-       // strategies.forEach(strategy -> System.out.println(strategy.description()));
-       // builders.forEach(builder -> System.out.println(builder.description()));
         String strategiesVariant = null;
         try {
             strategiesVariant = reader.readLine();
@@ -62,6 +60,7 @@ public class AddNewGoodsInStoreCatalogCommand extends BaseChain {
         } else System.out.println("Неккорректный выбор стратегии");
         return strategies();
     }
+
 
     private AddItemToStoreStrategies getChoiсe() throws IOException {
         addInfo();
