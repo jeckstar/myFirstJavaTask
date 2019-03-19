@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 public class SearchForNumbers {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private List<Integer> integerList = new ArrayList<>();
+    public ArrayList<Integer> integerList = new ArrayList<Integer>();
     private static int fromNum = 0;
     private static int toNum = 0;
 
@@ -16,13 +16,17 @@ public class SearchForNumbers {
         SearchForNumbers searchForNumbers = new SearchForNumbers();
         searchForNumbers.getКangeOfSearch();
 
-        SearchFirstHalf sfn = new SearchFirstHalf(fromNum, toNum);
+        SearchFirstHalf sfh = new SearchFirstHalf(fromNum, toNum);
         SearchSecondHalf ssh = new SearchSecondHalf(fromNum, toNum);
-        Thread threadF = new Thread(sfn);
+        Thread threadF = new Thread(sfh);
         Thread threadS = new Thread(ssh);
         threadF.start();
         threadS.start();
 
+        for (Integer i:
+                searchForNumbers.integerList) {
+            System.out.println(i);
+        }
     }
 
     private void getКangeOfSearch() throws IOException {

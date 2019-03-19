@@ -1,15 +1,15 @@
-package task_threads;
+package task_threads.task_executors;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFirstHalf implements Runnable {
+public class SearchFirstHalfByExecutors implements Runnable {
     private List<Integer> integerList = new ArrayList<>();
     private int fromNum;
     private int toNum;
 
 
-    public SearchFirstHalf(int fromNum, int toNum) {
+    public SearchFirstHalfByExecutors(int fromNum, int toNum) {
         this.fromNum = fromNum;
         this.toNum = toNum;
     }
@@ -39,3 +39,4 @@ public class SearchFirstHalf implements Runnable {
         }
     }
 }
+

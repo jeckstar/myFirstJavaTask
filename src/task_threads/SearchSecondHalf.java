@@ -31,11 +31,12 @@ public class SearchSecondHalf implements Runnable {
                     continue;
                 }
             }
-            if (isPrime && n>1) integerList.add(n);
+            if (isPrime && n > 1) integerList.add(n);
         }
-        for (Integer i:
+        for (Integer i :
                 integerList) {
             System.out.println(i);
         }
     }
+
 }
