@@ -21,12 +21,24 @@ public class SearchForNumbers {
     public static void main(String[] args) throws IOException, InterruptedException {
         SearchForNumbers searchForNumbers = new SearchForNumbers();
         searchForNumbers.getRangeOfSearch();
-
         if (path == 1) searchForNumbers.seachingByFirstOption();
         else if (path == 2) searchForNumbers.seachingBySecondOption();
         for (Integer i : integerList) {
             System.out.println(i);
         }
+        List<Integer> integers = new ArrayList<>();
+        for (int i = 1; i < 10000; i++) {
+            boolean isPrime = true;
+            int n = i;
+            for (int j = 2; j < n; j++) {
+                if ((n % j) == 0) {
+                    isPrime = false;
+                }
+            }
+            if (isPrime && n > 1) integers.add(n);
+        }
+        System.out.println("1 - " + integerList.size());
+        System.out.println("2 - " + integers.size());
     }
 
     private void getRangeOfSearch() throws IOException {

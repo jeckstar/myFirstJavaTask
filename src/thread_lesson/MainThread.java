@@ -5,13 +5,13 @@ public class MainThread {
 //        LiftOff liftOff = new LiftOff();
 //        liftOff.run();
 
-//        Thread thread = new Thread(new LiftOff());
-//        thread.start();
-//        System.out.println("Операция после LiftOff");
+        Thread thread = new Thread(new LiftOff());
+        thread.start();
+        System.out.println("Операция после LiftOff");
 
-        for (int i = 0; i < 5; i++) {
-            new Thread(new LiftOff()).start();
-            System.out.println("Операция после");
-        }
+//        for (int i = 0; i < 5; i++) {
+//            new Thread(new LiftOff()).start();
+//            System.out.println("Операция после");
+//        }
     }
 }
