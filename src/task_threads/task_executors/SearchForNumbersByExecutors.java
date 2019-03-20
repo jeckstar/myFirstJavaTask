@@ -1,36 +1,31 @@
 package task_threads.task_executors;
 
-import task_threads.SearchFirstHalf;
-import task_threads.SearchForNumbers;
-import task_threads.SearchSecondHalf;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class SearchForNumbersByExecutors {
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    public ArrayList<Integer> integerList = new ArrayList<Integer>();
     private static int fromNum = 0;
     private static int toNum = 0;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         SearchForNumbersByExecutors searching = new SearchForNumbersByExecutors();
         searching.getКangeOfSearch();
+        ArrayList<Integer> integerList = new ArrayList<>();
 
-        SearchFirstHalfByExecutors sfh = new SearchFirstHalfByExecutors(fromNum, toNum);
-        SearchSecondHalfByExecutors ssh = new SearchSecondHalfByExecutors(fromNum, toNum);
+        SearchFirstHalfByExecutors sfh = new SearchFirstHalfByExecutors(integerList, fromNum, toNum);
+        SearchSecondHalfByExecutors ssh = new SearchSecondHalfByExecutors(integerList, fromNum, toNum);
         ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.execute(sfh);
         executorService.execute(ssh);
         executorService.shutdown();
-
-
-        for (Integer i:
-                searching.integerList) {
+        TimeUnit.SECONDS.sleep(4);
+        for (Integer i : integerList) {
             System.out.println(i);
         }
     }

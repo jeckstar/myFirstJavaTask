@@ -3,24 +3,21 @@ package task_threads;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchSecondHalf implements Runnable {
-    private List<Integer> integerList = new ArrayList<>();
+public class SearchSecondOption implements Runnable {
+    private List<Integer> integerList;
     private int fromNum;
     private int toNum;
 
 
-    public SearchSecondHalf(int fromNum, int toNum) {
+    public SearchSecondOption(List<Integer> integerList, int fromNum, int toNum) {
+        this.integerList = integerList;
         this.fromNum = fromNum;
         this.toNum = toNum;
     }
 
-    private void changeFromNum() {
-        fromNum = toNum - (toNum - fromNum) / 2;
-    }
-
     @Override
     public void run() {
-        changeFromNum();
+        List<Integer> innerList = new ArrayList<>();
         System.out.println("[" + fromNum + " " + toNum + "]");
         for (int i = fromNum; i <= toNum; i++) {
             boolean isPrime = true;
@@ -31,12 +28,13 @@ public class SearchSecondHalf implements Runnable {
                     continue;
                 }
             }
-            if (isPrime && n > 1) integerList.add(n);
+            if (isPrime && n > 1) innerList.add(n);
         }
-        for (Integer i :
-                integerList) {
-            System.out.println(i);
-        }
+        integerList.addAll(innerList);
+//        for (Integer i :
+//                integerList) {
+//            System.out.println(i);
+//        }
     }
 
 }

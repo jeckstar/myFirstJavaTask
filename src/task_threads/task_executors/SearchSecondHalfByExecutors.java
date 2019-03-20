@@ -1,15 +1,15 @@
 package task_threads.task_executors;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchSecondHalfByExecutors implements Runnable{
-    private List<Integer> integerList = new ArrayList<>();
+    private List<Integer> integerList;
     private int fromNum;
     private int toNum;
 
 
-    public SearchSecondHalfByExecutors(int fromNum, int toNum) {
+    public SearchSecondHalfByExecutors(List<Integer> integerList, int fromNum, int toNum) {
+        this.integerList = integerList;
         this.fromNum = fromNum;
         this.toNum = toNum;
     }
