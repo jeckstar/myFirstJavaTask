@@ -21,6 +21,7 @@ public class SearchForNumbers {
     public static void main(String[] args) throws IOException, InterruptedException {
         SearchForNumbers searchForNumbers = new SearchForNumbers();
         searchForNumbers.getRangeOfSearch();
+
         if (path == 1) searchForNumbers.seachingByFirstOption();
         else if (path == 2) searchForNumbers.seachingBySecondOption();
         for (Integer i : integerList) {
@@ -46,12 +47,23 @@ public class SearchForNumbers {
             System.out.println(step);
             int threadCalling = 1;
             int startNum = fromNum;
+            List<Thread> threadList = new LinkedList<>();
             for (int i = 0; i < countOfThread; i++) {
                 System.out.println("Thread " + threadCalling++);
-                this.firstOption(startNum, startNum + step);
+                threadList.add(this.firstOption(startNum, startNum + step));
                 startNum += step;
             }
-        } else if (countOfThread == 1) this.firstOption(fromNum, toNum);
+            for (Thread thread: threadList) {
+                thread.start();
+            }
+            for (Thread thread: threadList) {
+                thread.join();
+            }
+        } else if (countOfThread == 1) {
+            Thread thread = this.firstOption(fromNum, toNum);
+            thread.start();
+            thread.join();
+        }
     }
 
     private void seachingBySecondOption() throws InterruptedException {
@@ -60,79 +72,32 @@ public class SearchForNumbers {
             System.out.println(step);
             int threadCalling = 1;
             int startNum = fromNum;
+            List<Thread> threadList = new LinkedList<>();
             for (int i = 0; i < countOfThread; i++) {
                 System.out.println("Thread " + threadCalling++);
-                this.secondOption(startNum, startNum + step);
+                threadList.add(this.secondOption(startNum, startNum + step));
                 startNum += step;
             }
-        } else if (countOfThread == 1) this.secondOption(fromNum, toNum);
-    }
-
-    private void firstOption(int fromNum, int toNum) throws InterruptedException {
-        SearchFirstOption sfh = new SearchFirstOption(integerList, fromNum, toNum);
-        Thread threadF = new Thread(sfh);
-        Date start = new Date();
-        threadF.start();
-        threadF.join();
-        Date finish = new Date();
-        long timeOfRun = finish.getTime() - start.getTime();
-        System.out.println("\n" + (double) timeOfRun / 1000);
-    }
-
-    private void secondOption(int fromNum, int toNum) throws InterruptedException {
-        SearchSecondOption ssh = new SearchSecondOption(integerList, fromNum, toNum);
-        Thread threadS = new Thread(ssh);
-        Date start = new Date();
-        threadS.start();
-        threadS.join();
-        Date finish = new Date();
-        long timeOfRun = finish.getTime() - start.getTime();
-        System.out.println("\n" + (double) timeOfRun / 1000);
-    }
-
-    private void firstOption1() throws InterruptedException {
-        List<Integer> integerList = new ArrayList<>();
-        int toNumLocal = changeToNum();
-        int fromNumLocal = toNumLocal;
-        SearchFirstOption sfh = new SearchFirstOption(integerList, fromNum, toNumLocal);
-        SearchFirstOption sfh2 = new SearchFirstOption(integerList, fromNumLocal, toNum);
-        Thread threadF = new Thread(sfh);
-        Thread threadF2 = new Thread(sfh2);
-        Date start = new Date();
-        threadF.start();
-        threadF2.start();
-        threadF.join();
-        threadF2.join();
-        Date finish = new Date();
-        long timeOfRun = finish.getTime() - start.getTime();
-        for (Integer i : integerList) {
-            System.out.println(i);
-        }
-        System.out.println("\n" + (double) timeOfRun / 1000);
-        TimeUnit.SECONDS.sleep(1);
-        List<Integer> newIntList = new LinkedList<>();
-        for (int i = 1; i < 10000; i++) {
-            boolean isPrime = true;
-            for (int j = 2; j < i; j++) {
-                if ((i % j) == 0) {
-                    isPrime = false;
-                }
+            for (Thread thread: threadList) {
+                thread.start();
             }
-            if (isPrime && i > 1) newIntList.add(i);
+            for (Thread thread: threadList) {
+                thread.join();
+            }
+        } else if (countOfThread == 1) {
+            Thread thread = this.secondOption(fromNum, toNum);
+            thread.start();
+            thread.join();
         }
-        final ArrayList<Integer> integers = new ArrayList<>(newIntList);
-        System.out.println("Integers size");
-        System.out.println(integerList.size());
-        System.out.println("Integers size");
-        System.out.println(integers.size());
-        integers.removeAll(integerList);
-        System.out.println("------------------------");
-        integers.forEach(System.out::println);
     }
 
-    private int changeToNum() {
-        return toNum - (toNum - fromNum) / 2;
+    private Thread firstOption(int fromNum, int toNum) {
+        SearchFirstOption sfh = new SearchFirstOption(integerList, fromNum, toNum);
+        return new Thread(sfh);
     }
 
-
+    private Thread secondOption(int fromNum, int toNum) throws InterruptedException {
+        SearchSecondOption ssh = new SearchSecondOption(integerList, fromNum, toNum);
+        return new Thread(ssh);
+    }
 }
