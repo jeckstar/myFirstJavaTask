@@ -26,17 +26,17 @@ public class EasyFileReader {
     private String getPath(){
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите путь файла!");
-//        try {
-            //path = reader.readLine();
-            path = "C:\\Users\\User\\IdeaProjects\\firstTask\\.idea\\workspace.xml";
+        try {
+            path = reader.readLine();
+            //path = "C:\\Users\\User\\IdeaProjects\\firstTask\\.idea\\workspace.xml";
             if(!checkFilePath()){
                 System.out.println("NO!");
                 return getPath();
             }
             else return path;
-//        } catch (IOException e) {
-//            System.out.println("Не верный ввод, повторите!!!");
-//            return getPath();
-//        }
+        } catch (IOException e) {
+            System.out.println("Не верный ввод, повторите!!!");
+            return getPath();
+        }
     }
 }

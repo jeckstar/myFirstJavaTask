@@ -8,6 +8,10 @@ public class LongestRepeatingByteSequenceInTheFileFinder {
 
 
     public static void main(String[] args) throws IOException {
+        ByteFinder byteFinder = new ByteFinder();
+        Thread byteFinderThread = new Thread(byteFinder);
+        byteFinderThread.start();
+
         FileConvertToByteArray fileConvertToByteArray = new FileConvertToByteArray();
         EasyFileReader fileReader = new EasyFileReader();
         File file = fileReader.getFile();
