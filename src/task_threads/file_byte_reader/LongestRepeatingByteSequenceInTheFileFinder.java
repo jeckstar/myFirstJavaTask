@@ -2,6 +2,7 @@ package task_threads.file_byte_reader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class LongestRepeatingByteSequenceInTheFileFinder {
 
@@ -10,7 +11,7 @@ public class LongestRepeatingByteSequenceInTheFileFinder {
         FileConvertToByteArray fileConvertToByteArray = new FileConvertToByteArray();
         EasyFileReader fileReader = new EasyFileReader();
         File file = fileReader.getFile();
-        byte[] fileByteArray = fileConvertToByteArray.covertFileToByteArray(file);
+        List<Byte> fileByteArray = fileConvertToByteArray.covertFileToByteArray(file);
         for (byte b: fileByteArray) {
             System.out.println(b);
         }
@@ -18,3 +19,4 @@ public class LongestRepeatingByteSequenceInTheFileFinder {
 }
 
 //   C://Users//User//Desktop//GIT BASH//GIT.txt
+//   C:\Users\User\IdeaProjects\firstTask\.idea\workspace.xml
