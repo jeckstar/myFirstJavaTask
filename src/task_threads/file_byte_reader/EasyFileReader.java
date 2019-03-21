@@ -5,12 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class FileReader {
+public class EasyFileReader {
     private File file;
     private String path;
 
 
-    public FileReader(){
+    public EasyFileReader(){
         this.file = new File(getPath());
     }
 
