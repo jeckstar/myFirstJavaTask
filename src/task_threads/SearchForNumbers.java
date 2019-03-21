@@ -71,6 +71,7 @@ public class SearchForNumbers {
                 if ((i == countOfThread - 1) && (toNum > startNum)) {
                     threadList.add(this.firstOption(startNum, toNum));
                 }
+                
             }
             for (Thread thread : threadList) {
                 thread.start();
