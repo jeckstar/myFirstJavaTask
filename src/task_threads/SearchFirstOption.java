@@ -1,15 +1,14 @@
 package task_threads;
 
-import java.util.List;
 
 public class SearchFirstOption implements Runnable {
-    private List<Integer> integerList;
+    private MySyncListOfNum mySyncListOfNum;
     private int fromNum;
     private int toNum;
 
 
-    public SearchFirstOption(List<Integer> integerList, int fromNum, int toNum) {
-        this.integerList = integerList;
+    public SearchFirstOption(MySyncListOfNum mySyncListOfNum, int fromNum, int toNum) {
+        this.mySyncListOfNum = mySyncListOfNum;
         this.fromNum = fromNum;
         this.toNum = toNum;
     }
@@ -17,7 +16,7 @@ public class SearchFirstOption implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("[" + fromNum + " " + toNum + "]");
+        System.out.println("[" + fromNum + " " + toNum + ")");
         for (int i = fromNum; i < toNum; i++) {
             boolean isPrime = true;
             int n = i;
@@ -26,7 +25,7 @@ public class SearchFirstOption implements Runnable {
                     isPrime = false;
                 }
             }
-            if (isPrime && n > 1) integerList.add(n);
+            if (isPrime && n > 1) mySyncListOfNum.addNote(n);
         }
     }
 }

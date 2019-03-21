@@ -62,13 +62,13 @@ public class SearchForNumbersByExecutors {
     }
 
     private void secondOption(ExecutorService executorService, int fromNum, int toNum) {
-        SearchSecondOption sfh = new SearchSecondOption(integerList, fromNum, toNum);
-        executorService.execute(sfh);
+     //   SearchSecondOption sfh = new SearchSecondOption(integerList, fromNum, toNum);
+      //  executorService.execute(sfh);
     }
 
     private void firstOption(ExecutorService executorService, int fromNum, int toNum) {
-        SearchFirstOption sfh = new SearchFirstOption(integerList, fromNum, toNum);
-        executorService.execute(sfh);
+        //SearchFirstOption sfh = new SearchFirstOption(integerList, fromNum, toNum);
+        //executorService.execute(sfh);
     }
 
 

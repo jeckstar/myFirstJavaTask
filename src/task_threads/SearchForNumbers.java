@@ -3,10 +3,7 @@ package task_threads;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class SearchForNumbers {
@@ -14,8 +11,9 @@ public class SearchForNumbers {
     private static int fromNum = 0;
     private static int toNum = 0;
     private static int countOfThread = 0;
-    private static List<Integer> integerList = new ArrayList<>();
+    //private static List<Integer> integerList = new ArrayList<>();
     private static int path;
+    private static MySyncListOfNum mySyncListOfNum = new MySyncListOfNum();
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -23,7 +21,7 @@ public class SearchForNumbers {
         searchForNumbers.getRangeOfSearch();
         if (path == 1) searchForNumbers.seachingByFirstOption();
         else if (path == 2) searchForNumbers.seachingBySecondOption();
-        for (Integer i : integerList) {
+        for (Integer i : mySyncListOfNum.getIntegerList()) {
             System.out.println(i);
         }
         List<Integer> integers = new ArrayList<>();
@@ -37,8 +35,14 @@ public class SearchForNumbers {
             }
             if (isPrime && n > 1) integers.add(n);
         }
-        System.out.println("1 - " + integerList.size());
+        System.out.println("1 - " + mySyncListOfNum.getIntegerList().size());
         System.out.println("2 - " + integers.size());
+        integers.removeAll(mySyncListOfNum.getIntegerList());
+        for (Integer i : integers) {
+            System.out.println(i);
+        }
+        System.out.println(integers.size());
+
     }
 
     private void getRangeOfSearch() throws IOException {
@@ -64,11 +68,14 @@ public class SearchForNumbers {
                 System.out.println("Thread " + threadCalling++);
                 threadList.add(this.firstOption(startNum, startNum + step));
                 startNum += step;
+                if ((i == countOfThread - 1) && (toNum > startNum)) {
+                    threadList.add(this.firstOption(startNum, toNum));
+                }
             }
-            for (Thread thread: threadList) {
+            for (Thread thread : threadList) {
                 thread.start();
             }
-            for (Thread thread: threadList) {
+            for (Thread thread : threadList) {
                 thread.join();
             }
         } else if (countOfThread == 1) {
@@ -89,11 +96,14 @@ public class SearchForNumbers {
                 System.out.println("Thread " + threadCalling++);
                 threadList.add(this.secondOption(startNum, startNum + step));
                 startNum += step;
+                if ((i == countOfThread - 1) && (toNum > startNum)) {
+                    threadList.add(this.firstOption(startNum, toNum));
+                }
             }
-            for (Thread thread: threadList) {
+            for (Thread thread : threadList) {
                 thread.start();
             }
-            for (Thread thread: threadList) {
+            for (Thread thread : threadList) {
                 thread.join();
             }
         } else if (countOfThread == 1) {
@@ -104,12 +114,12 @@ public class SearchForNumbers {
     }
 
     private Thread firstOption(int fromNum, int toNum) {
-        SearchFirstOption sfh = new SearchFirstOption(integerList, fromNum, toNum);
+        SearchFirstOption sfh = new SearchFirstOption(mySyncListOfNum, fromNum, toNum);
         return new Thread(sfh);
     }
 
-    private Thread secondOption(int fromNum, int toNum) throws InterruptedException {
-        SearchSecondOption ssh = new SearchSecondOption(integerList, fromNum, toNum);
+    private Thread secondOption(int fromNum, int toNum) {
+        SearchSecondOption ssh = new SearchSecondOption(mySyncListOfNum, fromNum, toNum);
         return new Thread(ssh);
     }
 }
