@@ -8,13 +8,24 @@ import java.io.InputStreamReader;
 public class EasyFileReader {
     private File file;
     private String path;
+    private int count = 0;
 
 
-    public EasyFileReader(){
+    public synchronized void setFile(){
         this.file = new File(getPath());
+        count++;
+        notify();
     }
 
-    public File getFile(){
+    public synchronized File getFile(){
+        while (count < 1){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        count = 0;
         return file;
     }
 
@@ -33,7 +44,9 @@ public class EasyFileReader {
                 System.out.println("NO!");
                 return getPath();
             }
-            else return path;
+            else {
+                return path;
+            }
         } catch (IOException e) {
             System.out.println("Не верный ввод, повторите!!!");
             return getPath();

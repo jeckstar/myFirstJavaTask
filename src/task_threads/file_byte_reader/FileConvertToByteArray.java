@@ -6,19 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileConvertToByteArray {
+    private final List<Byte> bytesList = new ArrayList<>();
+    private File file;
 
-    public FileConvertToByteArray() {
+    public  void setFile(File file) {
+            this.file = file;
     }
 
-    public List<Byte> covertFileToByteArray(File file) throws IOException {
-        List<Byte> bytesList = new ArrayList<>();
+    public List<Byte> covertFileToByteArray() throws IOException {
         FileReader fin = new FileReader(file);
-        int elemenrOfFile;
-        while ((elemenrOfFile = fin.read()) != -1) {
-            bytesList.add((byte) elemenrOfFile);
+        int elementOfFile;
+        while ((elementOfFile = fin.read()) != -1) {
+            bytesList.add((byte) elementOfFile);
         }
         System.out.println(bytesList.size());
         return bytesList;
     }
-
 }
